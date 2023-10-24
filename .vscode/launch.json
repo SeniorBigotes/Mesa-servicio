@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MesaServicioApplication<MesaServicio>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "servicedesk.MesaServicioApplication",
+            "projectName": "MesaServicio",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
