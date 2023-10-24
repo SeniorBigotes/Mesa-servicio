@@ -1,0 +1,15 @@
+@use '../styles.scss' as s;
+
+.contenido {
+    @include s.tablet {
+        display: grid;
+        grid-template-columns: 1fr 5fr 2fr;
+    }
+    .sroll-central {
+        padding-right: 20px;
+
+        @include s.tablet {
+            padding: 0;
+        }
+    }
+}

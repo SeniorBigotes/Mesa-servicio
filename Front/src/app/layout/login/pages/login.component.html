@@ -1,0 +1,45 @@
+<div class="login">
+    <div class="login-content p-4">
+        <div class="login-left bd-highlight">
+            <img src="../../../../assets/logoInfotec.png" alt="Infotec">
+            <div class="login-logos">
+                <img src="../../../../assets/gobMxLogo.png" alt="Gobierno de México">
+                <img src="../../../../assets/conahcytLogo.png" alt="CONAHCYT">
+            </div>
+            <h1 class="text-uppercase text-decoration-underline">Mesa de servicio</h1>
+        </div>
+    
+        <form [formGroup]="formLogin" (ngSubmit)="inciarSesion()"
+        class="login-right">
+            <fieldset>
+                <legend>Iniciar Sesión</legend>
+                
+                <p *ngIf="alert" class="badge bg-danger text-center text-uppercase text-white">Credenciales Erroneas</p>
+    
+                <div class="alert alert-danger mt-2" [hidden]="getUser.valid || getUser.pristine">Usuario <span class="alert-link">obligatiorio</span></div>
+                <div class="input-group flex-nowrap mb-3">
+                    <label for="user" class="input-group-text" id="addon-wrapping"> 
+                        <img src="../../../../assets/usuarioLogo.png" alt="Usuario">
+                    </label>
+                    <input type="text" name="user" id="user" placeholder="Ingrese su Usuario"
+                    formControlName="user" class="form-control">
+                </div>
+    
+                <div [hidden]="getPass.valid || getPass.pristine"
+                class="alert alert-danger mt-2">Contraseña
+                    <span class="alert-link">obligatioria</span>
+                </div>
+                <div class="input-group flex-nowrap mb-3">
+                    <label for="pass" class="input-group-text" id="addon-wrapping">
+                        <img src="../../../../assets/contraseñaLogo.png" alt="Contraseña">
+                    </label>
+                    <input type="password" name="pass" id="pass" placeholder="Ingrese su contraseña"
+                    formControlName="pass" class="form-control">
+                </div>
+            
+                <p *ngIf="formLogin.invalid" class="badge bg-danger text-white"><b>*Faltan campos por llenar*</b></p>
+                <button [disabled]="formLogin.invalid" class="btn btn-success">Ingresar</button>
+            </fieldset>
+        </form>
+    </div> <!-- end .login-content -->
+</div>

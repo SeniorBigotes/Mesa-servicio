@@ -1,0 +1,9 @@
+@use '../../../../styles.scss' as s;
+.contenido {
+    display: grid;
+    background: s.$bg-central;
+    
+    @include s.pc {
+        grid-template-columns: 1fr 5fr 2fr;
+    }
+}

@@ -1,0 +1,50 @@
+@use '.././../../styles.scss' as s;
+
+.section-left {
+    background-color: s.$bg-navegacion;
+    
+    ul {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        padding-bottom: 4rem;
+        
+        @include s.phone {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        @include s.pc {
+            height: 100vh;
+            display: block;
+            margin: 0;
+            padding-top: 1rem;
+        }
+    
+        li {
+            margin-top: 3rem;
+            @include s.pc {
+                padding: 0 1rem;
+            }
+        }
+
+        a {
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 1.5rem 2.5rem;
+            margin-top: 1rem;
+            border-radius: 5px;
+
+            @include s.pc {
+                padding: 1rem 6rem;
+            }
+
+            &:hover {
+                background-color: s.$bg-infotec-marron;
+            }
+        }
+
+    }
+}
+.router-active {
+    background-color: s.$bg-infotec-marron;
+}

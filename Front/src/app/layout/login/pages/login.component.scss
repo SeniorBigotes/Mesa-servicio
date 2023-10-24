@@ -1,0 +1,85 @@
+@use '../../../../styles.scss' as s;
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    background: s.$bg-navegacion;
+
+    .login-left {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        align-items: center;
+        justify-items: center;
+        gap: 3rem;
+        width: 30rem;
+
+        .login-logos {
+            display: flex;
+            justify-content: center;
+            width: 13rem;
+            gap: 2rem;
+        }
+        img {
+            width: 21rem;
+            margin: auto;
+            display: block;
+        }
+        h1 {
+            text-align: center;
+            font-weight: 700;
+            font-size: 3rem;
+            color: s.$bg-infotec-marron;
+            margin-top: 1rem;
+
+            @include s.pc {
+                grid-row: 1/2;
+            }
+        }
+    }
+
+    .login-right {
+        width: 30rem;
+
+        fieldset {
+            border: solid 3px s.$bg-navegacion;
+            padding: 10px;
+        }
+        legend {
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .alert {
+            font-size: 1.1rem;
+        }
+        input {
+            font-size: 1.5rem;
+        }
+        img {
+            width: 30px;
+        }
+        button, p {
+            font-size: 1.3rem;
+            width: 100%;
+        }
+        button {
+            font-size: 1.5rem;
+        }
+    }
+}
+.login-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: s.$bg-central;
+    gap: 2rem;
+    border: 10px double darken(s.$bg-navegacion-hover, 7);
+
+    @include s.pc {
+        flex-direction: row;
+    }
+}

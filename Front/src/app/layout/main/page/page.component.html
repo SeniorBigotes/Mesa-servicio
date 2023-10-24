@@ -1,0 +1,13 @@
+<!-- <div class="contenido" *ngIf="viewPage()"> -->
+<div class="contenido" *ngIf="viewPage()">
+    <!-- navegacion lateral izquierdo -->
+    <app-navigation></app-navigation>
+
+    <!-- Contenido central -->
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
+
+    <!-- Seccion derecho donde se muestra la info -->
+    <app-section-right></app-section-right>
+</div>

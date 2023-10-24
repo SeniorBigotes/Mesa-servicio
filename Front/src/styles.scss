@@ -1,0 +1,83 @@
+/*---------------------------------------VARIABLES---------------------------------------*/
+$bg-central: rgb(235, 230, 230);
+$bg-navegacion: #691c32;
+$bg-navegacion-hover: #5c182b;
+$bg-section-right: #c3bcbc;
+$bg-infotec-marron: #bc9562;
+
+$font-family: 'Raleway',sans-serif;
+
+/*---------------------------------------MIXINS---------------------------------------*/
+@mixin phone {
+    @media(min-width: 480px) {
+        @content; //remplasa el contenido
+    }
+}
+
+@mixin tablet {
+    @media(min-width: 768px) {
+        @content; //remplasa el contenido
+    }
+}
+
+@mixin pc {
+    @media(min-width: 992px) {
+        @content; //remplasa el contenido
+    }
+}
+
+@mixin cgrid($col, $med) {
+    display: grid;
+    grid-template-columns: repeat($col, 1fr);
+    gap: $med;
+}
+
+@mixin resetear-lista {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+/*---------------------------------------GLOBALES---------------------------------------*/
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+body {
+    font-size: 1.6rem;
+    font-family: $font-family;
+}
+p {
+    font-size: 2rem;
+    color: black;
+}
+a {
+    text-decoration: none;
+}
+h1,
+h2,
+h3 {
+    margin: 0;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 3.6rem;
+}
+h3 {
+    font-size: 3rem;
+}
+//La etiqueta es ajustada para que soporte los cambios echos en el archivo HTML
+img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    display: block;
+}

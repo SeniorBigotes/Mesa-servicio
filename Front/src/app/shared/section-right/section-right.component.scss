@@ -1,0 +1,10 @@
+@use '../../../styles.scss' as s;
+
+.section-right {
+    background-color: s.$bg-section-right;
+    height: auto;
+
+    @include s.tablet {
+    height: 100vh;
+    }
+}
