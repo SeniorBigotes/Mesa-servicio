@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import servicedesk.entity.Cuenta;
 import servicedesk.services.CuentaService;
 
+/* SE REQUIERE INCIO DE SESION PARA ACCEDER A ESTA PARTE */
+
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
