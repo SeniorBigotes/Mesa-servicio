@@ -1,4 +1,4 @@
-package servicedesk.controller.auth;
+package servicedesk.entity.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,11 +10,7 @@ import lombok.NoArgsConstructor;
 // modifica de forma automatica
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class LoginRequest {
     String nombreUsuario;
     String contraseña;
-    String nombre;
-    String apellidoP;
-    String apellidoM;
-    String pais;
 }

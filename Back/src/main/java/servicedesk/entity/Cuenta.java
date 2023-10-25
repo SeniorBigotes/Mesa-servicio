@@ -1,8 +1,10 @@
 package servicedesk.entity;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
@@ -24,58 +26,61 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "cuentas",
-	uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
+@Table(name = "cuentas", uniqueConstraints = { @UniqueConstraint(columnNames = { "nombre_usuario" }) })
 public class Cuenta implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "nombre_usuario", nullable = false)
-    private String usuario;
+    private String nombreUsuario;
+    @Column(nullable = false)
     private String contraseña;
     private String nombre;
-    @Column(name = "apellido_paterno")
+    @Column(name = "apellido_paterno", nullable = false)
     private String apellidoP;
-    @Column(name = "apellido_materno")
+    @Column(name = "apellido_materno", nullable = false)
     private String apellidoM;
+    @Column(nullable = false)
     private String correo;
+    @Column(nullable = false)
     private String telefono;
     
+    @Column(name = "rol", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Role rol;
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-	return null;
+        return List.of(new SimpleGrantedAuthority((role.name())));
     }
 
     @Override
     public String getPassword() {
-	return null;
+        return getContraseña();
     }
 
     @Override
     public String getUsername() {
-	return null;
+        return getNombreUsuario();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-	return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-	return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-	return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-	return false;
+        return true;
     }
 }
