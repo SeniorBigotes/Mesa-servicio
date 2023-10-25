@@ -11,43 +11,43 @@ import { LoginService } from '../login.service';
 export class LoginComponent {
   formLogin!: FormGroup;
   alert: boolean = false;
-  cuenta: any = [];
+  error: string = "";
   
   constructor(private formBuilder: FormBuilder,
               private loginService: LoginService,
-              private loginApp: ServiciosService) {}
+              private serviciosService: ServiciosService) {}
     
     ngOnInit(): void {
       // asignamos valores a la variable
       this.formLogin = this.crearFormulario();
-
-      // peticion url
-      this.loginService.getAllCuentas().subscribe(response => this.cuenta.push(response), err => console.log(err));
     }
     
   // llenamos datos
   crearFormulario(): FormGroup {
     return this.formBuilder.group({
-      user: ['', Validators.required],
-      pass: ['', Validators.required]
+      nombreUsuario: ['', Validators.required],
+      contraseña: ['', Validators.required]
     });
   }
 
-  get getUser() { return this.formLogin.get('user') as FormControl; }
-  get getPass() { return this.formLogin.get('pass') as FormControl; }
+  get getUser() { return this.formLogin.get('nombreUsuario') as FormControl; }
+  get getPass() { return this.formLogin.get('contraseña') as FormControl; }
 
   // se valida la informacion
   inciarSesion(): void {
-    // valida al dar submit
-    const front = this.formLogin.value;
-    const back = this.cuenta;
-    
-    if(!this.loginService.login(front, back)) {
+    const login = this.formLogin.value;
+    // almacenar token
+    this.loginService.postLogin(login).subscribe((token: any) => {
+      this.loginService.setToken(token.token);
+      this.alert = false;
+    }, (err: any) => {
+      this.error = err.error;
       this.alert = true;
-      this.formLogin.reset(); //limpia el formulario
-      return;
+    });
+
+    if(this.loginService.getToken.length > 0) {
+      this.serviciosService.setViewPage(true);
+      this.serviciosService.route.navigate(['/main']);
     }
-    this.formLogin.reset();
-    this.alert = false;
   }
 }

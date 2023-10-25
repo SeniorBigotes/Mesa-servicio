@@ -14,27 +14,30 @@
             <fieldset>
                 <legend>Iniciar Sesión</legend>
                 
-                <p *ngIf="alert" class="badge bg-danger text-center text-uppercase text-white">Credenciales Erroneas</p>
+                <p *ngIf="alert" class="badge bg-danger text-center text-uppercase text-white">{{error}}</p>
     
-                <div class="alert alert-danger mt-2" [hidden]="getUser.valid || getUser.pristine">Usuario <span class="alert-link">obligatiorio</span></div>
+                <div class="alert alert-danger mt-2" [hidden]="getUser.valid || getUser.pristine">
+                    Usuario <span class="alert-link">obligatiorio</span></div>
+
                 <div class="input-group flex-nowrap mb-3">
-                    <label for="user" class="input-group-text" id="addon-wrapping"> 
+                    <label for="nombreUsuario" class="input-group-text" id="addon-wrapping"> 
                         <img src="../../../../assets/usuarioLogo.png" alt="Usuario">
                     </label>
-                    <input type="text" name="user" id="user" placeholder="Ingrese su Usuario"
-                    formControlName="user" class="form-control">
+                    <input type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Ingrese su Nombre de usuario"
+                    formControlName="nombreUsuario" class="form-control">
                 </div>
     
                 <div [hidden]="getPass.valid || getPass.pristine"
                 class="alert alert-danger mt-2">Contraseña
                     <span class="alert-link">obligatioria</span>
                 </div>
+
                 <div class="input-group flex-nowrap mb-3">
-                    <label for="pass" class="input-group-text" id="addon-wrapping">
+                    <label for="contraseña" class="input-group-text" id="addon-wrapping">
                         <img src="../../../../assets/contraseñaLogo.png" alt="Contraseña">
                     </label>
-                    <input type="password" name="pass" id="pass" placeholder="Ingrese su contraseña"
-                    formControlName="pass" class="form-control">
+                    <input type="password" name="contraseña" id="contraseña" placeholder="Ingrese su contraseña"
+                    formControlName="contraseña" class="form-control">
                 </div>
             
                 <p *ngIf="formLogin.invalid" class="badge bg-danger text-white"><b>*Faltan campos por llenar*</b></p>

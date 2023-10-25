@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ServiciosService } from 'src/app/servicios.service';
+import { LoginService } from '../../login/login.service';
 @Component({
   selector: 'app-page',
   templateUrl: './page.component.html',
@@ -7,15 +8,10 @@ import { ServiciosService } from 'src/app/servicios.service';
 })
 export class PageComponent {
 
-  constructor(private loginAuth: ServiciosService) {}
+  constructor(private serviciosService: ServiciosService,
+              private loginService: LoginService) {}
 
   viewPage(): boolean {
-    // !true = false
-    if(!this.loginAuth.getViewPage()) {
-      this.loginAuth.route.navigate(['/login']);
-      return this.loginAuth.getViewPage();
-    }
-    // true
-    return this.loginAuth.getViewPage();
+    return this.serviciosService.getViewPage();
   }
 }

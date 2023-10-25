@@ -9,36 +9,36 @@ import { ServiciosService } from 'src/app/servicios.service';
 })
 export class LoginService {
 
-  private API_CUENTAS = "http://localhost:8080/api/cuentas";
+  private token: string = "";
+
+  private API_REGISTER = "http://localhost:8080/auth/register";
+  private API_LOGIN = "http://localhost:8080/auth/login";
+  private API_PAGE = "http://localhost:8080/user/demo";
 
   constructor(private httpClient: HttpClient,
               private serviciosApp: ServiciosService
-              ) { }
+              ) {
 
-  // Obtiene todos los usuarios y contraseñas
-  getAllCuentas(): Observable<any> {
-    return this.httpClient.get(this.API_CUENTAS);
+    // agregar almacenamiento local para conservar el token
+    console.log(this.token)
+    localStorage.setItem('token', this.getToken)
+              }
+
+  setToken(token: string) {
+    this.token = token;
   }
 
-  // Valida el inicio de sesion
-  login(front: any, back:any): boolean {
-    let userback = 0;
-    let passBack = 0;
-    
-    // iterar sobre el backend
-    for(let array of back) {
-      for(let element of array) {
-        userback = element.nombreUsuario;
-        passBack = element.contraseña;
-        // validar
-        if(front.user === userback && front.pass === passBack) {
-          this.serviciosApp.route.navigate(['/main']);
-          this.serviciosApp.setViewPage(true);
-          return true;
-        }
-      }
-    }
-    this.serviciosApp.setViewPage(false);
-    return false;
+  get getToken(): string {
+    return this.token;
+  }
+
+  // Solicitar el inicio de sesion
+  postLogin(sesion: any): Observable<any> {
+    return this.httpClient.post(this.API_LOGIN, sesion);
+  }
+
+  // Acceso a los datos protegidos
+  postPage(token: string): Observable<any> {
+    return this.httpClient.post(this.API_PAGE, token);
   }
 }
