@@ -5,14 +5,6 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class ServiciosService {
-  private viewPage: boolean = false;
 
   constructor(public route: Router) { }
-
-  public setViewPage(viewPage: boolean) {
-    this.viewPage = viewPage;
-  }
-  public getViewPage(): boolean {
-    return this.viewPage;
-  }
 }

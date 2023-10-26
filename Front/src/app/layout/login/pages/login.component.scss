@@ -68,6 +68,17 @@
         button {
             font-size: 1.5rem;
         }
+        .ng-invalid:not(form).ng-touched {
+            border: 2px solid s.$form-invalid
+        }
+        .ng-valid:not(form).ng-touched {
+            border: 2px solid s.$form-valid;
+        }
+        .alert-error {
+            margin: .5rem 0;
+            color: s.$form-invalid;
+            font-size: 1.2rem;
+        }
     }
 }
 .login-content {

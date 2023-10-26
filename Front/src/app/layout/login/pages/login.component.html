@@ -16,19 +16,19 @@
                 
                 <p *ngIf="alert" class="badge bg-danger text-center text-uppercase text-white">{{error}}</p>
     
-                <div class="alert alert-danger mt-2" [hidden]="getUser.valid || getUser.pristine">
-                    Usuario <span class="alert-link">obligatiorio</span></div>
+                <div class="alert-error" *ngIf="getUser.invalid && (getUser.dirty || getUser.touched)">
+                    *Usuario <span class="alert-link">obligatiorio</span></div>
 
                 <div class="input-group flex-nowrap mb-3">
                     <label for="nombreUsuario" class="input-group-text" id="addon-wrapping"> 
                         <img src="../../../../assets/usuarioLogo.png" alt="Usuario">
                     </label>
-                    <input type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Ingrese su Nombre de usuario"
+                    <input type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Ingrese su nombre de usuario"
                     formControlName="nombreUsuario" class="form-control">
                 </div>
     
-                <div [hidden]="getPass.valid || getPass.pristine"
-                class="alert alert-danger mt-2">Contraseña
+                <div *ngIf="getPass.invalid && (getPass.dirty || getPass.touched)"
+                class="alert-error">Contraseña
                     <span class="alert-link">obligatioria</span>
                 </div>
 
@@ -39,8 +39,7 @@
                     <input type="password" name="contraseña" id="contraseña" placeholder="Ingrese su contraseña"
                     formControlName="contraseña" class="form-control">
                 </div>
-            
-                <p *ngIf="formLogin.invalid" class="badge bg-danger text-white"><b>*Faltan campos por llenar*</b></p>
+
                 <button [disabled]="formLogin.invalid" class="btn btn-success">Ingresar</button>
             </fieldset>
         </form>

@@ -11,6 +11,7 @@ const routes: Routes = [
       {path: 'tickets', loadChildren: () => import('../tickets/tickets.module').then(m => m.TicketsModule)}
     ]
   },
+  {path: '**', redirectTo: 'main', pathMatch: 'full'}
 ];
 
 @NgModule({

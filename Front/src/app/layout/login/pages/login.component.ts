@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ServiciosService } from 'src/app/servicios.service';
 import { LoginService } from '../login.service';
+import { LoginRequest } from '../components/loginInterface';
+import { tokenResponse } from '../components/tokenResponse';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   formLogin!: FormGroup;
   alert: boolean = false;
   error: string = "";
@@ -35,19 +37,22 @@ export class LoginComponent {
 
   // se valida la informacion
   inciarSesion(): void {
-    const login = this.formLogin.value;
-    // almacenar token
-    this.loginService.postLogin(login).subscribe((token: any) => {
-      this.loginService.setToken(token.token);
-      this.alert = false;
-    }, (err: any) => {
-      this.error = err.error;
-      this.alert = true;
-    });
 
-    if(this.loginService.getToken.length > 0) {
-      this.serviciosService.setViewPage(true);
-      this.serviciosService.route.navigate(['/main']);
+    if(this.formLogin.valid) {
+      const login: LoginRequest = this.formLogin.value;
+      // almacenar token y otras validaciones
+      this.loginService.postLogin(login).subscribe((token: tokenResponse) => {
+        this.loginService.setToken(token.token);
+        this.alert = false;
+        this.serviciosService.route.navigate(['/main']);
+        this.formLogin.reset();
+      }, (err: any) => {
+        this.error = err.error;
+        this.alert = true;
+        this.formLogin.reset();
+      });
+    } else {
+      this.formLogin.markAllAsTouched();
     }
   }
 }
