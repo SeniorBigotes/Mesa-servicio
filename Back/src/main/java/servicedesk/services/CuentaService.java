@@ -72,4 +72,20 @@ public class CuentaService {
                 .token(jwtService.getToken(cuenta))
                 .build();
     }
+
+    // obtener cuenta logeada
+    public String loggedInAccount(Long id) {
+        Cuenta cuenta = findById(id);
+
+        if(cuenta == null) {
+            return null;
+        }
+        String usuario = cuenta.getNombreUsuario();
+
+        if(usuario == "") {
+            return null;
+        }
+
+        return usuario;
+    }
 }

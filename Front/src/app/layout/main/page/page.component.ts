@@ -14,14 +14,14 @@ export class PageComponent implements OnInit {
   constructor(private serviciosService: ServiciosService,
               private loginService: LoginService) {}
   
-  ngOnInit(): void {
+  ngOnInit(): void {    
     // verifica el inicio de sesion
-    if(this.loginService.getToken()) {
+    if(this.loginService.isLoggedIn ()) {
       this.userLogin = true;
     }
     
     if(!this.userLogin) {
-    this.serviciosService.route.navigate(['/login']);
+      this.serviciosService.route.navigate(['login']);
     }
   }
 }

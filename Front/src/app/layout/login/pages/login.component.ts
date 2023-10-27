@@ -41,8 +41,12 @@ export class LoginComponent implements OnInit {
     if(this.formLogin.valid) {
       const login: LoginRequest = this.formLogin.value;
       // almacenar token y otras validaciones
-      this.loginService.postLogin(login).subscribe((token: tokenResponse) => {
-        this.loginService.setToken(token.token);
+      this.loginService.postLogin(login).subscribe((resp: tokenResponse) => {
+        // pasar token y obener usuario
+        this.loginService.loginUser(resp.token);
+        this.loginService.getCurrentUser().subscribe((resp: any) => {
+          console.log(resp)
+        })
         this.alert = false;
         this.serviciosService.route.navigate(['/main']);
         this.formLogin.reset();
@@ -52,6 +56,7 @@ export class LoginComponent implements OnInit {
         this.formLogin.reset();
       });
     } else {
+      this.alert = true;
       this.formLogin.markAllAsTouched();
     }
   }
