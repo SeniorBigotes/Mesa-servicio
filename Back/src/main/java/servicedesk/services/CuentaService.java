@@ -61,7 +61,7 @@ public class CuentaService {
                 .apellidoM(request.getApellidoM())
                 .correo(request.getCorreo())
                 .telefono(request.getTelefono())
-                .role(Role.SUPERADMIN)
+                .role(Role.ADMINISTRATIVO)
                 .build();
 
         // Se almacena en la base de datos

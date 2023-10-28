@@ -2,6 +2,7 @@ package servicedesk.entity;
 
 public enum Role {
     SUPERADMIN,
-    ADMIN,
+    ADMINISTRATIVO,
+    DOCENTE,
     BECARIO
 }

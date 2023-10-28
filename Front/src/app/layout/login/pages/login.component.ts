@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
         // pasar token y obener usuario
         this.loginService.loginUser(resp.token);
         this.loginService.getCurrentUser().subscribe((usuario: any) => {
-          this.loginService.setUser(usuario);                   // POR TERMINAR
+          this.loginService.setUser(usuario);
           console.log(usuario)
         }, err => console.log(err))
         this.alert = false;
