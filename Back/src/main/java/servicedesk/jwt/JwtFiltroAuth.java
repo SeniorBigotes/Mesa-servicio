@@ -2,7 +2,6 @@ package servicedesk.jwt;
 
 import java.io.IOException;
 
-import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -68,7 +67,7 @@ public class JwtFiltroAuth extends OncePerRequestFilter {
 	private String getTokenFromRequest(HttpServletRequest request) {
 		final String authHead = request.getHeader(HttpHeaders.AUTHORIZATION);
 		// Si existe el encabezado, retorna desde el caracter 7 en adelante
-		if (StringUtils.hasText(authHead) && authHead.startsWith("Bearer ")) {
+		if (authHead != null && authHead.startsWith("Bearer ")) {
 			return authHead.substring(7);
 		}
 

@@ -12,7 +12,6 @@ import { environment } from 'src/environments/environment';
 export class LoginService {
 
   private apiAuth = environment.API_AUTHENTIFICATION;
-  private API_TICKETS = environment.API_TICKETS;
   private user = environment.API_USER;
 
   constructor(private httpClient: HttpClient
@@ -59,7 +58,7 @@ export class LoginService {
   }
   // obtener el usuario actual en la sesion
   getCurrentUser() {
-    return this.httpClient.get(`${this.user}/user-loged`)
+    return this.httpClient.get(`${this.user}/user-logged`)
   }
   // obtener rol del usuario
   getUserRol(): any {
@@ -71,11 +70,6 @@ export class LoginService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     return true;
-  }
-
-  // Acceso a los datos protegidos
-  postPage(token: string): Observable<any> {
-    return this.httpClient.post(this.API_TICKETS, token);
   }
 
   private handleError(error: HttpErrorResponse) {
