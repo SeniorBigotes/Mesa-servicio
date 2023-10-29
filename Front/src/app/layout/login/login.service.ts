@@ -63,7 +63,7 @@ export class LoginService {
   // obtener rol del usuario
   getUserRol(): any {
     const user = this.getUser();
-    return user.authorities[0].authority;
+    return user.authority;
   }
   // cerrar sesion
   logOut() {

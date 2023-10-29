@@ -44,9 +44,13 @@ export class LoginComponent implements OnInit {
       this.loginService.postLogin(login).subscribe((resp: tokenResponse) => {
         // pasar token y obener usuario
         this.loginService.loginUser(resp.token);
-        this.loginService.getCurrentUser().subscribe((usuario: any) => {
+        this.loginService.getCurrentUser().subscribe((user: any) => {
+          const usuario = {
+            id: user.id,
+            username: user.username,
+            authority: user.authorities[0].authority
+          }
           this.loginService.setUser(usuario);
-          console.log(usuario)
         }, err => console.log(err))
         this.alert = false;
         this.serviciosService.route.navigate(['/main']);
