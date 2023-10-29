@@ -13,7 +13,9 @@ import { tokenResponse } from '../components/tokenResponse';
 export class LoginComponent implements OnInit {
   formLogin!: FormGroup;
   alert: boolean = false;
-  error: string = "";
+
+  errorGeneral: any = this.serviciosService.error;
+  alertGeneral: boolean = this.serviciosService.activarError;
   
   constructor(private formBuilder: FormBuilder,
               private loginService: LoginService,
@@ -22,6 +24,11 @@ export class LoginComponent implements OnInit {
     ngOnInit(): void {
       // asignamos valores a la variable
       this.formLogin = this.crearFormulario();
+      
+      // en caso de error de token
+      setTimeout(() => {
+        this.alertGeneral = false;
+      }, 3000);
     }
     
   // llenamos datos
@@ -56,7 +63,6 @@ export class LoginComponent implements OnInit {
         this.serviciosService.route.navigate(['/main']);
         this.formLogin.reset();
       }, (err: any) => {
-        this.error = err.error;
         this.alert = true;
         this.formLogin.reset();
       });
@@ -64,5 +70,8 @@ export class LoginComponent implements OnInit {
       this.alert = true;
       this.formLogin.markAllAsTouched();
     }
+    setTimeout(() => {
+      this.alert = false;
+    }, 3000);
   }
 }

@@ -6,5 +6,7 @@ import { Router } from '@angular/router';
 })
 export class ServiciosService {
 
+  error: any = null;
+  activarError: boolean = false;
   constructor(public route: Router) { }
 }

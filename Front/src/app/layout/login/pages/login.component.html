@@ -15,6 +15,7 @@
                 <legend>Iniciar Sesión</legend>
                 
                 <p *ngIf="alert" class="badge bg-danger text-center text-uppercase text-white">Credenciales no válidas</p>
+                <p *ngIf="alertGeneral" class="badge bg-danger text-center text-uppercase text-white">{{errorGeneral}}</p>
     
                 <div class="alert-error" *ngIf="getUser.invalid && (getUser.dirty || getUser.touched)">
                     *Usuario <span class="alert-link">obligatiorio</span></div>

@@ -32,7 +32,7 @@ public class JwtService {
             .setClaims(extraClaims) // informacion del token (reclamaciones)
             .setSubject(cuenta.getUsername()) // sujeto que genera el token
             .setIssuedAt(new Date(System.currentTimeMillis())) // fecha de creacion del token
-            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))  // fecha de expiracion del token
+            .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 8)))  // fecha de expiracion del token
             .signWith(getKey(), SignatureAlgorithm.HS256) // codificar el token
             .compact(); // compactar todo lo generado
     }
