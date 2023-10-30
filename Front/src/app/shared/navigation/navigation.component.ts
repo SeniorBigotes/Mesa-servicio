@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/layout/login/login.service';
-import { MainService } from 'src/app/layout/main.service';
+import { MainService } from 'src/app/layout/main/main.service';
 import { ServiciosService } from 'src/app/servicios.service';
 
 @Component({
