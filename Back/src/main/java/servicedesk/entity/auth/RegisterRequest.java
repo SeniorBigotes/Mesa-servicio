@@ -1,5 +1,6 @@
 package servicedesk.entity.auth;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,4 +19,5 @@ public class RegisterRequest {
     private String apellidoM;
     private String correo;
     private String telefono;
+    private String role;
 }

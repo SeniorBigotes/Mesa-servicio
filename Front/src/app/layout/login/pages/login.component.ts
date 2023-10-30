@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     }
     
   // llenamos datos
-  crearFormulario(): FormGroup {
+  private crearFormulario(): FormGroup {
     return this.formBuilder.group({
       nombreUsuario: ['', Validators.required],
       contraseña: ['', Validators.required]

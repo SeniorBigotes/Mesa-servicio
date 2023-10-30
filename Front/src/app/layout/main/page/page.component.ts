@@ -11,7 +11,6 @@ export class PageComponent implements OnInit {
   // variable para el inicio de sesion
   userLogin: boolean = false;
   tokenLocalStorage: string | null = this.loginService.getToken();
-  remainingTokenTime: number = 0;
 
   constructor(private serviciosService: ServiciosService,
               private loginService: LoginService) {}
@@ -24,13 +23,15 @@ export class PageComponent implements OnInit {
       this.serviciosService.route.navigate(['/login']);
     }
     
-    // Obtener datos del token
+    // Cerrar sesion una vez expire el token
     try {
       if(this.tokenLocalStorage !== null) {
         const token = this.tokenLocalStorage;
         const tokenDecoded = this.decodeToken(token);
-        let tokenExp = this.tokenTime(tokenDecoded.exp);
-        let tokenIat = this.tokenTime(tokenDecoded.iat);
+        const currentTIime = Date.now() / 1000;
+        if(tokenDecoded.exp < currentTIime) {
+          if(this.loginService.logOut()){}
+        }
       }
     } catch (err) {
       if(this.loginService.logOut()) {

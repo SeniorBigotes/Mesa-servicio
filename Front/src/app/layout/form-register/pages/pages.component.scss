@@ -1,0 +1,27 @@
+@use '../../../../styles.scss' as s;
+
+.activo {
+    border: 1px solid s.$bg-section-right;
+    border-bottom: none;
+}
+
+a {
+    color: black;
+}
+
+.scroll-central {
+    height: 60vh;
+    overflow-y: auto;
+
+    @include s.phone {
+        height: 68vh;
+    }
+
+    @include s.tablet {
+        height: 76vh;
+    }
+
+    @include s.pc {
+        height: 93vh;
+    }
+}

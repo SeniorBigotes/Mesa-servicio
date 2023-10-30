@@ -2,6 +2,7 @@
     <ul class="list-unstyled text-center d-flex flex-column justify-content-between">
         <div class="">
             <li><a routerLinkActive="router-active" routerLink="tickets">tickets</a></li>
+            <li *ngIf="authority === 'SUPERADMIN'"><a routerLink="users">Usuarios</a></li>
         </div>
         <div>
             <li>

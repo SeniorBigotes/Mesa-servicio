@@ -14,7 +14,8 @@ export class LoginService {
   private apiAuth = environment.API_AUTHENTIFICATION;
   private user = environment.API_USER;
 
-  constructor(private httpClient: HttpClient
+  constructor(private httpClient: HttpClient,
+              private router: Router
               ) {}
 
   
@@ -49,12 +50,12 @@ export class LoginService {
   getUser(): any {
     const user = localStorage.getItem('user');
 
-    if(user !== null) {
-      return JSON.parse(user)
+    if(user === null) {
+      this.logOut();
+      return null;
     }
 
-    this.logOut();
-    return null;
+    return JSON.parse(user)
   }
   // obtener el usuario actual en la sesion
   getCurrentUser() {

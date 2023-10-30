@@ -13,16 +13,19 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import servicedesk.entity.Cuenta;
 import servicedesk.entity.Role;
+import servicedesk.entity.Roles;
 import servicedesk.entity.auth.AuthResponse;
 import servicedesk.entity.auth.LoginRequest;
 import servicedesk.entity.auth.RegisterRequest;
 import servicedesk.repository.ICuentaRep;
+import servicedesk.repository.IRolRep;
 
 @Service
 @RequiredArgsConstructor
 public class CuentaService {
 
     @Autowired private ICuentaRep cuentaRep;
+    @Autowired private IRolRep rolRep;
     @Autowired private JwtService jwtService;
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private AuthenticationManager authenticationManager;
@@ -31,11 +34,6 @@ public class CuentaService {
     @Transactional(readOnly = true)
     public List<Cuenta> findAll() {
         return cuentaRep.findAll();
-    }
-
-    // Buscar por id
-    public Cuenta findById(Long id) {
-        return cuentaRep.findById(id).orElse(null);
     }
 
     // Inicio de sesion
@@ -53,6 +51,8 @@ public class CuentaService {
 
     // creamos registro de usuario con codificacion (nuevo usuario)
     public AuthResponse register(RegisterRequest request) {
+        String rolString = request.getRole();
+        Role rol = Role.valueOf(rolString);
         Cuenta cuenta = Cuenta.builder()
                 .nombreUsuario(request.getNombreUsuario())
                 .contraseña(passwordEncoder.encode(request.getContraseña()))
@@ -61,7 +61,7 @@ public class CuentaService {
                 .apellidoM(request.getApellidoM())
                 .correo(request.getCorreo())
                 .telefono(request.getTelefono())
-                .role(Role.ADMINISTRATIVO)
+                .role(rol)
                 .build();
 
         // Se almacena en la base de datos
@@ -71,5 +71,11 @@ public class CuentaService {
         return AuthResponse.builder()
                 .token(jwtService.getToken(cuenta))
                 .build();
+    }
+
+    // Iterar sobre los roles
+    @Transactional(readOnly = true)
+    public List<Roles> findAllRoles() {
+        return rolRep.findAll();
     }
 }

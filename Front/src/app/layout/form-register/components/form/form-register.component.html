@@ -1,0 +1,50 @@
+<form [formGroup]="formUser" (ngSubmit)="crear();">
+    <div>
+        <div>
+            <label for="nombre">Nombre/s: </label>
+            <input type="text" formControlName="nombre"
+            id="nombre" placeholder="Ingrese nombre del nuevo usuario">
+        </div>
+        <div>
+            <label for="apellidoP">Apellido Paterno: </label>
+            <input type="text" formControlName="apellidoP"
+            id="apellidoP" placeholder="Ingrese el Apellido Paterno del nuevo usuario">
+        </div>
+        <div>
+            <label for="apellidoM">Apelldio Materno: </label>
+            <input type="text" formControlName="apellidoM"
+            id="apellidoM" placeholder="Ingrese el Apellido Materno del nuevo usuario">
+        </div>
+        <div>
+            <label for="correo">Correo electrónico: </label>
+            <input type="email" formControlName="correo"
+            id="correo" placeholder="Ingrese el correo del nuevo usuario">
+        </div>
+        <div>
+            <label for="telefono">Teléfono: </label>
+            <input type="text" formControlName="telefono"
+            id="telefono" placeholder="Ingrese el teléfono del nuevo usuario">
+        </div>
+    </div> <!-- Datos del usuario -->
+    <div>
+        <div>
+            <label for="username">Nombre de usuario: </label>
+            <input type="text" formControlName="nombreUsuario"
+            id="username" placeholder="Nombre de usuario para la nueva cuenta">
+        </div>
+        <div>
+            <label for="password">Contraseña: </label>
+            <input type="password" formControlName="contraseña"
+            id="password" placeholder="Contraseña">
+        </div>
+        <div>
+            <label for="rol">Rol: </label>
+            <select id="rol" formControlName="role">
+                <option selected disabled value=""> --Seleccione-- </option>
+                <option *ngFor="let rol of roles" [ngValue]="rol.rolName"> {{rol.rolName}} </option>
+            </select>
+        </div>
+    </div> <!-- Datos de inicio de sesion -->
+
+    <input type="submit" value="Crear">
+</form>

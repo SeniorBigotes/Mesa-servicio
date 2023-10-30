@@ -35,6 +35,7 @@ public class Cuenta implements UserDetails {
     private String nombreUsuario;
     @Column(nullable = false)
     private String contraseña;
+    @Column(nullable = false)
     private String nombre;
     @Column(name = "apellido_paterno", nullable = false)
     private String apellidoP;
