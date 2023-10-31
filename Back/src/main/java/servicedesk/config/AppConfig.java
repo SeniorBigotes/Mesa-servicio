@@ -13,14 +13,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.RequiredArgsConstructor;
-import servicedesk.repository.ICuentaRep;
+import servicedesk.repository.IUsuarioRep;
 
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig {
 
     @Autowired
-    private final ICuentaRep cuentaRep;
+    private final IUsuarioRep cuentaRep;
 
     // Autenticatioon Manager
     @Bean

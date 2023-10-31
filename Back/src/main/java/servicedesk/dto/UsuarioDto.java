@@ -1,19 +1,16 @@
 package servicedesk.dto;
 
-import javax.management.relation.Role;
-
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import servicedesk.entity.Estatus;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CuentaDto {
+public class UsuarioDto {
     private Long id;
     private String nombreUsuario;
     private String contraseña;
@@ -22,7 +19,7 @@ public class CuentaDto {
     private String apellidoM;
     private String correo;
     private String telefono;
-    
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private String role;
+
+    private Estatus estatus;
 }

@@ -29,7 +29,7 @@ public class SecurityConfig {
 		// retornamos con una cadena de filtros
 		return http.csrf(c -> c.disable()).cors(c -> c.disable()) // deshabilita la configuracion csrf
 				.authorizeHttpRequests(authRequest -> // rutas privadas y protegidas
-				authRequest.requestMatchers("/auth/**", "/user/**").permitAll() // acceso total a esas rutas
+				authRequest.requestMatchers("/auth/**", "/user/**", "/api/**").permitAll() // acceso total a esas rutas
 																				// "auth" tienen acceso total
 				.anyRequest().authenticated()) // cualquier otro request se tiene que autenticar
 				.sessionManagement(sessionManager -> sessionManager

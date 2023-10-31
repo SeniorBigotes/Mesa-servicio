@@ -26,8 +26,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "cuentas", uniqueConstraints = { @UniqueConstraint(columnNames = { "nombre_usuario" }) })
-public class Cuenta implements UserDetails {
+@Table(name = "usuarios", uniqueConstraints = { @UniqueConstraint(columnNames = { "nombre_usuario" }) })
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -49,6 +49,11 @@ public class Cuenta implements UserDetails {
     @Column(name = "rol", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+    
+    @Column(name = "estatus")  
+    @Enumerated(EnumType.STRING)
+    private Estatus estatus;
+    
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
