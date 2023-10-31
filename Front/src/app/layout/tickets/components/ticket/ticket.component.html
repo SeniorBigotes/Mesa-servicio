@@ -1,257 +1,27 @@
 <div class="tickets-content">
-    <div class="card-body border border-dark rounded-1 p-0 m-3">
+    <div *ngFor="let ticket of tickets"
+    class="card-body border border-dark rounded-1 p-0 m-3">
         <div class="card">
-            <h3 class="card-header">No puedo hacer el proyecto de estadia</h3>
+            <h3 class="card-header"> {{ticket.asunto}} </h3>
             <div class="ticket-cambios m-auto">
                 <p>Cambios:</p>
-                <span class="cambios-span">Ya recibi el correo, ya no es necesario hacer todos esos cambios</span>
+                <span class="cambios-span"> {{ticket.asunto}} </span>
             </div>
         </div>
         <div class="card">
-            <p class="">ticket: <span>#12345</span></p>
-                <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
+            <p class="">ticket: <span>#{{ticket.id}} </span></p>
+                <div class="d-flex align-items-center justify-content-center m-auto ticket-p" style="width: 90%;">
                     <label for="ּtatus" class="form-label">Status: </label>
-                    <select name="status" class="form-control">
-                        <option value="1">Abierto</option>
-                        <option value="1">Cerrado</option>
-                    </select>
+                    <p> {{ticket.estatus}} </p>
             </div>
             <div class="d-flex justify-content-evenly ticket-fecha">
-                <p class="fecha-creacion">Creación: <span class="d-block">11-09-2023</span></p>
-                <p>Modificación: <span class="d-block">17-10-2023</span></p>
+                <p class="fecha-creacion">Creación: <span class="d-block"> {{dc}}-{{mc}}-{{yc}} </span></p>
+                <p>Modificación: <span class="d-block"> {{dm}}-{{mm}}-{{ym}} </span></p>
             </div>
-            <p>Autor: <span>Mauricio Puente</span></p>
-            <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
+            <p>Autor: <span> {{ticket.usuario.nombre}} </span></p>
+            <div class="d-flex align-items-center justify-content-center m-auto ticket-p" style="width: 90%;">
                 <label for="prioridad" class="form-label">Prioridad: </label>
-                <select name="prioridad" class="form-control">
-                    <option value="1">Alta</option>
-                    <option value="2">Media</option>
-                    <option value="3">Baja</option>
-                </select>
-            </div>
-        </div>
-    </div> <!-- end .card-body (ticket individual)-->
-    <div class="card-body border border-dark rounded-1 p-0 m-3">
-        <div class="card">
-            <h3 class="card-header">No puedo hacer el proyecto de estadia</h3>
-            <div class="ticket-cambios m-auto">
-                <p>Cambios:</p>
-                <span class="cambios-span">Ya recibi el correo, ya no es necesario hacer todos esos cambios</span>
-            </div>
-        </div>
-        <div class="card">
-            <p class="">ticket: <span>#12345</span></p>
-                <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
-                    <label for="ּtatus" class="form-label">Status: </label>
-                    <select name="status" class="form-control">
-                        <option value="1">Abierto</option>
-                        <option value="1">Cerrado</option>
-                    </select>
-            </div>
-            <div class="d-flex justify-content-evenly ticket-fecha">
-                <p class="fecha-creacion">Creación: <span class="d-block">11-09-2023</span></p>
-                <p>Modificación: <span class="d-block">17-10-2023</span></p>
-            </div>
-            <p>Autor: <span>Mauricio Puente</span></p>
-            <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
-                <label for="prioridad" class="form-label">Prioridad: </label>
-                <select name="prioridad" class="form-control">
-                    <option value="1">Alta</option>
-                    <option value="2">Media</option>
-                    <option value="3">Baja</option>
-                </select>
-            </div>
-        </div>
-    </div> <!-- end .card-body (ticket individual)-->
-    <div class="card-body border border-dark rounded-1 p-0 m-3">
-        <div class="card">
-            <h3 class="card-header">No puedo hacer el proyecto de estadia</h3>
-            <div class="ticket-cambios m-auto">
-                <p>Cambios:</p>
-                <span class="cambios-span">Ya recibi el correo, ya no es necesario hacer todos esos cambios</span>
-            </div>
-        </div>
-        <div class="card">
-            <p class="">ticket: <span>#12345</span></p>
-                <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
-                    <label for="ּtatus" class="form-label">Status: </label>
-                    <select name="status" class="form-control">
-                        <option value="1">Abierto</option>
-                        <option value="1">Cerrado</option>
-                    </select>
-            </div>
-            <div class="d-flex justify-content-evenly ticket-fecha">
-                <p class="fecha-creacion">Creación: <span class="d-block">11-09-2023</span></p>
-                <p>Modificación: <span class="d-block">17-10-2023</span></p>
-            </div>
-            <p>Autor: <span>Mauricio Puente</span></p>
-            <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
-                <label for="prioridad" class="form-label">Prioridad: </label>
-                <select name="prioridad" class="form-control">
-                    <option value="1">Alta</option>
-                    <option value="2">Media</option>
-                    <option value="3">Baja</option>
-                </select>
-            </div>
-        </div>
-    </div> <!-- end .card-body (ticket individual)-->
-    <div class="card-body border border-dark rounded-1 p-0 m-3">
-        <div class="card">
-            <h3 class="card-header">No puedo hacer el proyecto de estadia</h3>
-            <div class="ticket-cambios m-auto">
-                <p>Cambios:</p>
-                <span class="cambios-span">Ya recibi el correo, ya no es necesario hacer todos esos cambios</span>
-            </div>
-        </div>
-        <div class="card">
-            <p class="">ticket: <span>#12345</span></p>
-                <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
-                    <label for="ּtatus" class="form-label">Status: </label>
-                    <select name="status" class="form-control">
-                        <option value="1">Abierto</option>
-                        <option value="1">Cerrado</option>
-                    </select>
-            </div>
-            <div class="d-flex justify-content-evenly ticket-fecha">
-                <p class="fecha-creacion">Creación: <span class="d-block">11-09-2023</span></p>
-                <p>Modificación: <span class="d-block">17-10-2023</span></p>
-            </div>
-            <p>Autor: <span>Mauricio Puente</span></p>
-            <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
-                <label for="prioridad" class="form-label">Prioridad: </label>
-                <select name="prioridad" class="form-control">
-                    <option value="1">Alta</option>
-                    <option value="2">Media</option>
-                    <option value="3">Baja</option>
-                </select>
-            </div>
-        </div>
-    </div> <!-- end .card-body (ticket individual)-->
-    <div class="card-body border border-dark rounded-1 p-0 m-3">
-        <div class="card">
-            <h3 class="card-header">No puedo hacer el proyecto de estadia</h3>
-            <div class="ticket-cambios m-auto">
-                <p>Cambios:</p>
-                <span class="cambios-span">Ya recibi el correo, ya no es necesario hacer todos esos cambios</span>
-            </div>
-        </div>
-        <div class="card">
-            <p class="">ticket: <span>#12345</span></p>
-                <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
-                    <label for="ּtatus" class="form-label">Status: </label>
-                    <select name="status" class="form-control">
-                        <option value="1">Abierto</option>
-                        <option value="1">Cerrado</option>
-                    </select>
-            </div>
-            <div class="d-flex justify-content-evenly ticket-fecha">
-                <p class="fecha-creacion">Creación: <span class="d-block">11-09-2023</span></p>
-                <p>Modificación: <span class="d-block">17-10-2023</span></p>
-            </div>
-            <p>Autor: <span>Mauricio Puente</span></p>
-            <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
-                <label for="prioridad" class="form-label">Prioridad: </label>
-                <select name="prioridad" class="form-control">
-                    <option value="1">Alta</option>
-                    <option value="2">Media</option>
-                    <option value="3">Baja</option>
-                </select>
-            </div>
-        </div>
-    </div> <!-- end .card-body (ticket individual)-->
-    <div class="card-body border border-dark rounded-1 p-0 m-3">
-        <div class="card">
-            <h3 class="card-header">No puedo hacer el proyecto de estadia</h3>
-            <div class="ticket-cambios m-auto">
-                <p>Cambios:</p>
-                <span class="cambios-span">Ya recibi el correo, ya no es necesario hacer todos esos cambios</span>
-            </div>
-        </div>
-        <div class="card">
-            <p class="">ticket: <span>#12345</span></p>
-                <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
-                    <label for="ּtatus" class="form-label">Status: </label>
-                    <select name="status" class="form-control">
-                        <option value="1">Abierto</option>
-                        <option value="1">Cerrado</option>
-                    </select>
-            </div>
-            <div class="d-flex justify-content-evenly ticket-fecha">
-                <p class="fecha-creacion">Creación: <span class="d-block">11-09-2023</span></p>
-                <p>Modificación: <span class="d-block">17-10-2023</span></p>
-            </div>
-            <p>Autor: <span>Mauricio Puente</span></p>
-            <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
-                <label for="prioridad" class="form-label">Prioridad: </label>
-                <select name="prioridad" class="form-control">
-                    <option value="1">Alta</option>
-                    <option value="2">Media</option>
-                    <option value="3">Baja</option>
-                </select>
-            </div>
-        </div>
-    </div> <!-- end .card-body (ticket individual)-->
-    <div class="card-body border border-dark rounded-1 p-0 m-3">
-        <div class="card">
-            <h3 class="card-header">No puedo hacer el proyecto de estadia</h3>
-            <div class="ticket-cambios m-auto">
-                <p>Cambios:</p>
-                <span class="cambios-span">Ya recibi el correo, ya no es necesario hacer todos esos cambios</span>
-            </div>
-        </div>
-        <div class="card">
-            <p class="">ticket: <span>#12345</span></p>
-                <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
-                    <label for="ּtatus" class="form-label">Status: </label>
-                    <select name="status" class="form-control">
-                        <option value="1">Abierto</option>
-                        <option value="1">Cerrado</option>
-                    </select>
-            </div>
-            <div class="d-flex justify-content-evenly ticket-fecha">
-                <p class="fecha-creacion">Creación: <span class="d-block">11-09-2023</span></p>
-                <p>Modificación: <span class="d-block">17-10-2023</span></p>
-            </div>
-            <p>Autor: <span>Mauricio Puente</span></p>
-            <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
-                <label for="prioridad" class="form-label">Prioridad: </label>
-                <select name="prioridad" class="form-control">
-                    <option value="1">Alta</option>
-                    <option value="2">Media</option>
-                    <option value="3">Baja</option>
-                </select>
-            </div>
-        </div>
-    </div> <!-- end .card-body (ticket individual)-->
-    <div class="card-body border border-dark rounded-1 p-0 m-3">
-        <div class="card">
-            <h3 class="card-header">No puedo hacer el proyecto de estadia</h3>
-            <div class="ticket-cambios m-auto">
-                <p>Cambios:</p>
-                <span class="cambios-span">Ya recibi el correo, ya no es necesario hacer todos esos cambios</span>
-            </div>
-        </div>
-        <div class="card">
-            <p class="">ticket: <span>#12345</span></p>
-                <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
-                    <label for="ּtatus" class="form-label">Status: </label>
-                    <select name="status" class="form-control">
-                        <option value="1">Abierto</option>
-                        <option value="1">Cerrado</option>
-                    </select>
-            </div>
-            <div class="d-flex justify-content-evenly ticket-fecha">
-                <p class="fecha-creacion">Creación: <span class="d-block">11-09-2023</span></p>
-                <p>Modificación: <span class="d-block">17-10-2023</span></p>
-            </div>
-            <p>Autor: <span>Mauricio Puente</span></p>
-            <div class="d-flex align-items-center justify-content-center m-auto ticket-select" style="width: 90%;">
-                <label for="prioridad" class="form-label">Prioridad: </label>
-                <select name="prioridad" class="form-control">
-                    <option value="1">Alta</option>
-                    <option value="2">Media</option>
-                    <option value="3">Baja</option>
-                </select>
+                <p> {{ticket.prioridad?.prioridad}} </p>
             </div>
         </div>
     </div> <!-- end .card-body (ticket individual)-->

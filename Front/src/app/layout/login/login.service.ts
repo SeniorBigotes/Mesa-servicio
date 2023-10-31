@@ -11,8 +11,8 @@ import { environment } from 'src/environments/environment';
 })
 export class LoginService {
 
-  private apiAuth = environment.API_AUTHENTIFICATION;
-  private user = environment.API_USER;
+  private apiAuth = environment.API_AUTH;
+  private user = environment.API_USERS;
 
   constructor(private httpClient: HttpClient,
               private router: Router
@@ -49,6 +49,7 @@ export class LoginService {
   // obtener usuario
   getUser(): any {
     const user = localStorage.getItem('user');
+
 
     if(user === null) {
       this.logOut();

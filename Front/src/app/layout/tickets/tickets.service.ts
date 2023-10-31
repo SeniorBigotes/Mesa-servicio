@@ -6,13 +6,13 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class FormRegisterService {
-
-  rolesUrl: string = environment.API_AUTH;
+export class TicketsService {
+  
+  ticketsUrl: string = environment.API_API;
 
   constructor(private http: HttpClient) { }
 
-  getRoles(): Observable<any> {
-   return  this.http.get(`${this.rolesUrl}/roles`);
+  getTickets(): Observable<any> {
+    return this.http.get(`${this.ticketsUrl}/tickets`);
   }
 }

@@ -11,5 +11,6 @@ export class MainService implements OnInit {
   constructor(private loginService: LoginService) {}
 
   ngOnInit(): void {
+    console.log(this.authority)
   }
 }

@@ -58,9 +58,9 @@ export class LoginComponent implements OnInit {
             authority: user.authorities[0].authority
           }
           this.loginService.setUser(usuario);
+          this.serviciosService.route.navigate(['/main']);
         }, err => console.log(err))
         this.alert = false;
-        this.serviciosService.route.navigate(['/main']);
         this.formLogin.reset();
       }, (err: any) => {
         this.alert = true;
