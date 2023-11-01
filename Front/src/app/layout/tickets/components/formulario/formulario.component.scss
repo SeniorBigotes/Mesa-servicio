@@ -1,0 +1,49 @@
+@use '../../../../../styles.scss' as s;
+
+.formulario {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    align-items: center;
+    background-color: lighten($color: s.$bg-infotec-marron, $amount: 37);
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+    padding: 1rem;
+    
+    form {
+        background-color: #ffffff;
+        box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+        padding: 5rem 0;
+        display: grid;
+        margin: auto 0;
+
+        .campo-form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 80%;
+            margin: 0 auto;
+            select, input[type='text'] {
+                font-size: 1.4rem;
+                height: 4rem;
+            }
+        }
+        
+        .button {
+            width: 90%;
+            display: flex;
+            justify-content: end;
+            button {
+                box-shadow: #0d6efd 2.4px 2.4px 3.2px;
+                padding: 1.5rem 3rem;
+                text-transform: uppercase;
+                font-weight: 600;
+                font-size: 1.3rem;
+
+                @include s.pc-chico {
+                    padding: 1rem 2.5rem;
+                }
+            }
+        }
+    }
+
+}

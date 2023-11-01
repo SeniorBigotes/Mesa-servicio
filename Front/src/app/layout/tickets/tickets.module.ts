@@ -5,6 +5,7 @@ import { TicketsRoutingModule } from './tickets-routing.module';
 import { TicketsComponent } from './pages/tickets.component';
 import { TicketComponent } from './components/ticket/ticket.component';
 import { FormularioComponent } from './components/formulario/formulario.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,9 @@ import { FormularioComponent } from './components/formulario/formulario.componen
   ],
   imports: [
     CommonModule,
-    TicketsRoutingModule
+    TicketsRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class TicketsModule { }

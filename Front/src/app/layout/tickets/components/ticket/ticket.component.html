@@ -25,7 +25,7 @@
     </button>
 </div> <!-- Fin de Cambio de vista -->
 
-<div [ngClass]="!vistaLista ? 'verLista' : 'verCuadros'">
+<div [ngClass]="vistaLista ? 'verLista' : 'verCuadros'">
     <div *ngFor="let ticket of tickets" class="ticket">
         <div class="card ticket-header-list">
             <h3 class="card-header asunto"> {{ticket.asunto}} </h3>

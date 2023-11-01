@@ -16,9 +16,11 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [loginInterceptor],
+  providers: [
+    loginInterceptor
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
