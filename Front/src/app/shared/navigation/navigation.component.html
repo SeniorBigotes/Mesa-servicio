@@ -1,12 +1,12 @@
 <nav class="section-left">
-    <ul class="list-unstyled text-center d-flex flex-column justify-content-between">
-        <div class="">
+    <ul class="list-unstyled text-center ul">
+        <div class="menu">
             <li><a routerLinkActive="router-active" routerLink="tickets">tickets</a></li>
-            <li *ngIf="authority === 'SUPERADMIN'"><a routerLink="users">Usuarios</a></li>
+            <li *ngIf="authority === 'SUPERADMIN'"><a routerLinkActive="router-active" routerLink="users">Usuarios</a></li>
         </div>
         <div>
             <li>
-                <a routerLink="/login" class="d-flex justify-content-center align-items-center">
+                <a routerLink="/login" class="">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="28" height="28"
                         viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />

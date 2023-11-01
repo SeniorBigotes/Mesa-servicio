@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketsService } from '../../tickets.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-ticket',
@@ -10,39 +11,31 @@ export class TicketComponent implements OnInit {
 
   tickets: any;
   error: any;
-  fechaCreacion!: Date;
-  fechaModificacion!: Date;
-  // Fecha de creacion
-  dc!: number;
-  mc!: number;
-  yc!: number;
-  // Fecha de expiracion
-  dm?: number;
-  mm?: number;
-  ym?: number;
-  
+  fechaCreacion!: Date | string;
+  fechaModificacion!: Date | string;
+  vista: boolean = false;
+  vistaLista: boolean = false;
+
   constructor(private ticketsService: TicketsService) {}
 
   ngOnInit(): void {
     this.ticketsService.getTickets().subscribe(resp => {
-      console.log(resp);
       this.tickets = resp;
       resp.forEach((tickets: any) => {
         this.fechaCreacion = tickets.fechaCreacion;
         this.fechaModificacion = tickets.fechaModificacion;
       })
-      this.obtenerFecha(this.fechaCreacion, this.fechaModificacion);
     }, err => this.error = err)
   }
 
-  private obtenerFecha(fc:Date, fm: Date): void {
-    fc = new Date(this.fechaCreacion);
-    fm = new Date(this.fechaModificacion);
-    this.dc = fc.getDate();
-    this.mc = fc.getMonth();
-    this.yc = fc.getFullYear();
-    this.dm = fc.getDate();
-    this.mm = fc.getMonth();
-    this.ym = fc.getFullYear();
+  lista() {
+    this.vistaLista = true;
+    console.log(this.vistaLista)
+  }
+  
+  cuadros() {
+    this.vistaLista = false;
+    console.log(this.vistaLista)
+
   }
 }

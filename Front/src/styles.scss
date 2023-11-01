@@ -12,20 +12,38 @@ $font-family: 'Raleway',sans-serif;
 
 /*---------------------------------------MIXINS---------------------------------------*/
 @mixin phone {
-    @media(min-width: 480px) {
+    @media(max-width: 575px) {
         @content; //remplasa el contenido
     }
 }
 
 @mixin tablet {
+    @media(min-width: 576px) {
+        @content; //remplasa el contenido
+    }
+}
+
+@mixin pc-chico {
     @media(min-width: 768px) {
         @content; //remplasa el contenido
     }
 }
 
-@mixin pc {
+@mixin pc-mediano {
     @media(min-width: 992px) {
-        @content; //remplasa el contenido
+        @content
+    }
+}
+
+@mixin pc-grande {
+    @media(min-width: 1200px) {
+        @content
+    }
+}
+
+@mixin pc-1920 {
+    @media(min-width: 1700px) {
+        @content
     }
 }
 

@@ -34,7 +34,7 @@
             color: s.$bg-infotec-marron;
             margin-top: 1rem;
 
-            @include s.pc {
+            @include s.pc-chico {
                 grid-row: 1/2;
             }
         }
@@ -90,7 +90,7 @@
     gap: 2rem;
     border: 10px double darken(s.$bg-navegacion-hover, 7);
 
-    @include s.pc {
+    @include s.pc-chico {
         flex-direction: row;
     }
 }

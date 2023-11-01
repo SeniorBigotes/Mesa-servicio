@@ -2,49 +2,58 @@
 
 .section-left {
     background-color: s.$bg-navegacion;
-    
-    ul {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        padding-bottom: 4rem;
-        
-        @include s.phone {
-            grid-template-columns: repeat(4, 1fr);
-        }
-        
-        @include s.pc {
+
+    .ul {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 2rem;
+        padding: 3rem 0 2rem 0;
+
+        @include s.pc-chico {
+            flex-direction: column;
             height: 100vh;
+        }
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            
+            @include s.tablet {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            @include s.pc-chico {
+                grid-template-columns: none;
+                padding-top: 2rem;
+            }
+
+        }
+    }
+}
+li {
+    margin-bottom: 2rem;
+    a{
+        padding: 1.2rem 2.2rem;
+        color: white;
+        text-transform: uppercase;
+        font-weight: 600;
+        border-radius: 10px;
+   
+        &:hover {
+            background: s.$bg-infotec-marron;
+        }
+
+        @include s.pc-chico {
             display: block;
-            margin: 0;
-            padding-top: 1rem;
+            width: 15rem;
+            padding: 1rem 4rem;
         }
-    
-        li {
-            margin-top: 3rem;
-            @include s.pc {
-                padding: 0 1rem;
-            }
-        }
-
-        a {
-            color: white;
-            font-weight: bold;
-            text-transform: uppercase;
-            padding: 1.5rem 2.5rem;
-            margin-top: 1rem;
-            border-radius: 5px;
-
-            @include s.pc {
-                padding: 1rem 6rem;
-            }
-
-            &:hover {
-                background-color: s.$bg-infotec-marron;
-            }
-        }
-
+    }
+    @include s.pc-chico {
+        margin-bottom: 1rem;
     }
 }
 .router-active {
-    background-color: s.$bg-infotec-marron;
+    background-color: s.$bg-infotec-marron;   
 }

@@ -18,7 +18,7 @@ a {
     @include s.tablet {
         height: 76vh;
     }
-    @include s.pc {
-        height: 91vh;
+    @include s.pc-chico {
+        height: 90vh;
     }
 }

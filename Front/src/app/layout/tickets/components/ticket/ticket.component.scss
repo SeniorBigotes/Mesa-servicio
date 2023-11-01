@@ -1,79 +1,191 @@
 @use '../../../../../styles.scss' as s;
 
-p{
-    font-size: 1.3rem;
-    border-bottom: 1px solid s.$bg-section-right;
-    margin: 0;
-    span {
-        font-weight: 400;
-        color: blue;
+.vista {
+    button {
+        padding: 1rem;
+        svg {
+            width: 30px;
+            height: 30px;
+        }
     }
-}
-.ticket-cambios {
-    display: flex;
-    align-items: center;
-    font-size: 1.3rem;
-    height: 4rem;
-    width: 95%;
+    @include s.pc-chico {
+        button {
+            padding: .5rem;
     
-    p {
-        font-weight: 600;
-        border: none;
-        margin-right: .5rem;
-    }
-    .cambios-span {
-        overflow-x: scroll;
-        height: 100%;
-        border-left: 1px solid black;
-        word-wrap: break-word;
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
     }
 }
-.ticket-fecha {
-    border-top: 1px solid s.$bg-section-right;
-    border-bottom: 1px solid s.$bg-section-right;
+p, span{
+    font-size: 1.3rem;
+}
+span {
+    color: blue;
+    font-weight: 600;
+}
+.ticket {
+    width: 100%;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    border-radius: 10px;
+}
+.footer-ticket,
+.autor-prioridad {
     p {
-        border-bottom: none;
-    }
-    &::before {
-        border: 1px solid s.$bg-section-right;
-        display: block;
-        content: "";
-        height: 4rem;
-        position: absolute;
-        margin-right: 1.3rem;
+        margin: 0;
     }
 }
-.ticket-p {
-    p {
-        border-bottom: none;
-    }
-}
-.tickets-content {
+/*-----------------------------------------CUADRICULADO-----------------------------------------*/
+.verCuadros {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    
-    @include s.phone {
+    gap: 2rem;
+
+    @include s.tablet {
         grid-template-columns: repeat(2, 1fr);
     }
-    @include s.tablet {
+    @include s.pc-grande {
         grid-template-columns: repeat(3, 1fr);
     }
-    @include s.pc {
+    @include s.pc-1920 {
         grid-template-columns: repeat(4, 1fr);
     }
-    
-    h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-    }
 
+    .asunto {
+        height: 7rem;
+        overflow-y: scroll;
+        font-weight: 600;
+        display: grid;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        font-size: 1.6rem;
+    }
+    .cambios {
+        height: 6rem;
+        display: grid;
+        grid-template-columns: 2fr 6fr;
+        p {
+            border-right: 1px solid s.$bg-section-right;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+        span {
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            margin: 5px 1rem;
+            overflow-y: scroll;
+            color: black;
+            font-weight: 400;
+        }
+    }
+    .ticket-fecha {
+        display: flex;
+        justify-content: center;
+        border-top: 1px solid s.$bg-section-right;
+        border-bottom: 1px solid s.$bg-section-right;;
+        p {
+            margin: 0;
+            width: 50%;
+        }
+        span {
+            display: block;
+        }
+        .linea {
+            width: 1px;
+            height: 4rem;
+            background-color: s.$bg-section-right;
+        }
+    }
+    .footer-ticket {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        div {
+            width: 50%;
+        }        
+        .linea {
+            width: 1px;
+            height: 8rem;
+            background-color: s.$bg-section-right;
+        }
+        .linea-bottom {
+            border-bottom: 1px solid s.$bg-section-right;
+        }
+        p {
+            span {
+                display: block;
+            }
+        }
+        .id-status, .sec-cat {
+            height: 8rem;
+        }
+    }
+    
 }
-label, select {
-    font-size: 1.3rem;
-}
-label {
-    margin: 0 1rem 0 0; 
-}
-select {
-    border: 1px solid s.$bg-section-right;
+/*-----------------------------------------LISTADO+-----------------------------------------*/
+.verLista {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    .ticket-header-list {
+        display: flex;
+        flex-direction: row;
+
+        .asunto {
+            height: 7rem;
+            overflow-y: scroll;
+            font-weight: 600;
+            display: grid;
+            align-items: center;
+            text-align: start;
+            margin: 0 0 0 1.5rem;
+            padding: 0;
+            font-size: 1.6rem;
+            width: 40%;
+        }
+        .cambios {
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+            align-items: center;
+            width: 60%;
+            p {
+                margin: 0;
+                border-left: 1px solid s.$bg-section-right;
+                border-right: 1px solid s.$bg-section-right;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0 1rem;
+            }
+            span {
+                color: black;
+                text-align: start;
+                margin-left: 1rem;
+                overflow-y: scroll;
+            }
+        }
+    }
+    .autor-prioridad, .ticket-fecha, .ticket-medium,
+    .footer-ticket, .id-status, .sec-cat {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        gap: 1rem;
+        width: 100%;
+        p{
+            margin: 1rem 0;
+        }
+    }
+    .ticket-medium {
+        border-bottom: 1px solid s.$bg-section-right;
+    }
 }

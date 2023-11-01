@@ -1,27 +1,64 @@
-<div class="tickets-content">
-    <div *ngFor="let ticket of tickets"
-    class="card-body border border-dark rounded-1 p-0 m-3">
-        <div class="card">
-            <h3 class="card-header"> {{ticket.asunto}} </h3>
-            <div class="ticket-cambios m-auto">
+<!-- Vista del usuario -->
+<div class="vista d-flex align-items-center justify-content-end gap-2 m-3">
+    <p style="border: none;" class="m-0 mx-2">Vista:</p>
+    <button (click)="lista()" class="btn btn-light border border-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-details"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M13 5h8" />
+            <path d="M13 9h5" />
+            <path d="M13 15h8" />
+            <path d="M13 19h5" />
+            <path d="M3 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+            <path d="M3 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+        </svg>
+    </button>
+    <button (click)="cuadros()" class="btn btn-light border border-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-layout-grid"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+            <path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+            <path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+            <path d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+        </svg>
+    </button>
+</div> <!-- Fin de Cambio de vista -->
+
+<div [ngClass]="!vistaLista ? 'verLista' : 'verCuadros'">
+    <div *ngFor="let ticket of tickets" class="ticket">
+        <div class="card ticket-header-list">
+            <h3 class="card-header asunto"> {{ticket.asunto}} </h3>
+            <div class="cambios">
                 <p>Cambios:</p>
-                <span class="cambios-span"> {{ticket.asunto}} </span>
+                <span class=""> {{ticket.descripcionCambios}} </span>
             </div>
         </div>
         <div class="card">
-            <p class="">ticket: <span>#{{ticket.id}} </span></p>
-                <div class="d-flex align-items-center justify-content-center m-auto ticket-p" style="width: 90%;">
-                    <label for="ּtatus" class="form-label">Status: </label>
-                    <p> {{ticket.estatus}} </p>
+            <div class="ticket-medium">
+                <div class="autor-prioridad">
+                    <p>Autor: <span> {{ticket.usuario.nombre}} </span></p>
+                    <p class="form-label">Prioridad: <span>{{ticket.prioridad?.prioridad}}</span> </p>
+                </div>
+                <div class="linea-list"></div>
+                <div class="ticket-fecha">
+                    <p class="fecha-creacion">Creación: <span> {{ticket.fechaCreacion | date:'dd-MM-yyyy'}} </span></p>
+                    <p>Modificación:
+                        <span *ngIf="ticket.fechaModificacion === null; else modificacion"> - - </span>
+                        <ng-template #modificacion> <span>{{ticket.fechaModificacion | date:'dd-MM-yyyy'}}</span> </ng-template>
+                    </p>
+                </div>
             </div>
-            <div class="d-flex justify-content-evenly ticket-fecha">
-                <p class="fecha-creacion">Creación: <span class="d-block"> {{dc}}-{{mc}}-{{yc}} </span></p>
-                <p>Modificación: <span class="d-block"> {{dm}}-{{mm}}-{{ym}} </span></p>
-            </div>
-            <p>Autor: <span> {{ticket.usuario.nombre}} </span></p>
-            <div class="d-flex align-items-center justify-content-center m-auto ticket-p" style="width: 90%;">
-                <label for="prioridad" class="form-label">Prioridad: </label>
-                <p> {{ticket.prioridad?.prioridad}} </p>
+            <div class="footer-ticket">
+                <div class="id-status">
+                    <p class="linea-bottom">Ticket: <span>#{{ticket.id}} </span></p>
+                    <p>Status: <span>{{ticket.estatus}}</span> </p>
+                </div>
+                <p class="linea"></p>
+                <div class="sec-cat">
+                    <p class="linea-bottom">Seccion: <span>{{ticket.seccion?.seccion}}</span> </p>
+                    <p>Categoria: <span> {{ticket.categoria?.categoria}} </span> </p>
+                </div>
             </div>
         </div>
     </div> <!-- end .card-body (ticket individual)-->

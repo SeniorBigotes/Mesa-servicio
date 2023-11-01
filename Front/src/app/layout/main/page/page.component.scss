@@ -3,7 +3,7 @@
     display: grid;
     background: s.$bg-central;
     
-    @include s.pc {
+    @include s.pc-chico {
         grid-template-columns: 1fr 5fr 2fr;
     }
 }
