@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import servicedesk.entity.Estatus;
+import servicedesk.entity.usuario.EstatusUsuario;
 
 @Data // getters and setters autpmaticas
 @Builder // construye objetos de manera limpia
@@ -21,5 +21,5 @@ public class RegisterRequest {
     private String correo;
     private String telefono;
     private String role;
-    private Estatus estatus;
+    private EstatusUsuario estatus;
 }

@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import servicedesk.dto.TicketDto;
-import servicedesk.entity.Ticket;
+import servicedesk.entity.ticket.Categoria;
+import servicedesk.entity.ticket.Prioridad;
+import servicedesk.entity.ticket.Seccion;
+import servicedesk.entity.ticket.Ticket;
 import servicedesk.services.TicketService;
 
 @RestController
@@ -32,7 +35,25 @@ public class TicketRest {
     @GetMapping("/tickets")
     @ResponseStatus(HttpStatus.OK)
     public List<Ticket> consulta() {
-        return ticketservice.findAll();
+        return ticketservice.findAllTicket();
+    }
+    
+    @GetMapping("/secciones")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Seccion> consultaSeccion() {
+        return ticketservice.findAllSeccion();
+    }
+
+    @GetMapping("/categorias")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Categoria> consultaCategorias() {
+        return ticketservice.findAllCategorias();
+    }
+
+    @GetMapping("/prioridades")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Prioridad> consultaPrioridad() {
+        return ticketservice.findAllPrioridad();
     }
 
     // Buscar ticket por ID

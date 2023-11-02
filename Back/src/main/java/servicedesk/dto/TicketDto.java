@@ -6,10 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import servicedesk.entity.Categoria;
-import servicedesk.entity.Prioridad;
-import servicedesk.entity.Seccion;
-import servicedesk.entity.Usuario;
+import servicedesk.entity.ticket.Categoria;
+import servicedesk.entity.ticket.EstatusTicket;
+import servicedesk.entity.ticket.Prioridad;
+import servicedesk.entity.ticket.Seccion;
+import servicedesk.entity.usuario.Usuario;
 
 @Data
 @Builder
@@ -17,12 +18,12 @@ import servicedesk.entity.Usuario;
 @NoArgsConstructor
 public class TicketDto {
     private Long id;
-	private String estatus; 
 	private String asunto;
 	private String descripcionCambios;
 	private Date fechaCreacion;
 	private Date fechaModificacion;
-    
+
+	private EstatusTicket estatus;
 	private Seccion seccion;
 	private Usuario usuario;
 	private Categoria categoria;

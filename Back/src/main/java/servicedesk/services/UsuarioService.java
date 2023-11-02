@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import servicedesk.entity.Usuario;
 import servicedesk.dto.UsuarioDto;
-import servicedesk.entity.Estatus;
-import servicedesk.entity.Role;
-import servicedesk.entity.Roles;
 import servicedesk.entity.auth.AuthResponse;
 import servicedesk.entity.auth.LoginRequest;
 import servicedesk.entity.auth.RegisterRequest;
+import servicedesk.entity.usuario.EstatusUsuario;
+import servicedesk.entity.usuario.Role;
+import servicedesk.entity.usuario.Roles;
+import servicedesk.entity.usuario.Usuario;
 import servicedesk.repository.IUsuarioRep;
 import servicedesk.repository.IRolRep;
 
@@ -70,7 +70,7 @@ public class UsuarioService {
                 .correo(request.getCorreo())
                 .telefono(request.getTelefono())
                 .role(rol)
-                .estatus(Estatus.ACTIVO)
+                .estatus(EstatusUsuario.ACTIVO)
                 .build();
 
                 // persona: nombres, apellidos, contacto

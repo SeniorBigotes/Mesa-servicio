@@ -1,4 +1,4 @@
-package servicedesk.entity;
+package servicedesk.entity.ticket;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

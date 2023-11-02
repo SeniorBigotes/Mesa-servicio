@@ -13,6 +13,6 @@ export class FormRegisterService {
   constructor(private http: HttpClient) { }
 
   getRoles(): Observable<any> {
-   return  this.http.get(`${this.rolesUrl}/roles`);
+    return  this.http.get(`${this.rolesUrl}/roles`);
   }
 }

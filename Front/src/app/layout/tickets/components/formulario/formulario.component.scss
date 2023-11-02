@@ -8,13 +8,14 @@
     background-color: lighten($color: s.$bg-infotec-marron, $amount: 37);
     box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
     padding: 1rem;
+    width: 100%;
     
     form {
+        max-width: 90rem;
         background-color: #ffffff;
         box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
         padding: 5rem 0;
-        display: grid;
-        margin: auto 0;
+        margin: auto;
 
         .campo-form {
             display: flex;
@@ -31,7 +32,7 @@
         .button {
             width: 90%;
             display: flex;
-            justify-content: end;
+            justify-content: flex-end;
             button {
                 box-shadow: #0d6efd 2.4px 2.4px 3.2px;
                 padding: 1.5rem 3rem;
@@ -45,5 +46,48 @@
             }
         }
     }
+}
+.campo-form {
+    .check-box {
+        gap: 1rem;
 
+        @include s.tablet {
+            gap: 3rem;
+        }
+    }
+}
+.ng-invalid:not(form).ng-touched {
+    border: 2px solid s.$form-invalid
+}
+
+.ng-valid:not(form).ng-touched {
+    border: 2px solid s.$form-valid;
+}
+.toast-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.toast {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+
+    .toast-header {
+        display: flex;
+    }
+    .toast-body {
+        padding: 3rem ;
+    }
+}
+.bola-color {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    background-color: s.$form-invalid;
+    content: "";
+    border-radius: 5px;
+    margin-right: 1rem;
 }

@@ -1,58 +1,78 @@
 
 <div class="formulario">
-    <form [formGroup]="nuevoTicket" (ngSumbit)="crearTicket()">
-        <legend>Creacion de tickets</legend>
-
-        <div class="mb-3 campo-form">
-            <label for="asunto">Asunto: </label>
-            <input type="text" class="form-control" id="asunto" placeholder="¿Cual es el asunto?"
-            formControlName="asunto">
-        </div>
-        <div class="mb-3 campo-form">
-            <label for="seccion">Sección: </label>
-            <select id="seccion" class="form-select form-select-lg mb-3"
-            formControlName="seccion">
-                <option disabled selected id=""> --Seleccione-- </option>
-                <option value="">Area de la empresa</option>
-            </select>
-        </div>
-        <div class="mb-3 campo-form">
-            <label for="categoria">Categoría: </label>
-            <select id="categoria" class="form-select form-select-lg mb-3"
-            formControlName="categoria">
-                <option disabled selected id=""> --Seleccione-- </option>
-                <option value="">Tipo de problema</option>
-            </select>
-        </div>
-        <fieldset class="row mb-3 campo-form">
-            <legend class="col-form-label col-sm-2 p-0">Prioridad:</legend>
-            <div class="col-sm-10 d-flex gap-5 mt-4">
-                <div class="form-check">
-                    <label class="form-check-label" for="alta">
-                        Alta
-                    </label>
-                    <input class="form-check-input" type="radio" id="alta" name="prioridad" value=""
-                    formControlName="prioridad">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label" for="media">
-                        Media
-                    </label>
-                    <input class="form-check-input" type="radio" id="media"  name="prioridad" value=""
-                    formControlName="prioridad">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label" for="baja">
-                        Baja
-                    </label>
-                    <input class="form-check-input" type="radio" id="baja"  name="prioridad" value=""
-                    formControlName="prioridad">
+    <div style="width: 100%;">
+        <form [formGroup]="nuevoTicket" (ngSubmit)="crearTicket()"
+        class="g-3 needs-validation" novalidate>
+            <legend class="fs-2 fw-bolder mb-3">Creacion de tickets</legend>
+    
+            <div class="mb-3 campo-form">
+                <label for="asunto">Asunto: </label>
+                <input type="text" class="form-control" id="asunto" placeholder="¿Cual es el asunto?"
+                formControlName="asunto">
+                <div *ngIf="getAsunto.invalid && (getAsunto.dirty || getAsunto.touched)">
+                    <p class="text-danger text-opacity-75 border-bottom border-danger rounded-2 fw-bolder p-1 fs-6 mt-2">
+                        * Es necesario un asunto</p>
                 </div>
             </div>
-        </fieldset>
+            <div class="mb-3 campo-form">
+                <label for="seccion">Sección: </label>
+                <select id="seccion" class="form-select form-select-lg mb-3"
+                formControlName="seccion">
+                    <option value="" disabled selected> --Seleccione-- </option>
+                    <option *ngFor="let seccion of secciones" [ngValue]="seccion.id"> {{seccion.seccion}} </option>
+                </select>
+                <div *ngIf="getSeccion.value === '' && getSeccion.touched">
+                    <p class="text-danger text-opacity-75 border-bottom border-danger rounded-2 fw-bolder p-1 fs-6 mt-2">
+                        * ¿A que area va dirigido?</p>
+                </div>
+            </div>
+            <div class="mb-3 campo-form">
+                <label for="categoria">Categoría: </label>
+                <select id="categoria" class="form-select form-select-lg mb-3"
+                formControlName="categoria">
+                    <option value="" disabled selected> --Seleccione-- </option>
+                    <option *ngFor="let categoria of categorias" [ngValue]="categoria.id"> {{categoria.categoria}} </option>
+                </select>
+                <div *ngIf="getCategoria.value === '' && getCategoria.touched">
+                    <p class="text-danger text-opacity-75 border-bottom border-danger rounded-2 fw-bolder p-1 fs-6 mt-2">
+                        * ¿Sera de papaeleria o de administracion?</p>
+                </div>
+            </div>
+            <div class="row mb-3 campo-form">
+                <p class="col-form-label col-sm-2 p-0 fs-4">Prioridad:</p>
+                <div class="col-sm-10 d-flex mt-4 check-box">
+                    <div class="form-check" *ngFor="let prioridad of prioridades">
+                        <input type="radio" [id]="prioridad.id"
+                        class="form-check-input border"
+                        [ngClass]="{'border-danger': prioridad.id === 1, 'border-warning': prioridad.id === 2, 'border-primary': prioridad.id === 3}"
+                        formControlName="prioridad" [value]="prioridad.id">
+                        <label class="form-check-label px-3 border-bottom" [for]="prioridad.id"
+                        [ngClass]="{'border-danger': prioridad.id === 1, 'border-warning': prioridad.id === 2, 'border-primary': prioridad.id === 3}">
+                            {{prioridad.prioridad}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="button">
+                <button class="btn btn-outline-primary mt-4"
+                [disabled]="nuevoTicket.invalid"
+                >Crear</button>
+            </div>
+        </form>
+    </div>
 
-        <div class="button">
-            <button class="btn btn-outline-primary mt-4">Crear</button>
+    <div class="toast-container" style="z-index: 11" *ngIf="toastr">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="bola-color"></div>
+                <strong class="me-auto fs-5">Advertencia</strong>
+                <small class="fs-6 fw-bolder">INFOTEC</small>
+                <button class="btn-close mx-3" (click)="toastr = false"></button>
+            </div>
+            <div class="toast-body text-uppercase fs-3">
+                ¡faltan campos por llenar!
+            </div>
         </div>
-    </form>
+    </div>
 </div>

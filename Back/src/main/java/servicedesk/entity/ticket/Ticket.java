@@ -1,4 +1,4 @@
-package servicedesk.entity;
+package servicedesk.entity.ticket;
 
 import java.util.Date;
 
@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import servicedesk.entity.usuario.Usuario;
 
 @Data
 @Builder
@@ -29,7 +32,6 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String estatus;
     private String asunto;
     @Column(name = "descripcion_cambios")
     private String descripcionCambios;
@@ -37,6 +39,9 @@ public class Ticket {
     private Date fechaCreacion;
     @Column(name = "fecha_modificacion") // Renombrara la columna
     private Date fechaModificacion;
+    
+    @Enumerated(EnumType.STRING)
+    private EstatusTicket estatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seccion_id")

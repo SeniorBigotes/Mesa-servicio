@@ -1,4 +1,4 @@
-package servicedesk.entity;
+package servicedesk.entity.usuario;
 
 public enum Role {
     SUPERADMIN,

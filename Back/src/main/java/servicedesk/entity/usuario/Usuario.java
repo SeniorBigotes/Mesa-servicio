@@ -1,4 +1,4 @@
-package servicedesk.entity;
+package servicedesk.entity.usuario;
 
 import java.util.Collection;
 import java.util.List;
@@ -52,7 +52,7 @@ public class Usuario implements UserDetails {
     
     @Column(name = "estatus")  
     @Enumerated(EnumType.STRING)
-    private Estatus estatus;
+    private EstatusUsuario estatus;
     
 
     @Override

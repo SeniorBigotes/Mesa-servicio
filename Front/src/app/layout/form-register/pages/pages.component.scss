@@ -21,7 +21,7 @@ a {
         height: 76vh;
     }
 
-    @include s.pc {
+    @include s.pc-chico {
         height: 93vh;
     }
 }

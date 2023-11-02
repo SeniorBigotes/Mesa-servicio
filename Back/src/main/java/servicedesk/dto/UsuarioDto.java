@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import servicedesk.entity.Estatus;
+import servicedesk.entity.usuario.EstatusUsuario;
 
 @Data
 @Builder
@@ -21,5 +21,5 @@ public class UsuarioDto {
     private String telefono;
     private String role;
 
-    private Estatus estatus;
+    private EstatusUsuario estatus;
 }

@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 import servicedesk.entity.auth.AuthResponse;
 import servicedesk.entity.auth.LoginRequest;
 import servicedesk.entity.auth.RegisterRequest;
+import servicedesk.entity.usuario.Roles;
+import servicedesk.entity.usuario.Usuario;
 import servicedesk.services.UsuarioService;
 import servicedesk.dto.UsuarioDto;
-import servicedesk.entity.Roles;
-import servicedesk.entity.Usuario;
 
 @RestController
 @RequestMapping("/auth")

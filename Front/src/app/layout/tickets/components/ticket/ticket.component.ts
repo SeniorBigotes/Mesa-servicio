@@ -30,12 +30,10 @@ export class TicketComponent implements OnInit {
 
   lista() {
     this.vistaLista = true;
-    console.log(this.vistaLista)
   }
   
   cuadros() {
     this.vistaLista = false;
-    console.log(this.vistaLista)
 
   }
 }

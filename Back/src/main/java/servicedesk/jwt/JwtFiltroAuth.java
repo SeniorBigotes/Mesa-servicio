@@ -73,5 +73,4 @@ public class JwtFiltroAuth extends OncePerRequestFilter {
 
 		return null;
 	}
-
 }

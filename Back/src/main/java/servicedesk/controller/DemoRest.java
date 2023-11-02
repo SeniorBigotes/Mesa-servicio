@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import servicedesk.entity.Usuario;
+import servicedesk.entity.usuario.Usuario;
 import servicedesk.repository.IUsuarioRep;
 import servicedesk.services.UsuarioService;
 
