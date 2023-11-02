@@ -5,7 +5,7 @@ import { LoginService } from '../login/login.service';
 
 export const mainGuard: CanActivateFn = (route: ActivatedRouteSnapshot,
                                         state: RouterStateSnapshot
-): boolean | UrlTree => {
+): boolean => {
   const loginService: LoginService = inject(LoginService);
   const router: Router = inject(Router);
 

@@ -1,7 +1,5 @@
 package servicedesk.config;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,11 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import servicedesk.jwt.JwtFiltroAuth;
 
@@ -27,42 +20,16 @@ public class SecurityConfig {
 	@Autowired private AuthenticationProvider authenticationProvider;
 
 	@Bean
-	WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-                    .allowedOrigins("http://localhost:4200")
-                    .allowedMethods("*")
-					.allowedHeaders("*");
-			}
-		};
-	}
-
-	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		// retornamos con una cadena de filtros
-		return http.csrf(c -> c.disable()).cors(c -> c.disable()) // deshabilita la configuracion csrf
-				.authorizeHttpRequests(authRequest -> // rutas privadas y protegidas
-				authRequest.requestMatchers("/auth/**", "/user/**", "/api/**").permitAll() // acceso total a esas rutas
-																				// "auth" tienen acceso total
-				.anyRequest().authenticated()) // cualquier otro request se tiene que autenticar
+		return http.csrf(c -> c.disable())
+				.authorizeHttpRequests(authRequest ->
+				authRequest.requestMatchers("/auth/**", "/user/**", "/api/**").permitAll()
+				.anyRequest().authenticated())
 				.sessionManagement(sessionManager -> sessionManager
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider)
 				.addFilterBefore(filtroAuth, UsernamePasswordAuthenticationFilter.class)
 				.build(); // construimos
-	}
-
-	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowedOrigins(Arrays.asList("*"));
-		config.setAllowedMethods(Arrays.asList("*"));
-		config.setAllowedHeaders(Arrays.asList("*"));
-		config.setAllowCredentials(true);
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", config);
-		return source;
 	}
 }

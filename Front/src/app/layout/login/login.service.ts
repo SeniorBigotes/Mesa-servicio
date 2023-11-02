@@ -1,6 +1,6 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { ServiciosService } from 'src/app/servicios.service';
 import { LoginRequest } from './components/loginInterface';
@@ -22,11 +22,11 @@ export class LoginService {
   /* INICIO DE SESION */
   // solicitar datos
   postLogin(sesion: LoginRequest): Observable<any> {
-    return this.httpClient.post(`${this.apiAuth}/login`, sesion);
+    return this.httpClient.post(`${this.apiAuth}/login`, sesion)
   }
   // almacenar token
   loginUser(token: string) {
-    localStorage.setItem('token', token);
+    localStorage.setItem('token', token)
   }
   // verificar login
   isLoggedIn(): boolean {

@@ -15,16 +15,16 @@ export class TicketsInterceptor implements HttpInterceptor {
   constructor(private loginService: LoginService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let authRequest = request;
     const token = this.loginService.getToken();
 
     // Inserta el token de autorizacion
     if(token !== null) {
-      authRequest = authRequest.clone({
-        setHeaders: {Authorization: `Bearer ${token}`}
+      const authRequest = request.clone({
+        headers: request.headers.set('Authorization', `Bearer ${token}`)
       });
+      return next.handle(authRequest);
     }
-    return next.handle(authRequest);
+    return next.handle(request);
   }
 }
 
