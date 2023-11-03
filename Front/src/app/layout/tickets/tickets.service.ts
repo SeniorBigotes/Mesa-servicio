@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Ticket } from './components/TicketInterface';
 
@@ -9,7 +9,10 @@ import { Ticket } from './components/TicketInterface';
 })
 export class TicketsService {
   
-  api: string = environment.API_API;
+  private api: string = environment.API_API;
+
+  private ticket = new BehaviorSubject<any>(null);
+  ticketService$ = this.ticket.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -22,12 +25,17 @@ export class TicketsService {
     return this.http.get(`${this.api}/tickets`, {withCredentials: true, headers: headers});
   }
 
+  getTicketId(id: number): Observable<any> {
+    return this.http.get(`${this.api}/tickets/${id}`)
+  }
+
   postTickets(ticket: any): Observable<any> {
     return this.http.post(`${this.api}/tickets`, ticket, {
       withCredentials: true
     });
   }
 
+  /* Para el formulario de creacion de tickets */
   getSecciones(): Observable<any> {
     return this.http.get(`${this.api}/secciones`);
   }
@@ -38,5 +46,10 @@ export class TicketsService {
 
   getPrioridad(): Observable<any> {
     return this.http.get(`${this.api}/prioridades`)
+  }
+
+  /* Obtener tickets */
+  setTicket(ticket: any) {
+    this.ticket.next(ticket);
   }
 }

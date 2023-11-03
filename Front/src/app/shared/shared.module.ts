@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { NavigationComponent } from './navigation/navigation.component';
 import { SectionRightComponent } from './section-right/section-right.component';
 import { RouterModule } from '@angular/router';
+import { ModificarComponent } from '../layout/tickets/components/modificar/modificar.component';
 
 
 
 @NgModule({
   declarations: [
     NavigationComponent,
-    SectionRightComponent
+    SectionRightComponent,
+    ModificarComponent
   ],
   imports: [
     CommonModule,

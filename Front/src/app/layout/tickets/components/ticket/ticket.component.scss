@@ -1,5 +1,6 @@
 @use '../../../../../styles.scss' as s;
 
+/* TIPO DE VISTA */
 .vista {
     button {
         padding: 1rem;
@@ -11,7 +12,7 @@
     @include s.pc-chico {
         button {
             padding: .5rem;
-    
+            
             svg {
                 width: 16px;
                 height: 16px;
@@ -26,10 +27,20 @@ span {
     color: blue;
     font-weight: 600;
 }
+
+/* TICKET */
+.click, .ticket {
+    transition: all .3s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    border-radius: 1rem;
+
+}
+.click {
+    margin: 1rem 0 0 0;
+}
 .ticket {
     width: 100%;
-    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 .footer-ticket,
 .autor-prioridad {
@@ -54,6 +65,14 @@ span {
         grid-template-columns: repeat(4, 1fr);
     }
 
+    .ticket-header-list {
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+    }
+    .ticket-body {
+        border-bottom-right-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+    }
     .asunto {
         height: 7rem;
         overflow-y: scroll;
@@ -110,10 +129,10 @@ span {
         align-items: center;
         div {
             width: 50%;
-        }        
+        }
         .linea {
             width: 1px;
-            height: 8rem;
+            height: 10rem;
             background-color: s.$bg-section-right;
         }
         .linea-bottom {
@@ -125,6 +144,10 @@ span {
             }
         }
         .id-status, .sec-cat {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: .5rem;
             height: 8rem;
         }
     }

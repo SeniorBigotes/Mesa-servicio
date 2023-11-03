@@ -1,10 +1,17 @@
 @use '../../../styles.scss' as s;
 
 .section-right {
-    background-color: s.$bg-section-right;
-    height: auto;
+    z-index: -1;
+    background-color: lighten(s.$bg-infotec-marron, 12);
+    height: 70rem;
+    margin-top: 3rem;
 
-    @include s.tablet {
-    height: 100vh;
+    @include s.pc-mediano {
+        height: 100vh;
+        margin: 0;
     }
+}
+.container {
+    width: 95%;
+    padding-top: 5rem;
 }

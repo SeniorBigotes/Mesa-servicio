@@ -1,7 +1,9 @@
 <section class="section-right">
-    <div class="container">
-        <input class="form form-control" type="text">
-        <input class="form form-control" type="text">
-        <textarea name="desc" id="desc" cols="30" rows="10" class="form-control"></textarea>
+    <div class="container" *ngIf="ruta(); else usuarios">
+        <app-modificar></app-modificar>
     </div>
+    <ng-template #usuarios>
+
+    </ng-template>
+    
 </section>

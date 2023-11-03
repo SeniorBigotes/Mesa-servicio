@@ -26,7 +26,8 @@
 </div> <!-- Fin de Cambio de vista -->
 
 <div [ngClass]="vistaLista ? 'verLista' : 'verCuadros'">
-    <div *ngFor="let ticket of tickets" class="ticket">
+    <div *ngFor="let ticket of tickets"(click)="click(ticket.id)" 
+    [ngClass]="ticketSeleccionado == ticket.id ? 'ticket' : 'click'">
         <div class="card ticket-header-list">
             <h3 class="card-header asunto"> {{ticket.asunto}} </h3>
             <div class="cambios">
@@ -34,7 +35,7 @@
                 <span class=""> {{ticket.descripcionCambios}} </span>
             </div>
         </div>
-        <div class="card">
+        <div class="card ticket-body">
             <div class="ticket-medium">
                 <div class="autor-prioridad">
                     <p>Autor: <span> {{ticket.usuario.nombre}} </span></p>

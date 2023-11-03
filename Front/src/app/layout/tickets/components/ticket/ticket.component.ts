@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketsService } from '../../tickets.service';
 import { DatePipe } from '@angular/common';
+import { LoginService } from 'src/app/layout/login/login.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-ticket',
@@ -15,10 +17,13 @@ export class TicketComponent implements OnInit {
   fechaModificacion!: Date | string;
   vista: boolean = false;
   vistaLista: boolean = false;
+  ticketSeleccionado: number | null = null;
 
-  constructor(private ticketsService: TicketsService) {}
+  constructor(private ticketsService: TicketsService,
+              private loginService: LoginService) {}
 
   ngOnInit(): void {
+    //Obtener tickets
     this.ticketsService.getTickets().subscribe(resp => {
       this.tickets = resp;
       resp.forEach((tickets: any) => {
@@ -34,6 +39,13 @@ export class TicketComponent implements OnInit {
   
   cuadros() {
     this.vistaLista = false;
+  }
 
+  // Almacenar ticket (evento click)
+  click(id: number): void {
+    this.ticketSeleccionado = id;
+    this.ticketsService.getTicketId(id).subscribe(ticket => {
+      this.ticketsService.setTicket(ticket);
+    })
   }
 }

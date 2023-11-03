@@ -10,7 +10,7 @@
         margin: 0 2rem;
         padding: 3rem 0 2rem 0;
 
-        @include s.pc-chico {
+        @include s.pc-mediano {
             flex-direction: column;
             height: 100vh;
         }
@@ -23,7 +23,7 @@
                 grid-template-columns: repeat(3, 1fr);
             }
             
-            @include s.pc-chico {
+            @include s.pc-mediano {
                 grid-template-columns: none;
                 padding-top: 2rem;
             }
@@ -39,7 +39,7 @@ li {
         text-transform: uppercase;
         font-weight: 600;
         border-radius: 10px;
-   
+
         &:hover {
             background: s.$bg-infotec-marron;
         }
