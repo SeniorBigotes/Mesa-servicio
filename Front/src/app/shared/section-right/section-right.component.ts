@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-section-right',
@@ -8,15 +8,23 @@ import { Router } from '@angular/router';
 })
 export class SectionRightComponent implements OnInit {
 
-  rutaActual!: string;
+  
+  rutaActual: string | null = localStorage.getItem('url');
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.rutaActual = this.router.url;
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationEnd) {
+        if(event.url.includes('/tickets')) this.almacenarUrl('tickets')
+        if(event.url.includes('/users')) this.almacenarUrl('users')
+      }
+    })
   }
-
-  ruta(): boolean {
-    return this.rutaActual.startsWith('/main/tickets');
+  
+  private almacenarUrl(url: string): void {
+    localStorage.removeItem(url);
+    localStorage.setItem('url', url);
+    this.rutaActual = url;
   }
 }

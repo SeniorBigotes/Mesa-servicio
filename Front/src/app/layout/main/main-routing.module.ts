@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageComponent } from './page/page.component';
 import { mainGuard } from './main.guard';
+import { ModificarComponent } from '../tickets/components/modificar/modificar.component';
 
 // arreglar el outlet y main
 const routes: Routes = [

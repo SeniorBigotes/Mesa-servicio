@@ -66,7 +66,7 @@ export class FormularioComponent implements OnInit {
     }, 2000);
   }
 
-  private crearFormulario() {
+  private crearFormulario(): FormGroup {
     return this.fb.group({
       asunto: ['', Validators.required],
       seccion: ['', Validators.required],

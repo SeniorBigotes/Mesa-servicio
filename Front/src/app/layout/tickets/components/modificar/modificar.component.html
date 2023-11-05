@@ -1,5 +1,5 @@
 <div class="form-modificar">
-    <form class="m-auto w-auto text-center">
+    <form class="m-auto w-auto text-center" [formGroup]="modificarTicket" (ngSubmit)="modificar()">
         <fieldset class="fw-bolder text-center mb-3">Cambios</fieldset>
         
         <h2 class="fs-3 fw-bold"> {{ticket?.asunto}} </h2>
@@ -13,7 +13,8 @@
         <div class="my-4 div-select m-auto">
             <div class="d-flex justify-content-between align-items-center gap-3 mb-3">
                 <label for="prioridad" class="fs-4">Prioridad: </label>
-                <select id="prioridad" class="form-select fs-4" [value]="ticket?.prioridad?.id">
+                <select id="prioridad" class="form-select fs-4" ngValue="ticket?.prioridad?.id"
+                formControlName="prioridad">
                     <option value="">Alta</option>
                     <option value="">Media</option>
                     <option value="">Baja</option>
@@ -22,7 +23,8 @@
         
             <div class="div-select d-flex justify-content-between align-items-center gap-3">
                 <label for="estatus" class="fs-4">Status: </label>
-                <select id="estatus" class="form-select fs-4" [value]="ticket?.estatus">
+                <select id="estatus" class="form-select fs-4" ngValue="ticket?.estatus?.id"
+                formControlName="estatus">
                     <option value="">ACTIVO</option>
                     <option value="">EN_PROCESO</option>
                     <option value="">CERRADO</option>
@@ -34,7 +36,7 @@
         <div class="m-auto div-textarea">
             <label for="cambios" class="fs-4">Novedades </label>
             <textarea id="cambios" placeholder="¿Paso algo antes de dar seguimiento?"
-            class="d-block m-auto"> {{ticket?.descripcionCambios}} </textarea>
+            class="d-block m-auto" formControlName="descripcionCambios"> {{ticket?.descripcionCambios}} </textarea>
         </div>
 
         <div class="boton d-flex">

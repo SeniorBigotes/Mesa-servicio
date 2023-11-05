@@ -4,6 +4,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { SectionRightComponent } from './section-right/section-right.component';
 import { RouterModule } from '@angular/router';
 import { ModificarComponent } from '../layout/tickets/components/modificar/modificar.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -15,7 +16,9 @@ import { ModificarComponent } from '../layout/tickets/components/modificar/modif
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     NavigationComponent,

@@ -6,4 +6,7 @@
     @include s.pc-mediano {
         grid-template-columns: 1fr 5fr 2fr;
     }
+    @include s.pc-1920 {
+        grid-template-columns: 1fr 7fr 2fr;
+    }
 }

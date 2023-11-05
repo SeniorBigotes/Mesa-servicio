@@ -35,12 +35,17 @@ span {
     border-radius: 1rem;
 
 }
-.click {
+.ticket {
     margin: 1rem 0 0 0;
 }
-.ticket {
+.click {
     width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    box-shadow:
+            rgba(206, 178, 141, 0.7) 0px 0px 4px,
+            rgba(206, 178, 141, 0.6) 0px 7px 13px -3px,
+            rgba(206, 178, 141, 0.5) 0px -8px 0px inset,
+            rgba(206, 178, 141, 0.7) -8px 0px 8px,
+            rgba(206, 178, 141, 0.6) 8px 0px 8px;
 }
 .footer-ticket,
 .autor-prioridad {

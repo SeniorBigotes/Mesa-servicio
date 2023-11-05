@@ -1,9 +1,8 @@
 <section class="section-right">
-    <div class="container" *ngIf="ruta(); else usuarios">
-        <app-modificar></app-modificar>
+    <!-- <div class="container" *ngIf="ruta() === '/main/tickets/'"> -->
+    <div class="container" [ngSwitch]="rutaActual">
+        <app-modificar *ngSwitchCase="'tickets'"></app-modificar>
+        <div *ngSwitchDefault>Hola mundo</div>
     </div>
-    <ng-template #usuarios>
-
-    </ng-template>
     
 </section>

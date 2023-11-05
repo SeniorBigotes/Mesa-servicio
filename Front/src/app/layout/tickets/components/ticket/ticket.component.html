@@ -27,7 +27,7 @@
 
 <div [ngClass]="vistaLista ? 'verLista' : 'verCuadros'">
     <div *ngFor="let ticket of tickets"(click)="click(ticket.id)" 
-    [ngClass]="ticketSeleccionado == ticket.id ? 'ticket' : 'click'">
+    [ngClass]="ticketSeleccionado == ticket.id ? 'click' : 'ticket'">
         <div class="card ticket-header-list">
             <h3 class="card-header asunto"> {{ticket.asunto}} </h3>
             <div class="cambios">
@@ -44,6 +44,7 @@
                 <div class="linea-list"></div>
                 <div class="ticket-fecha">
                     <p class="fecha-creacion">Creación: <span> {{ticket.fechaCreacion | date:'dd-MM-yyyy'}} </span></p>
+                    <p class="linea"></p>
                     <p>Modificación:
                         <span *ngIf="ticket.fechaModificacion === null; else modificacion"> - - </span>
                         <ng-template #modificacion> <span>{{ticket.fechaModificacion | date:'dd-MM-yyyy'}}</span> </ng-template>
