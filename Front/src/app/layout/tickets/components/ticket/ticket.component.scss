@@ -1,25 +1,5 @@
 @use '../../../../../styles.scss' as s;
 
-/* TIPO DE VISTA */
-.vista {
-    button {
-        padding: 1rem;
-        svg {
-            width: 30px;
-            height: 30px;
-        }
-    }
-    @include s.pc-chico {
-        button {
-            padding: .5rem;
-            
-            svg {
-                width: 16px;
-                height: 16px;
-            }
-        }
-    }
-}
 p, span{
     font-size: 1.3rem;
 }
@@ -31,21 +11,25 @@ span {
 /* TICKET */
 .click, .ticket {
     transition: all .3s ease-in-out;
-    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
     border-radius: 1rem;
 
 }
 .ticket {
     margin: 1rem 0 0 0;
 }
+.ticket-header-list {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.ticket-body {
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
 .click {
     width: 100%;
-    box-shadow:
-            rgba(206, 178, 141, 0.7) 0px 0px 4px,
-            rgba(206, 178, 141, 0.6) 0px 7px 13px -3px,
-            rgba(206, 178, 141, 0.5) 0px -8px 0px inset,
-            rgba(206, 178, 141, 0.7) -8px 0px 8px,
-            rgba(206, 178, 141, 0.6) 8px 0px 8px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 10px 20px, rgba(0, 0, 0, 0.5) 0px 6px 6px;
 }
 .footer-ticket,
 .autor-prioridad {
@@ -70,14 +54,6 @@ span {
         grid-template-columns: repeat(4, 1fr);
     }
 
-    .ticket-header-list {
-        border-top-left-radius: 1rem;
-        border-top-right-radius: 1rem;
-    }
-    .ticket-body {
-        border-bottom-right-radius: 1rem;
-        border-bottom-left-radius: 1rem;
-    }
     .asunto {
         height: 7rem;
         overflow-y: scroll;

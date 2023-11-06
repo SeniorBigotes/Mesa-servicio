@@ -15,30 +15,30 @@ export class TicketComponent implements OnInit {
   error: any;
   fechaCreacion!: Date | string;
   fechaModificacion!: Date | string;
-  vista: boolean = false;
-  vistaLista: boolean = false;
   ticketSeleccionado: number | null = null;
+  vista: boolean = false;
 
-  constructor(private ticketsService: TicketsService,
-              private loginService: LoginService) {}
+  constructor(private ticketsService: TicketsService) {}
 
   ngOnInit(): void {
-    //Obtener tickets
-    this.ticketsService.getTickets().subscribe(resp => {
-      this.tickets = resp;
-      resp.forEach((tickets: any) => {
+    // vista del ticket 
+    this.ticketsService.vistaSubject$.subscribe(vista => {
+      this.vista = vista;
+    })
+
+    //Obtener tickets (principal)
+    this.ticketsService.getTickets().subscribe(tickets => {
+      this.tickets = tickets;
+      tickets.forEach((tickets: any) => {
         this.fechaCreacion = tickets.fechaCreacion;
         this.fechaModificacion = tickets.fechaModificacion;
       })
-    }, err => this.error = err)
-  }
-
-  lista() {
-    this.vistaLista = true;
-  }
-  
-  cuadros() {
-    this.vistaLista = false;
+    }, err => this.error = err);
+    
+    //Escucha por los cambios
+    this.ticketsService.ticketsActualizados$.subscribe(tickets => {
+      this.tickets = tickets;
+    })
   }
 
   // Almacenar ticket (evento click)

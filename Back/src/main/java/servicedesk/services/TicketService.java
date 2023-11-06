@@ -1,7 +1,5 @@
 package servicedesk.services;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -32,21 +30,6 @@ public class TicketService {
     @Transactional(readOnly = true)
     public List<Ticket> findAllTicket() {
         List<Ticket> lista = ticketRepo.findAll();
-
-        // Ordenar la lista de forma descendente por 'id'
-        Collections.sort(lista, Comparator.comparing(Ticket::getId).reversed());
-
-        // Mover los elementos con fecha de modificación al principio
-        // Collections.sort(lista, (a, b) -> {
-        //     if (a.getFechaModificacion() != null && b.getFechaModificacion() == null) {
-        //         return -1; // a antes que b (a tiene fecha de modificación, b no)
-        //     } else if (a.getFechaModificacion() == null && b.getFechaModificacion() != null) {
-        //         return 1; // b antes que a (b tiene fecha de modificación, a no)
-        //     } else {
-        //         return 0; // Igual (ambos tienen fecha de modificación o ninguno la tiene)
-        //     }
-        // });
-
         return lista;
     }
 
@@ -76,6 +59,7 @@ public class TicketService {
         Ticket ticketEntity = new Ticket();
 
         ticketEntity.setAsunto(ticket.getAsunto());
+        ticketEntity.setDescripcionCambios("");
         ticketEntity.setEstatus(EstatusTicket.ABIERTO);
         ticketEntity.setFechaCreacion(fecha);
         ticketEntity.setUsuario(ticket.getUsuario());
@@ -109,8 +93,6 @@ public class TicketService {
 
         if(ticket.getEstatus() == EstatusTicket.CERRADO) {
             ticketEntity.setEstatus(EstatusTicket.CERRADO);
-        } else if(ticket.getEstatus() == EstatusTicket.EN_PROCESO) {
-            ticketEntity.setEstatus(EstatusTicket.EN_PROCESO);
         }
         
         return ticketRepo.save(ticketEntity);

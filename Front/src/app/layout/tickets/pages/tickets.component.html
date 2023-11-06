@@ -12,7 +12,38 @@
             </li>
         </ul>
     </div>
-    <div class="card-body scroll-central">
-        <router-outlet></router-outlet>
+    <div class="card-body">
+
+        <!-- Vista del usuario -->
+        <div class="vista d-flex align-items-center justify-content-end gap-2 m-3 border-bottom border-dark w-100 m-auto pb-2 mb-1">
+            <p style="border: none;" class="m-0 mx-2">Vista:</p>
+            <button (click)="lista()" class="btn btn-light border border-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-details" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M13 5h8" />
+                    <path d="M13 9h5" />
+                    <path d="M13 15h8" />
+                    <path d="M13 19h5" />
+                    <path d="M3 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                    <path d="M3 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                </svg>
+            </button>
+            <button (click)="cuadros()" class="btn btn-light border border-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-layout-grid" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                    <path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                    <path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                    <path d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                </svg>
+            </button>
+        </div> <!-- Fin de Cambio de vista -->
+        <div class="ajustar">
+            <div class="scroll-central">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
     </div>
 </nav>

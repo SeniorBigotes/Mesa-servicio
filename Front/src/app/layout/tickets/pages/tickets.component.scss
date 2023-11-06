@@ -1,5 +1,28 @@
 @use '../../../../styles.scss' as s;
 
+/* TIPO DE VISTA */
+.vista {
+    button {
+        padding: 1rem;
+
+        svg {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    @include s.pc-chico {
+        button {
+            padding: .5rem;
+
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+}
+
 .activo {
     border: 1px solid s.$bg-section-right;
     border-bottom: none;
@@ -9,16 +32,19 @@ a {
     color: black;
 }
 .scroll-central {
-    height: 60vh;
-    overflow-y: auto;
+    height: calc(97vh - 100px); // 100px representa la altura sumada de otros elementos
+        overflow-y: auto;
     
-    @include s.phone {
-        height: 68vh;
-    }
-    @include s.tablet {
-        height: 76vh;
-    }
-    @include s.pc-chico {
-        height: 90vh;
-    }
+    // @include s.phone {
+    //     height: 68vh;
+    // }
+    // @include s.tablet {
+    //     height: 76vh;
+    // }
+    // @include s.pc-chico {
+    //     height: 82vh;
+    // }
+    // @include s.pc-1920 {
+    //     height: 87vh;
+    // }
 }

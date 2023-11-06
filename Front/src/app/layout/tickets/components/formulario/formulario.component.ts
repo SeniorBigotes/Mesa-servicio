@@ -30,7 +30,7 @@ export class FormularioComponent implements OnInit {
     this.ticketsService.getCategorias().subscribe(resp => this.categorias = resp, err => this.errores = err);
     this.ticketsService.getSecciones().subscribe(resp => this.secciones = resp, err => this.errores = err);
     this.ticketsService.getPrioridad().subscribe(resp => this.prioridades = resp, err => this.errores = err);
-}
+  }
   // Obtener datos
   get getAsunto() {return this.nuevoTicket.get('asunto') as FormControl}
   get getSeccion() {return this.nuevoTicket.get('seccion') as FormControl}
@@ -49,7 +49,6 @@ export class FormularioComponent implements OnInit {
         prioridad: {id: this.getPrioridad.value}
       }
       this.ticketsService.postTickets(ticketGenerado).subscribe((resp: any) => {
-        console.log(resp)
         this.nuevoTicket.reset();
         this.router.navigate(['/main/tickets/activos']);
       }, (err:any) => this.errores = err)

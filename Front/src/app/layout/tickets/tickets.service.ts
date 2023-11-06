@@ -8,9 +8,15 @@ import { Ticket } from './components/TicketInterface';
   providedIn: 'root'
 })
 export class TicketsService {
-  
-  private api: string = environment.API_API;
 
+  private api: string = environment.API_API;
+  
+  private vista = new BehaviorSubject<any>(false);
+  vistaSubject$ = this.vista.asObservable();
+
+  private ticketsSubject = new BehaviorSubject<any>(null);
+  ticketsActualizados$ = this.ticketsSubject.asObservable();
+  
   private ticket = new BehaviorSubject<any>(null);
   ticketService$ = this.ticket.asObservable();
 
@@ -25,12 +31,28 @@ export class TicketsService {
     return this.http.get(`${this.api}/tickets`, {withCredentials: true, headers: headers});
   }
 
+  // Actualiza tickets
+  actualizarTickets(tickets: any) {
+    this.ticketsSubject.next(tickets);
+  }
+
+    /* Obtener tickets (escuchar por los cambios) */
+  setTicket(ticket: any) {
+    this.ticket.next(ticket);
+  }
+
   getTicketId(id: number): Observable<any> {
     return this.http.get(`${this.api}/tickets/${id}`)
   }
 
   postTickets(ticket: any): Observable<any> {
     return this.http.post(`${this.api}/tickets`, ticket, {
+      withCredentials: true
+    });
+  }
+
+  putTicket(ticket: any, id: number): Observable<any> {
+    return this.http.put(`${this.api}/tickets/${id}`, ticket, {
       withCredentials: true
     });
   }
@@ -48,8 +70,12 @@ export class TicketsService {
     return this.http.get(`${this.api}/prioridades`)
   }
 
-  /* Obtener tickets */
-  setTicket(ticket: any) {
-    this.ticket.next(ticket);
+  /* VISTA DE TICKETS */
+  vistaLista() {
+    this.vista.next(true);
+  }
+  
+  vistaCuadros() {
+    this.vista.next(false);
   }
 }
