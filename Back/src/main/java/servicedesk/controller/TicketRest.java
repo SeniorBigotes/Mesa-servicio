@@ -93,7 +93,7 @@ public class TicketRest {
         }
         response.put("mensaje", "Ticket creado con exito");
         response.put("ticket", ticketNew);
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
     // Actualizar ticket

@@ -23,6 +23,25 @@
     }
 }
 
+/* BARRA DE BUSQUEDA */
+.tickets-header {
+    flex-direction: column;
+    .busqueda {
+        width: 28rem;
+        margin-bottom: 1rem;
+        input, button {
+            padding: .5rem;
+            font-size: 1.3rem;
+        }
+    }
+    @include s.pc-chico {
+        flex-direction: row;
+        .busqueda {
+            margin: 0;
+        }
+    }
+}
+
 .activo {
     border: 1px solid s.$bg-section-right;
     border-bottom: none;
@@ -33,18 +52,5 @@ a {
 }
 .scroll-central {
     height: calc(97vh - 100px); // 100px representa la altura sumada de otros elementos
-        overflow-y: auto;
-    
-    // @include s.phone {
-    //     height: 68vh;
-    // }
-    // @include s.tablet {
-    //     height: 76vh;
-    // }
-    // @include s.pc-chico {
-    //     height: 82vh;
-    // }
-    // @include s.pc-1920 {
-    //     height: 87vh;
-    // }
+    overflow-y: auto;
 }
