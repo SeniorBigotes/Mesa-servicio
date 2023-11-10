@@ -10,15 +10,22 @@ import { Ticket } from './components/TicketInterface';
 export class TicketsService {
 
   private api: string = environment.API_API;
-  
+
+  // Vista de tickets (lista o cuadriculado)
   private vista = new BehaviorSubject<any>(false);
   vistaSubject$ = this.vista.asObservable();
-
+  
+  // Actualizar tickets (cambios)
   private ticketsSubject = new BehaviorSubject<any>(null);
   ticketsActualizados$ = this.ticketsSubject.asObservable();
-  
   private ticket = new BehaviorSubject<any>(null);
   ticketService$ = this.ticket.asObservable();
+
+  // Busqueda de tickets (barra de busqueda)
+  private ticketBuscadoSubject = new BehaviorSubject([]);
+  ticketBuscado$ = this.ticketBuscadoSubject.asObservable();
+  private busquedaTexto = new BehaviorSubject('');
+  busquedaTexto$ = this.busquedaTexto.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -77,5 +84,13 @@ export class TicketsService {
   
   vistaCuadros() {
     this.vista.next(false);
+  }
+
+  /* Obtener tickets buscados */
+  buscarTickets(response: any) {
+    this.ticketBuscadoSubject.next(response)
+  }
+  textoBuscado(texto: string) {
+    this.busquedaTexto.next(texto);
   }
 }

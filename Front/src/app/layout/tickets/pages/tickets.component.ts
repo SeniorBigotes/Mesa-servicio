@@ -41,8 +41,8 @@ export class TicketsComponent implements OnInit {
       const busqueda = parseInt(this.busquedaInput, 10);
       this.ticketBuscado = this.tickets.filter((ticket: any) => ticket.id === busqueda);
     }
-    console.log(this.ticketBuscado);
-    this.busquedaInput = '';
+    this.ticketsService.buscarTickets(this.ticketBuscado);
+    this.ticketsService.textoBuscado(this.busquedaInput);
   }
 
   private soloLetras(str: string): boolean {

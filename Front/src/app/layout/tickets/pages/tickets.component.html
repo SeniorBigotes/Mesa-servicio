@@ -14,12 +14,12 @@
     </div>
     <div class="card-body">
 
-        
-        <!-- Vista del usuario -->
+        <!-- Busqueda de tickets -->
         <div class="vista d-flex align-items-center justify-content-between gap-4 m-3 border-bottom border-dark w-100 m-auto pb-2 mb-1 tickets-header">
             <div class="d-flex align-items-center filtros">
                 <div class="input-group busqueda">
                     <input type="text" class="form-control" placeholder="Buscar por ID o Asunto"
+                    [ngClass]="{'ng-untouched': busquedaInput === ''}"
                     aria-label="Nombre de usuario del destinatario"
                     [(ngModel)]="busquedaInput" (keyup.enter)="busqueda()">
                     <button class="btn btn-outline-secondary"
@@ -32,11 +32,15 @@
                         </svg>
                     </button>
                 </div> <!-- end .busqueda -->
+                <p class="text-danger fs-5 fw-bolder" *ngIf="busquedaInput !== ''">
+                    * La barra debe estar vacía para <span class="d-block"> obtener <u class="text-uppercase">todos</u> los resultados *</span>
+                </p>
             </div>
 
+        <!-- Vista del usuario -->
             <div class="d-flex align-items-center">
-                <p style="border: none;" class="m-0 mx-2">Vista:</p>
-                <button (click)="lista()" class="btn btn-light border border-secondary">
+                <p style="border: none;" class="m-0">Vista:</p>
+                <button (click)="lista()" class="btn btn-light border border-secondary mx-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-details" viewBox="0 0 24 24"
                         stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />

@@ -22,7 +22,6 @@
         }
     }
 }
-
 /* BARRA DE BUSQUEDA */
 .tickets-header {
     flex-direction: column;
@@ -40,13 +39,28 @@
             margin: 0;
         }
     }
-}
+    .filtros {
+        flex-direction: column;
+        p {
+            margin: 0;
+        }
+        @include s.pc-chico {
+            flex-direction: row;
+            gap: 1rem;
+        }
+        .ng-touched {
+            border: 2px solid s.$form-invalid
+        }
 
+        .ng-untouched {
+            border: 2px solid s.$form-valid;
+        }
+    }
+}
 .activo {
     border: 1px solid s.$bg-section-right;
     border-bottom: none;
 }
-
 a {
     color: black;
 }

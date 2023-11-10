@@ -17,6 +17,10 @@ export class TicketComponent implements OnInit {
   fechaModificacion!: Date | string;
   ticketSeleccionado: number | null = null;
   vista: boolean = false;
+  ticketBuscado: any = [];
+  textoBusqueda: string = "";
+  ticketsRespaldo!: any;
+
 
   constructor(private ticketsService: TicketsService) {}
 
@@ -24,22 +28,38 @@ export class TicketComponent implements OnInit {
     // vista del ticket 
     this.ticketsService.vistaSubject$.subscribe(vista => {
       this.vista = vista;
-    })
+    });
 
     //Obtener tickets (principal)
     this.ticketsService.getTickets().subscribe(tickets => {
       this.tickets = tickets;
+      this.ticketsRespaldo = tickets;
+      
       tickets.forEach((tickets: any) => {
         this.fechaCreacion = tickets.fechaCreacion;
         this.fechaModificacion = tickets.fechaModificacion;
-      })
+      });
     }, err => this.error = err);
     
-    //Escucha por los cambios
+    // Actualiza los tickets
     this.ticketsService.ticketsActualizados$.subscribe(tickets => {
       this.tickets = tickets;
-    })
-  }
+    });
+
+    // Busqueda de tickets 
+    this.ticketsService.ticketBuscado$.subscribe(resp => {
+      this.ticketBuscado = resp;
+    });
+    this.ticketsService.busquedaTexto$.subscribe(texto => {
+      this.textoBusqueda = texto;
+      
+      if(this.textoBusqueda !== '') {
+        this.tickets = this.ticketBuscado;
+      } else {
+        this.tickets = this.ticketsRespaldo;
+      }
+    });
+  } // end OnInit()
 
   // Almacenar ticket (evento click)
   click(id: number): void {
