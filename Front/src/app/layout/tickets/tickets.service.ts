@@ -27,6 +27,7 @@ export class TicketsService {
   private busquedaTexto = new BehaviorSubject('');
   busquedaTexto$ = this.busquedaTexto.asObservable();
 
+  // CONSTRUCTOR
   constructor(private http: HttpClient) { }
 
   getTickets(): Observable<any> {

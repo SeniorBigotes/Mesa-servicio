@@ -32,7 +32,7 @@ export class ModificarComponent implements OnInit {
           prioridad: ticket.prioridad.id,
           estatus: ticket.estatus,
           descripcionCambios: ticket.descripcionCambios
-        })
+        });
       }
     });
 
@@ -45,7 +45,6 @@ export class ModificarComponent implements OnInit {
   get getEstatus() {return this.modificarTicket.get('estatus') as FormControl;}
   get getDescripcion() {return this.modificarTicket.get('descripcionCambios') as FormControl;}
 
-  // Por arreglar, envia todo null
   modificar() {
     if(!this.modificarTicket.invalid) { // if
       const ticketModificado = {
@@ -56,6 +55,7 @@ export class ModificarComponent implements OnInit {
       // actualizar tickets
       this.ticketsService.putTicket(ticketModificado, this.ticketID). subscribe(resp => {
         this.ticketsService.getTickets().subscribe(tickets => this.ticketsService.actualizarTickets(tickets), err => this.error = err);
+        this.modificarTicket.reset();
       }, err => console.log(err));
       
     } else { // else
@@ -67,12 +67,11 @@ export class ModificarComponent implements OnInit {
   }
 
   // Crear formulario para modificar tickets
-  // Solucionar problema (no carga formulario hasta recargar la página)
   private formulario(): FormGroup {
     return this.fb.group({
       prioridad: ['', Validators.required],
       estatus: ['', Validators.required],
       descripcionCambios: ['', Validators.required]
-    })
+    });
   }
 }

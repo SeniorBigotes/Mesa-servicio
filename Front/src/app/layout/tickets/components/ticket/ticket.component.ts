@@ -3,6 +3,7 @@ import { TicketsService } from '../../tickets.service';
 import { DatePipe } from '@angular/common';
 import { LoginService } from 'src/app/layout/login/login.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ticket',
@@ -12,6 +13,8 @@ import { Observable } from 'rxjs';
 export class TicketComponent implements OnInit {
 
   tickets: any;
+  ticketsActivos!: any;
+  ticketsFinalizados!: any;
   error: any;
   fechaCreacion!: Date | string;
   fechaModificacion!: Date | string;
@@ -22,33 +25,49 @@ export class TicketComponent implements OnInit {
   ticketsRespaldo!: any;
 
 
-  constructor(private ticketsService: TicketsService) {}
+  constructor(private ticketsService: TicketsService,
+              private router: Router) {}
 
   ngOnInit(): void {
     // vista del ticket 
     this.ticketsService.vistaSubject$.subscribe(vista => {
       this.vista = vista;
-    });
+    }); // end vista ticket
 
     //Obtener tickets (principal)
     this.ticketsService.getTickets().subscribe(tickets => {
-      this.tickets = tickets;
-      this.ticketsRespaldo = tickets;
+      // Mostrar Activos / Finalizados
+      if (this.router.url === '/main/tickets/finalizados') { // Finalizados
+        this.tickets = this.filtrosFinalizados(this.tickets, tickets);
+        this.ticketsFinalizados = this.tickets;
+      } else if(this.router.url === '/main/tickets/activos') {
+        this.tickets = this.filtrosActivos(this.tickets, tickets);
+        this.ticketsActivos = this.tickets
+      }
+      this.ticketsRespaldo = this.tickets;
       
       tickets.forEach((tickets: any) => {
         this.fechaCreacion = tickets.fechaCreacion;
         this.fechaModificacion = tickets.fechaModificacion;
       });
-    }, err => this.error = err);
+    }, err => this.error = err); // end obtener tickets 
     
     // Actualiza los tickets
     this.ticketsService.ticketsActualizados$.subscribe(tickets => {
-      this.tickets = tickets;
-    });
+      if(this.router.url === '/main/tickets/finalizados') { // Finalizados
+        this.tickets = this.filtrosFinalizados(this.tickets, tickets);
+      } else if(this.router.url === '/main/tickets/activos') { // Activos
+        this.tickets = this.filtrosActivos(this.tickets, tickets);
+      }
+    }); // end actualizar tickets
 
-    // Busqueda de tickets 
+    // Busqueda de tickets (descompuesto por el filtro de activos/finalizados)
     this.ticketsService.ticketBuscado$.subscribe(resp => {
-      this.ticketBuscado = resp;
+      if(this.router.url === '/main/tickets/finalizados') { // Finalizados
+        this.ticketBuscado = this.filtrosFinalizados(this.tickets, resp);
+      } else if(this.router.url === '/main/tickets/activos') { // Activos
+        this.ticketBuscado = this.filtrosActivos(this.tickets, resp);
+      }
     });
     this.ticketsService.busquedaTexto$.subscribe(texto => {
       this.textoBusqueda = texto;
@@ -58,7 +77,7 @@ export class TicketComponent implements OnInit {
       } else {
         this.tickets = this.ticketsRespaldo;
       }
-    });
+    }); // end busqueda y filtros
   } // end OnInit()
 
   // Almacenar ticket (evento click)
@@ -66,6 +85,23 @@ export class TicketComponent implements OnInit {
     this.ticketSeleccionado = id;
     this.ticketsService.getTicketId(id).subscribe(ticket => {
       this.ticketsService.setTicket(ticket);
-    })
+    });
+  } // end evento click
+
+  /* FILTROS PARA LA BUSQUEDA DE TICKETS */
+  private filtrosActivos(vari: any, param: any): any {
+    vari = param?.filter((f: any) => {
+      const estatus = f.estatus.toLowerCase()
+      return estatus.includes('abierto') ||
+      estatus.includes('en_proceso');
+    });
+    return vari;
   }
+  private filtrosFinalizados(vari: any, param: any): any {
+    vari = param?.filter((f: any) => {
+      const estatus = f.estatus.toLowerCase();
+      return estatus.includes('cerrado');
+    });
+    return vari;
+  } // end filtros
 }

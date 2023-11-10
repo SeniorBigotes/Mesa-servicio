@@ -4,9 +4,15 @@
         
         <h2 class="fs-3 fw-bold"> {{ticket?.asunto}} </h2>
 
-        <p class="my-5 fs-4 text-center">Autor: 
+        <p class="mt-5 fs-4 text-center">Autor:
             <span class="text-uppercase fw-bold fs-5" style="color: blue;">
                 {{ticket?.usuario?.nombre}} {{ticket?.usuario?.apellidoP}}
+            </span>
+        </p>
+
+        <p class="mb-5 fs-4 text-center">Ticket:
+            <span class="fw-bold fs-5" style="color: blue;">
+                #{{ticket?.id}}
             </span>
         </p>
         
