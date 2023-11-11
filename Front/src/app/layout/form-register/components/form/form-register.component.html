@@ -1,50 +1,66 @@
-<form [formGroup]="formUser" (ngSubmit)="crear();">
-    <div>
-        <div>
-            <label for="nombre">Nombre/s: </label>
-            <input type="text" formControlName="nombre"
-            id="nombre" placeholder="Ingrese nombre del nuevo usuario">
+<div class="bg-form-users">
+    <form [formGroup]="formUser" (ngSubmit)="crear();" class="d-flex flex-column gap-3">
+        <fieldset class="usuario border border-3 rounded-4">
+            <legend class="my-3">Datos del usuario</legend>
+            <div>
+                <div>
+                    <label for="nombre" class="form-label text-start d-block">Nombre/s: </label>
+                    <input type="text" formControlName="nombre" class="form-control"
+                    id="nombre" placeholder="Nombre/s">
+                </div>
+                <div class="apellidos">
+                    <div>
+                        <label for="apellidoP" class="form-label text-start d-block">Apellido Paterno: </label>
+                        <input type="text" formControlName="apellidoP" class="form-control"
+                        id="apellidoP" placeholder="Apellido Paterno">
+                    </div>
+                    <div>
+                        <label for="apellidoM" class="form-label text-start d-block">Apelldio Materno: </label>
+                        <input type="text" formControlName="apellidoM" class="form-control"
+                        id="apellidoM" placeholder="Apellido Materno">
+                    </div>
+                </div>
+                <div class="contacto">
+                    <div>
+                        <label for="correo" class="form-label text-start d-block">Correo electrónico: </label>
+                        <input type="email" formControlName="correo" class="form-control"
+                        id="correo" placeholder="Correo electrónico">
+                    </div>
+                    <div>
+                        <label for="telefono" class="form-label text-start d-block">Teléfono: </label>
+                        <input type="text" formControlName="telefono" class="form-control"
+                        id="telefono" placeholder="Teléfono o celular">
+                    </div>
+                </div>
+            </div> <!-- Datos del usuario -->
+        </fieldset>
+    
+        <fieldset class="cuenta border border-3 rounded-4">
+            <legend class="my-3">Datos de la cuenta</legend>
+            <div>
+                <div class="usuario">
+                    <div>
+                        <label for="username" class="form-label text-start d-block">Nombre de usuario: </label>
+                        <input type="text" formControlName="nombreUsuario" class="form-control"
+                        id="username" placeholder="Nombre de usuario (username)">
+                    </div>
+                    <div>
+                        <label for="password" class="form-label text-start d-block">Contraseña: </label>
+                        <input type="password" formControlName="contraseña" class="form-control"
+                        id="password" placeholder="Contraseña (password)">
+                    </div>
+                </div>
+                <div>
+                    <label for="rol" class="form-label text-start d-block">Rol: </label>
+                    <select id="rol" formControlName="role" class="form-select">
+                        <option selected disabled value=""> --Seleccione-- </option>
+                        <option *ngFor="let rol of roles" [ngValue]="rol.rolName"> {{rol.rolName}} </option>
+                    </select>
+                </div>
+            </div> <!-- Datos de inicio de sesion -->
+        </fieldset>
+        <div class="boton">
+            <input type="submit" value="Crear" class="btn btn-light">
         </div>
-        <div>
-            <label for="apellidoP">Apellido Paterno: </label>
-            <input type="text" formControlName="apellidoP"
-            id="apellidoP" placeholder="Ingrese el Apellido Paterno del nuevo usuario">
-        </div>
-        <div>
-            <label for="apellidoM">Apelldio Materno: </label>
-            <input type="text" formControlName="apellidoM"
-            id="apellidoM" placeholder="Ingrese el Apellido Materno del nuevo usuario">
-        </div>
-        <div>
-            <label for="correo">Correo electrónico: </label>
-            <input type="email" formControlName="correo"
-            id="correo" placeholder="Ingrese el correo del nuevo usuario">
-        </div>
-        <div>
-            <label for="telefono">Teléfono: </label>
-            <input type="text" formControlName="telefono"
-            id="telefono" placeholder="Ingrese el teléfono del nuevo usuario">
-        </div>
-    </div> <!-- Datos del usuario -->
-    <div>
-        <div>
-            <label for="username">Nombre de usuario: </label>
-            <input type="text" formControlName="nombreUsuario"
-            id="username" placeholder="Nombre de usuario para la nueva cuenta">
-        </div>
-        <div>
-            <label for="password">Contraseña: </label>
-            <input type="password" formControlName="contraseña"
-            id="password" placeholder="Contraseña">
-        </div>
-        <div>
-            <label for="rol">Rol: </label>
-            <select id="rol" formControlName="role">
-                <option selected disabled value=""> --Seleccione-- </option>
-                <option *ngFor="let rol of roles" [ngValue]="rol.rolName"> {{rol.rolName}} </option>
-            </select>
-        </div>
-    </div> <!-- Datos de inicio de sesion -->
-
-    <input type="submit" value="Crear">
-</form>
+    </form>
+</div>

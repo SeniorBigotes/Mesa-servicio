@@ -10,18 +10,13 @@ a {
 }
 
 .scroll-central {
-    height: 60vh;
+    height: calc(102vh - 100px);
     overflow-y: auto;
-
-    @include s.phone {
-        height: 68vh;
-    }
-
     @include s.tablet {
-        height: 76vh;
+        height: calc(71vh - 100px);
+        
     }
-
-    @include s.pc-chico {
-        height: 93vh;
+    @include s.pc-mediano {
+        height: calc(102vh - 100px);
     }
 }

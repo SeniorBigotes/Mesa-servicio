@@ -1,5 +1,7 @@
 package servicedesk.services;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -21,15 +23,24 @@ import servicedesk.repository.ITicketRep;
 @Service
 public class TicketService {
 
-    @Autowired private ITicketRep ticketRepo;
-    @Autowired private ISeccionRep seccionRep;
-    @Autowired private ICategoriaRep categoriaRep;
-    @Autowired private IPrioridadRep prioridadRep;
+    @Autowired
+    private ITicketRep ticketRepo;
+    @Autowired
+    private ISeccionRep seccionRep;
+    @Autowired
+    private ICategoriaRep categoriaRep;
+    @Autowired
+    private IPrioridadRep prioridadRep;
 
     // Consulta de todos los tickets
     @Transactional(readOnly = true)
     public List<Ticket> findAllTicket() {
+        // Obtén la lista de tickets desde el repositorio
         List<Ticket> lista = ticketRepo.findAll();
+
+        // Ordena la lista por ID de forma descendente
+        Collections.sort(lista, Comparator.comparingLong(Ticket::getId).reversed());
+
         return lista;
     }
 
@@ -66,17 +77,17 @@ public class TicketService {
         ticketEntity.setSeccion(ticket.getSeccion());
         ticketEntity.setCategoria(ticket.getCategoria());
         ticketEntity.setPrioridad(ticket.getPrioridad());
-        
+
         return ticketRepo.save(ticketEntity);
     }
-    
+
     // Update o Actualizar
     public Ticket update(TicketDto ticket, Long id) {
         Ticket ticketEntity = null;
         Date fecha = new Date();
-        
+
         ticketEntity = ticketRepo.findById(id).orElse(null);
-        
+
         if (ticketEntity == null) {
             return null;
         }
@@ -91,10 +102,10 @@ public class TicketService {
         // ticketEntity.setCategoria(ticket.getCategoria());
         ticketEntity.setPrioridad(ticket.getPrioridad());
 
-        if(ticket.getEstatus() == EstatusTicket.CERRADO) {
+        if (ticket.getEstatus() == EstatusTicket.CERRADO) {
             ticketEntity.setEstatus(EstatusTicket.CERRADO);
         }
-        
+
         return ticketRepo.save(ticketEntity);
     }
 }

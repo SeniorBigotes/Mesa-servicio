@@ -1,0 +1,57 @@
+@use './../../../../../styles.scss' as s;
+
+.bg-form-users {
+    height: calc(105% - (-10px));
+    display: grid;
+    align-items: center;
+    background-color: lighten($color: s.$bg-infotec-marron, $amount: 37);
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+    padding: 2rem;
+    form {
+        margin: auto;
+        fieldset {
+            max-width: 90rem;
+            background-color: #ffffff;
+            box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+            @include s.tablet {
+                .apellidos, .contacto, .usuario {
+                    display: flex;
+                    align-items: center;
+                    margin: 0;
+                }
+            }
+        }
+    }
+    @include s.tablet{
+        height: calc(96% - (0px));
+    }
+    @include s.pc-mediano {
+        height: calc(125% - (-10px));
+    }
+    @include s.pc-grande {
+        height: calc(96% - (-10px));
+    }
+}
+
+div {
+    margin: 1rem;
+}
+input, select {
+    font-size: 1.5rem;
+    padding: .5rem;
+}
+.boton {
+    margin: 0 0 1rem 0;
+    .btn {
+    box-shadow: s.$form-invalid 2.4px 2.4px 3.2px;
+    border: .5px solid lighten(s.$form-invalid, 50);
+    padding: 1rem 4rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.3rem;
+
+    @include s.pc-chico {
+        padding: 1rem 2.5rem;
+        }
+    }
+}
