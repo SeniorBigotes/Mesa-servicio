@@ -15,11 +15,15 @@ import servicedesk.dto.UsuarioDto;
 import servicedesk.entity.auth.AuthResponse;
 import servicedesk.entity.auth.LoginRequest;
 import servicedesk.entity.auth.RegisterRequest;
+import servicedesk.entity.usuario.Cuenta;
 import servicedesk.entity.usuario.EstatusUsuario;
+import servicedesk.entity.usuario.Perfil;
 import servicedesk.entity.usuario.Role;
 import servicedesk.entity.usuario.Roles;
 import servicedesk.entity.usuario.Usuario;
 import servicedesk.repository.IUsuarioRep;
+import servicedesk.repository.ICuentaRep;
+import servicedesk.repository.IPerfilRep;
 import servicedesk.repository.IRolRep;
 
 @Service
@@ -28,6 +32,8 @@ public class UsuarioService {
 
     @Autowired private IUsuarioRep usuarioRep;
     @Autowired private IRolRep rolRep;
+    @Autowired private ICuentaRep cuentaRep;
+    @Autowired private IPerfilRep perfilRep;
     @Autowired private JwtService jwtService;
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private AuthenticationManager authenticationManager;
@@ -58,29 +64,43 @@ public class UsuarioService {
     }
 
     // creamos registro de usuario con codificacion (nuevo usuario)
+    @Transactional
     public AuthResponse register(RegisterRequest request) {
         String rolString = request.getRole();
         Role rol = Role.valueOf(rolString);
-        Usuario cuenta = Usuario.builder()
-                .nombreUsuario(request.getNombreUsuario())
-                .contraseña(passwordEncoder.encode(request.getContraseña()))
-                .nombre(request.getNombre())
-                .apellidoP(request.getApellidoP())
-                .apellidoM(request.getApellidoM())
-                .correo(request.getCorreo())
-                .telefono(request.getTelefono())
-                .role(rol)
-                .estatus(EstatusUsuario.ACTIVO)
-                .build();
+        Usuario usuario = Usuario.builder()
+            .nombreUsuario(request.getNombreUsuario())
+            .contraseña(passwordEncoder.encode(request.getContraseña()))
+            .nombre(request.getNombre())
+            .apellidoP(request.getApellidoP())
+            .apellidoM(request.getApellidoM())
+            .correo(request.getCorreo())
+            .telefono(request.getTelefono())
+            .role(rol)
+            .estatus(EstatusUsuario.ACTIVO)
+            .build();
 
-                // persona: nombres, apellidos, contacto
-                // cuenta: usuario, contraseña, rol, estatus
+        Perfil perfil = new Perfil();
+        perfil.setNombre(usuario.getNombre());
+        perfil.setApellidoP(usuario.getApellidoP());
+        perfil.setApellidoM(usuario.getApellidoM());
+        perfil.setCorreo(usuario.getCorreo());
+        perfil.setTelefono(usuario.getTelefono());
+        perfil.setEstatus(usuario.getEstatus());
+
+        Cuenta cuenta = new Cuenta();
+        cuenta.setNombreUsuario(usuario.getNombreUsuario());
+        cuenta.setContraseña(usuario.getContraseña());
+        cuenta.setRole(usuario.getRole());
+        cuenta.setPerfil(perfil);
+
         // Se almacena en la base de datos
-        usuarioRep.save(cuenta);
-
+        perfilRep.save(perfil);
+        cuentaRep.save(cuenta);
+                
         // retornamos token
         return AuthResponse.builder()
-                .token(jwtService.getToken(cuenta))
+                .token(jwtService.getToken(usuario))
                 .build();
     }
 
