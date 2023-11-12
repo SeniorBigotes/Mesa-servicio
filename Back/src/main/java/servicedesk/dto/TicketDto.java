@@ -10,7 +10,7 @@ import servicedesk.entity.ticket.Categoria;
 import servicedesk.entity.ticket.EstatusTicket;
 import servicedesk.entity.ticket.Prioridad;
 import servicedesk.entity.ticket.Seccion;
-import servicedesk.entity.usuario.Usuario;
+import servicedesk.entity.usuario.Cuenta;
 
 @Data
 @Builder
@@ -25,7 +25,7 @@ public class TicketDto {
 
 	private EstatusTicket estatus;
 	private Seccion seccion;
-	private Usuario usuario;
 	private Categoria categoria;
 	private Prioridad prioridad;
+	private Cuenta cuenta;
 }

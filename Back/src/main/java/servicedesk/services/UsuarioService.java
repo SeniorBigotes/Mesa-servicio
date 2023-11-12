@@ -50,15 +50,37 @@ public class UsuarioService {
         return rolRep.findAll();
     }
 
-    // Inicio de sesion
+    // Ver todos los perfiles de los usuarios
+    @Transactional(readOnly = true)
+    public List<Perfil> findAllPerfles() {
+        return perfilRep.findAll();
+    }
+
+    // Ver todas las cuentas de los usuarios
+    @Transactional(readOnly = true)
+    public List<Cuenta> findAllCuentas() {
+        return cuentaRep.findAll();
+    }
+
+    // Consulta perfil por Id
+    public Perfil findPerfilById(Long id) {
+        return (Perfil) perfilRep.findById(id).orElse(null);
+    }
+
+    // Consulta cuenta por Id
+    public Cuenta findCuentaById(Long id) {
+        return (Cuenta) cuentaRep.findById(id).orElse(null);
+    }
+
+    // Inicio de sesion (ajustar a la clase cuenta)
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate( // solicitar credenciales para autentificacion
             new UsernamePasswordAuthenticationToken(request.getNombreUsuario(), request.getContraseña())
         );
-        UserDetails user = usuarioRep.findByNombreUsuario(
+        UserDetails user = cuentaRep.findByNombreUsuario(
             request.getNombreUsuario()).orElseThrow(); // buscamos al usuario en la BD
         String token = jwtService.getToken(user); // Generamostoken con los datos del usuario
-        return AuthResponse.builder() // retoro
+        return AuthResponse.builder() // retorno
             .token(token) // añadimos el token
             .build();
     }

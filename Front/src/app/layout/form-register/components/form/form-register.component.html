@@ -1,7 +1,7 @@
 <div class="bg-form-users">
     <form [formGroup]="formUser" (ngSubmit)="crear();" class="d-flex flex-column gap-3">
         <fieldset class="usuario border border-3 rounded-4">
-            <legend class="my-3">Datos del usuario</legend>
+            <legend class="my-3 fs-3 fw-bold">Datos del usuario</legend>
             <div>
                 <div>
                     <label for="nombre" class="form-label text-start d-block">Nombre/s: </label>
@@ -24,19 +24,19 @@
                     <div>
                         <label for="correo" class="form-label text-start d-block">Correo electrónico: </label>
                         <input type="email" formControlName="correo" class="form-control"
-                        id="correo" placeholder="Correo electrónico">
+                        id="correo" placeholder="Correo electrónico" [ngClass]="getCorreo.invalid ? 'ng-invalid' : ''">
                     </div>
                     <div>
                         <label for="telefono" class="form-label text-start d-block">Teléfono: </label>
-                        <input type="text" formControlName="telefono" class="form-control"
-                        id="telefono" placeholder="Teléfono o celular">
+                        <input type="number" formControlName="telefono" class="form-control"
+                        id="telefono" placeholder="Teléfono o celular" [ngClass]="getTelefono.invalid ? 'ng-invalid' : ''">
                     </div>
                 </div>
             </div> <!-- Datos del usuario -->
         </fieldset>
     
-        <fieldset class="cuenta border border-3 rounded-4">
-            <legend class="my-3">Datos de la cuenta</legend>
+        <fieldset class="cuenta border border-3 rounded-4 pb-2">
+            <legend class="my-3 fs-3 fw-bold">Datos de la cuenta</legend>
             <div>
                 <div class="usuario">
                     <div>
@@ -60,7 +60,26 @@
             </div> <!-- Datos de inicio de sesion -->
         </fieldset>
         <div class="boton">
-            <input type="submit" value="Crear" class="btn btn-light">
+            <input type="submit" value="Crear" class="btn btn-light" [disabled]="formUser.invalid">
         </div>
     </form>
+
+    <!-- modal -->
+    <div class="modal" [ngClass]="modal ? 'grid' : ''">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header px-3">
+                <strong class="me-auto fs-4">Mensaje</strong>
+                <button class="btn-close fs-4" (click)="cerrarToast()"></button>
+            </div>
+            <div class="toast-body">
+                <p>¡{{mensaje}}!</p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="36" height="36"
+                    viewBox="0 0 24 24" stroke-width="2.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                    <path d="M9 12l2 2l4 -4" />
+                </svg>
+            </div>
+        </div>
+    </div>
 </div>

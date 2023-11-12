@@ -10,6 +10,8 @@ import { FormRegisterService } from '../../form-register.service';
 export class FormRegisterComponent implements OnInit {
   formUser!: FormGroup;
   roles!: any;
+  modal: boolean = false;
+  mensaje: string = "";
 
   constructor(private fb: FormBuilder,
               private formService: FormRegisterService) {}
@@ -19,7 +21,7 @@ export class FormRegisterComponent implements OnInit {
 
     this.formService.getRoles().subscribe(resp => {
       this.roles = resp;
-    })
+    });
   }
   
   private formulario(): FormGroup {
@@ -30,14 +32,41 @@ export class FormRegisterComponent implements OnInit {
       apellidoP: ['', Validators.required],
       apellidoM: ['', Validators.required],
       correo: ['', [Validators.required, Validators.email]],
-      telefono: ['', Validators.required],
+      telefono: ['', [Validators.required, Validators.min(10)]],
       role: ['', Validators.required]
     });
   }
 
-  get getCorreo() {return this.formUser.get('correo') as FormControl}
+  get getCorreo() { return this.formUser.get('correo') as FormControl }
+  get getTelefono() { return this.formUser.get('telefono') as FormControl }
 
+  // Crear
   crear() {
-    console.log(this.formUser.value);
+    if(this.formUser.valid) {
+      // Exito
+      this.formService.postUser(this.formUser.value).subscribe(resp => {
+        this.mensaje = resp.mensaje;
+        this.mostrarToast(1500);
+        this.formUser.reset();
+      }, err => { // Error
+        this.mensaje = `Error en el código: ${err.message}`
+        this.mostrarToast(5000)
+      });
+    } else { // No éxito
+      this.mensaje = "Error al crear usuario";
+      this.mostrarToast(2000);
+    }
+  }
+
+  // Mostrar el toast (modal)
+  private mostrarToast(time: number): void {
+    this.modal = true;
+    setTimeout(() => {
+        this.modal = false;
+      }, time);
+  }
+  
+  cerrarToast() {
+    this.modal = false
   }
 }

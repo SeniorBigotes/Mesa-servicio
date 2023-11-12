@@ -7,6 +7,7 @@
     background-color: lighten($color: s.$bg-infotec-marron, $amount: 37);
     box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
     padding: 2rem;
+    position: relative;
     form {
         margin: auto;
         fieldset {
@@ -54,4 +55,31 @@ input, select {
         padding: 1rem 2.5rem;
         }
     }
+}
+.modal {
+    background-color: rgba(black, .5);
+    margin: 0;
+    position: absolute;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    z-index: -1;
+    transition: all .2s ease-in-out;
+    .toast {
+        display: block;
+        padding: 1rem;
+    }
+}
+.grid {
+    opacity: 1;
+    z-index: 1;
+}
+
+.ng-invalid:not(form).ng-touched {
+    border: 2px solid s.$form-invalid
+}
+
+.ng-valid:not(form).ng-touched {
+    border: 2px solid s.$form-valid;
 }

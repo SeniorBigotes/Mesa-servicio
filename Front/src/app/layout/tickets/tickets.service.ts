@@ -54,8 +54,14 @@ export class TicketsService {
   }
 
   postTickets(ticket: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders()
+      .set('Authorization', 'Bearer ' + token)
+      .set('Acces-Control-Allow-Origin', '*');
+
     return this.http.post(`${this.api}/tickets`, ticket, {
-      withCredentials: true
+      withCredentials: true,
+      headers: headers
     });
   }
 

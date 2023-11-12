@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import servicedesk.entity.usuario.Usuario;
+import servicedesk.entity.usuario.Cuenta;
 
 @Data
 @Builder
@@ -48,12 +48,6 @@ public class Ticket {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Seccion seccion; // a quien va dirigido
     
-    // Se colocan las relaciones entre entidades
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Usuario usuario; // ticket que creo el usuario
-    
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -63,4 +57,10 @@ public class Ticket {
     @JoinColumn(name = "prioridad_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Prioridad prioridad; // alta, media, baja
+    
+    // Se colocan las relaciones entre entidades
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cuenta_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Cuenta cuenta; // ticket que creo el usuario
 }

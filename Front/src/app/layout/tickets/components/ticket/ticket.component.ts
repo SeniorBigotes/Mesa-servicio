@@ -61,7 +61,7 @@ export class TicketComponent implements OnInit {
       }
     }); // end actualizar tickets
 
-    // Busqueda de tickets (descompuesto por el filtro de activos/finalizados)
+    // Busqueda de tickets
     this.ticketsService.ticketBuscado$.subscribe(resp => {
       if(this.router.url === '/main/tickets/finalizados') { // Finalizados
         this.ticketBuscado = this.filtrosFinalizados(this.tickets, resp);

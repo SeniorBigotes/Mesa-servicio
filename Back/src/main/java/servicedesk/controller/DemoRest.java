@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import servicedesk.entity.usuario.Cuenta;
 import servicedesk.entity.usuario.Usuario;
-import servicedesk.repository.IUsuarioRep;
+import servicedesk.repository.ICuentaRep;
 import servicedesk.services.UsuarioService;
 
 /* SE REQUIERE INCIO DE SESION PARA ACCEDER A ESTA PARTE */
@@ -24,11 +25,11 @@ import servicedesk.services.UsuarioService;
 public class DemoRest {
     
     @Autowired private UsuarioService usuarioService;
-    @Autowired private IUsuarioRep usuarioRep;
+    @Autowired private ICuentaRep cuentaRep;
 
     @Transactional(readOnly = true)
-    public Usuario findByID(Long id) {
-        return usuarioRep.findById(id).orElse(null);
+    public Cuenta findByID(Long id) {
+        return cuentaRep.findById(id).orElse(null);
     }
     
     @GetMapping("/demo")
@@ -37,7 +38,7 @@ public class DemoRest {
     }
     
     @GetMapping("/user-logged")
-    public Optional<Usuario> obtenerUsuarioLogeado(Principal principal) {
-        return usuarioRep.findByNombreUsuario(principal.getName());
+    public Optional<Cuenta> obtenerUsuarioLogeado(Principal principal) {
+        return cuentaRep.findByNombreUsuario(principal.getName());
     }
 }

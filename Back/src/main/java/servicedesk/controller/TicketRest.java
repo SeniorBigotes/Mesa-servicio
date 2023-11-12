@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +32,6 @@ public class TicketRest {
     private TicketService ticketservice;
 
     // Buscar todos los tickets
-    @CrossOrigin
     @GetMapping("/tickets")
     @ResponseStatus(HttpStatus.OK)
     public List<Ticket> consulta() {
@@ -86,14 +84,16 @@ public class TicketRest {
         Map<String, Object> response = new HashMap<>();
         try {
             ticketNew = this.ticketservice.createTicket(ticket);
+
+            response.put("mensaje", "Ticket creado con exito");
+            response.put("ticket", ticketNew);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+            
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert");
             response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        response.put("mensaje", "Ticket creado con exito");
-        response.put("ticket", ticketNew);
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
     // Actualizar ticket

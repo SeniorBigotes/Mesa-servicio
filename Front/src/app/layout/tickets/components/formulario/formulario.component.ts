@@ -43,7 +43,7 @@ export class FormularioComponent implements OnInit {
     if(this.nuevoTicket.valid) {
       const ticketGenerado = {
         asunto: this.getAsunto.value,
-        usuario: {id: this.loginService.getUser().id},
+        cuenta: {id: this.loginService.getUser().id},
         seccion: {id: this.getSeccion.value},
         categoria: {id: this.getCategoria.value},
         prioridad: {id: this.getPrioridad.value}

@@ -73,7 +73,7 @@ public class TicketService {
         ticketEntity.setDescripcionCambios("");
         ticketEntity.setEstatus(EstatusTicket.ABIERTO);
         ticketEntity.setFechaCreacion(fecha);
-        ticketEntity.setUsuario(ticket.getUsuario());
+        ticketEntity.setCuenta(ticket.getCuenta());
         ticketEntity.setSeccion(ticket.getSeccion());
         ticketEntity.setCategoria(ticket.getCategoria());
         ticketEntity.setPrioridad(ticket.getPrioridad());

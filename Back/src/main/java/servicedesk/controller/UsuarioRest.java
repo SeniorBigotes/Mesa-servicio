@@ -1,7 +1,6 @@
 package servicedesk.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import servicedesk.entity.auth.AuthResponse;
 import servicedesk.entity.auth.LoginRequest;
 import servicedesk.entity.auth.RegisterRequest;
-import servicedesk.entity.usuario.Roles;
+import servicedesk.entity.usuario.Cuenta;
+import servicedesk.entity.usuario.Perfil;
 import servicedesk.entity.usuario.Usuario;
 import servicedesk.services.UsuarioService;
 import servicedesk.dto.UsuarioDto;
@@ -32,6 +32,70 @@ public class UsuarioRest {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    // Visualizar perfil perfil
+    @GetMapping(value = "perfiles")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> perfiles() {
+        return ResponseEntity.ok(usuarioService.findAllPerfles());
+    }
+    
+    // Visualizar cuenta de usuario
+    @GetMapping(value = "cuentas")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> cuentas() {
+        return ResponseEntity.ok(usuarioService.findAllCuentas());
+    }
+
+    // VISUALIZAR ROLES
+    @GetMapping(value = "/roles")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> roles() {
+        return ResponseEntity.ok(usuarioService.findAllRoles());
+    }
+
+    // Visualizar perfil por ID
+    @GetMapping(value = "perfiles/{id}")
+    public ResponseEntity<?> perfilID(@PathVariable Long id) {
+        Perfil perfil = null;
+        String response = "";
+
+        try {
+            perfil = usuarioService.findPerfilById(id);
+            
+            if (perfil == null) {
+                response = "El perfil con el ID: ".concat(id.toString()).concat("no existe en la base de datos");
+                return new ResponseEntity<String>(response, HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<Perfil>(perfil, HttpStatus.OK);
+        
+        } catch (DataAccessException e) {
+            response = "Error al realizar la consulta";
+            response = response.concat(e.getMessage().concat(e.getMostSpecificCause().toString()));
+            return new ResponseEntity<String>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    // Visualizar cuenta por ID
+    @GetMapping(value = "cuentas/{id}")
+    public ResponseEntity<?> cuentaID(@PathVariable Long id) {
+        Cuenta cuenta = null;
+        String response = "";
+
+        try {
+            cuenta = usuarioService.findCuentaById(id);
+            
+            if (cuenta == null) {
+                response = "La cuenta con el ID: ".concat(id.toString()).concat("no existe en la base de datos");
+                return new ResponseEntity<String>(response, HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<Cuenta>(cuenta, HttpStatus.OK);
+        
+        } catch (DataAccessException e) {
+            response = "Error al realizar la consulta";
+            response = response.concat(e.getMessage().concat(e.getMostSpecificCause().toString()));
+            return new ResponseEntity<String>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     // inicio de sesion
     @PostMapping(value = "/login")
@@ -66,13 +130,6 @@ public class UsuarioRest {
             response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-    // VISUALIZAR ROLES
-    @GetMapping(value = "/roles")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<Roles>> roles() {
-        return ResponseEntity.ok(usuarioService.findAllRoles());
     }
 
     // ACTUALIZAR USUARIO
