@@ -12,7 +12,7 @@ const routes: Routes = [
     canActivate: [mainGuard],
     children: [
       {path: 'tickets', loadChildren: () => import('../tickets/tickets.module').then(m => m.TicketsModule)},
-      {path: 'users', loadChildren: () => import('../form-register/form-register.module').then(m => m.FormRegisterModule)}
+      {path: 'users', loadChildren: () => import('../usuarios/usuarios.module').then(m => m.FormRegisterModule)}
     ]
   },
   {path: '**', redirectTo: 'main', pathMatch: 'full'}

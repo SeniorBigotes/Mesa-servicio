@@ -33,7 +33,7 @@ public class UsuarioRest {
     @Autowired
     private UsuarioService usuarioService;
 
-    // Visualizar perfil perfil
+    // Visualizar perfiles de usuarios
     @GetMapping(value = "perfiles")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> perfiles() {
@@ -156,4 +156,29 @@ public class UsuarioRest {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    // Actualizar estatus de usuario
+    @PutMapping(value = "/estatus/{id}")
+    public ResponseEntity<?> actualizarEstatus(@RequestBody UsuarioDto estatus, @PathVariable Long id) {
+        Perfil perfil = null;
+        Map<String, Object> response = new HashMap<>();
+        try {
+            perfil = this.usuarioService.updateStatus(estatus, id);
+            
+            if (perfil == null) {
+                response.put("Error", "Usuario no existente en la base de datos");
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+            }
+
+            response.put("mensaje", "Usuario actualizado con exito");
+            response.put("Usuario", perfil);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al actualizar el usuario");
+            response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

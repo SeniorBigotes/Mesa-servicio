@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
-import { FormRegisterService } from '../../form-register.service';
+import { FormRegisterService } from '../../usuarios.service';
 
 @Component({
   selector: 'app-form-register',
@@ -11,6 +11,7 @@ export class FormRegisterComponent implements OnInit {
   formUser!: FormGroup;
   roles!: any;
   modal: boolean = false;
+  check: boolean = false;
   mensaje: string = "";
 
   constructor(private fb: FormBuilder,
@@ -46,6 +47,7 @@ export class FormRegisterComponent implements OnInit {
       // Exito
       this.formService.postUser(this.formUser.value).subscribe(resp => {
         this.mensaje = resp.mensaje;
+        this.check = true;
         this.mostrarToast(1500);
         this.formUser.reset();
       }, err => { // Error

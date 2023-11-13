@@ -50,7 +50,7 @@ export class TicketsService {
   }
 
   getTicketId(id: number): Observable<any> {
-    return this.http.get(`${this.api}/tickets/${id}`)
+    return this.http.get(`${this.api}/tickets/${id}`);
   }
 
   postTickets(ticket: any): Observable<any> {
@@ -81,7 +81,7 @@ export class TicketsService {
   }
 
   getPrioridad(): Observable<any> {
-    return this.http.get(`${this.api}/prioridades`)
+    return this.http.get(`${this.api}/prioridades`);
   }
 
   /* VISTA DE TICKETS */
@@ -95,7 +95,7 @@ export class TicketsService {
 
   /* Obtener tickets buscados */
   buscarTickets(response: any) {
-    this.ticketBuscadoSubject.next(response)
+    this.ticketBuscadoSubject.next(response);
   }
   textoBuscado(texto: string) {
     this.busquedaTexto.next(texto);

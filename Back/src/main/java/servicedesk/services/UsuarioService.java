@@ -1,5 +1,7 @@
 package servicedesk.services;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,12 @@ public class UsuarioService {
     // Ver todos los perfiles de los usuarios
     @Transactional(readOnly = true)
     public List<Perfil> findAllPerfles() {
-        return perfilRep.findAll();
+        List<Perfil> perfil = perfilRep.findAll();
+
+        // Ordenar por ID
+        Collections.sort(perfil, Comparator.comparingLong(Perfil::getId));
+
+        return perfil;
     }
 
     // Ver todas las cuentas de los usuarios
@@ -152,5 +159,24 @@ public class UsuarioService {
         usuario.setEstatus(newUsuario.getEstatus());
 
         return usuarioRep.save(usuario);
+    }
+
+    // Actualizar estatus usuario
+    public Perfil updateStatus(UsuarioDto usuario, Long id) {
+        Perfil perfil = null;
+
+        perfil = perfilRep.findById(id).orElse(null);
+        
+        if(perfil == null) {
+            return null;
+        }
+
+        if(usuario.getEstatus() == EstatusUsuario.INACTIVO) {
+            perfil.setEstatus(EstatusUsuario.INACTIVO);
+        } else if(usuario.getEstatus() == EstatusUsuario.ACTIVO) {
+            perfil.setEstatus(EstatusUsuario.ACTIVO);
+        }
+
+        return perfilRep.save(perfil);
     }
 }
