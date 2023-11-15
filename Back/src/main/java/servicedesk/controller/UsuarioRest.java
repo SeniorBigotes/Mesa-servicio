@@ -22,7 +22,6 @@ import servicedesk.entity.auth.LoginRequest;
 import servicedesk.entity.auth.RegisterRequest;
 import servicedesk.entity.usuario.Cuenta;
 import servicedesk.entity.usuario.Perfil;
-import servicedesk.entity.usuario.Usuario;
 import servicedesk.services.UsuarioService;
 import servicedesk.dto.UsuarioDto;
 
@@ -135,19 +134,19 @@ public class UsuarioRest {
     // ACTUALIZAR USUARIO
     @PutMapping(value = "/register/{id}")
     public ResponseEntity<?> actuaizarUsuario(@RequestBody UsuarioDto actualizarUsuario, @PathVariable Long id) {
-        Usuario usuario = null;
+        Cuenta cuenta = null;
         Map<String, Object> response = new HashMap<>();
 
         try {
-            usuario = usuarioService.updateUser(actualizarUsuario, id);
+            cuenta = usuarioService.updateUser(actualizarUsuario, id);
 
-            if(usuario == null) {
+            if(cuenta == null) {
                 response.put("error", "Usuario no existente");
                 return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
             }
 
-            response.put("mensaje", "Persona actualizada con éxito");
-            response.put("persona", usuario);
+            response.put("mensaje", "Usuario actualizada con éxito");
+            response.put("usuario", cuenta);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 
         } catch(DataAccessException e) {

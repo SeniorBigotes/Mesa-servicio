@@ -13,7 +13,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   declarations: [
     FormRegisterComponent,
     PagesComponent,
-    UsuarioComponent,
+    UsuarioComponent
   ],
   imports: [
     CommonModule,

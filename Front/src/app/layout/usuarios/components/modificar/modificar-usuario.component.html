@@ -1,0 +1,90 @@
+<div class="container rounded-4 p-4">
+    <h1 class="text-center text-uppercase fs-3 fw-bold my-3">Cambios</h1>
+    <form class="formulario" [formGroup]="formMoidficarUsuario" (ngSubmit)="enviar()">
+        <fieldset class="usuario border border-3 rounded-4 p-3">
+            <legend class="my-3 fs-3 fw-bold text-center">Datos del usuario</legend>
+            <div>
+                <div class="mb-3">
+                    <label for="nombre" class="form-label text-start d-block">Nombre: </label>
+                    <input type="text" class="form-control" id="nombre" 
+                    placeholder="Nombre/s"
+                    formControlName="nombre">
+                </div>
+                <div class="apellidos">
+                    <div class="mb-3">
+                        <label for="apellidoP" class="form-label text-start d-block">Apellido Paterno: </label>
+                        <input type="text" class="form-control" id="apellidoP"
+                        placeholder="Apellido Paterno"
+                        formControlName="apellidoP">
+                    </div>
+                    <div class="mb-3">
+                        <label for="apellidoM" class="form-label text-start d-block">Apelldio Materno: </label>
+                        <input type="text" class="form-control" id="apellidoM"
+                        placeholder="Apellido Materno"
+                        formControlName="apellidoM">
+                    </div>
+                </div>
+                <div class="contacto">
+                    <div class="mb-3">
+                        <label for="correo" class="form-label text-start d-block">Correo electrónico: </label>
+                        <input type="email" class="form-control" id="correo"
+                        placeholder="Correo electrónico"
+                        formControlName="correo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label text-start d-block">Teléfono: </label>
+                        <input type="number" class="form-control" id="telefono"
+                        placeholder="Teléfono o celular"
+                        formControlName="telefono">
+                    </div>
+                </div>
+            </div> <!-- Datos del usuario -->
+        </fieldset>
+        
+        <fieldset class="cuenta border border-3 rounded-4 p-3 mt-4">
+            <legend class="my-3 fs-3 fw-bold text-center">Datos de la cuenta</legend>
+            <div>
+                <div class="usuario">
+                    <div class="mb-3">
+                        <label for="username" class="form-label text-start d-block">Nombre de usuario: </label>
+                        <input type="text" class="form-control" id="username"
+                        placeholder="Nombre de usuario (username)"
+                        formControlName="nombreUsuario">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label text-start d-block">Contraseña: </label>
+                        <input type="password" class="form-control" id="password"
+                        placeholder="Contraseña (password)"
+                        formControlName="contraseña">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="rol" class="form-label text-start d-block">Rol: </label>
+                    <select id="rol" class="form-select"
+                    formControlName="role">
+                        <option selected disabled value=""> --Seleccione-- </option>
+                        <option *ngFor="let rol of roles" [ngValue]="rol.rolName"> {{rol.rolName}} </option>
+                    </select>
+                </div>
+            </div> <!-- Datos de inicio de sesion -->
+        </fieldset>
+
+        <div class="text-danger fw-bold fs-4 text-center mt-3 text-decoration-underline" *ngIf="mensaje">* {{mensaje}} *</div>
+
+        <div class="boton d-flex gap-3">
+            <button class="btn btn-outline-dark" (click)="clear()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash-x-filled" width="20" height="20"
+                    viewBox="0 0 24 24" stroke-width="1" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path
+                        d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16zm-9.489 5.14a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z"
+                        stroke-width="0" fill="currentColor" />
+                    <path
+                        d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z"
+                        stroke-width="0" fill="currentColor" />
+                </svg>
+            </button>
+            <input type="submit" value="Actualizar" class="btn text-uppercase fw-bold"
+            [disabled]="formMoidficarUsuario.invalid" [ngClass]="formMoidficarUsuario.invalid ? 'btn-outline-danger' : 'btn-outline-success'">
+        </div>
+    </form>

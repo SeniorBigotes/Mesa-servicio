@@ -9,14 +9,26 @@ th, td {
     border-left: 1px solid s.$bg-section-right;
     border-right: 1px solid s.$bg-section-right;
 }
+tr {
+    height: 100%;
+}
 .container {
     max-width: 90rem;
 }
 .tabla {
     width: 90%;
     margin: auto;
-    .tabla-encabezado {
+    .tabla-encabezado, .tabla-cuerpo {
         border-bottom: 2px solid black;
+    }
+    .estatus {
+        height: 100%;
+        div {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 }
 
@@ -40,4 +52,39 @@ th, td {
 .grid {
     opacity: 1;
     z-index: 1;
+}
+.table {
+    tbody {
+        tr.inactivo {
+            td {
+                // Combina el box-shadow original con un tono de rojo brillante
+                box-shadow: rgba(255, 0, 0, 0.5) 0px 30px 60px -12px inset,
+                    rgba(255, 0, 0, 0.3) 0px 18px 36px -18px inset,
+                    rgba(248, 215, 218, 0.7) 0px 0px 0px 3px; // Ajusta según sea necesario
+                transition: box-shadow 0.3s ease;
+            }
+        }
+    }
+}
+.table-hover {
+    tbody {
+        tr {
+            &:hover {
+                border-left: 2px solid black;
+                border-right: 2px solid black;
+            }
+        }
+    }
+}
+.desglosado {
+    span {
+        display: block;
+        font-weight: bold;
+    }
+    @include s.pc-chico {
+        margin: 0 4rem;
+        span {
+            display: inline;
+        }
+    }
 }

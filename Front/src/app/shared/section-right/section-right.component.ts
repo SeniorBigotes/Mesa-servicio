@@ -17,7 +17,7 @@ export class SectionRightComponent implements OnInit {
     this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd) {
         if(event.url.includes('/tickets')) this.almacenarUrl('tickets')
-        if(event.url.includes('/users')) this.almacenarUrl('users')
+        if(event.url.includes('/usuarios')) this.almacenarUrl('usuarios')
       }
     })
   }

@@ -5,6 +5,7 @@ import { SectionRightComponent } from './section-right/section-right.component';
 import { RouterModule } from '@angular/router';
 import { ModificarComponent } from '../layout/tickets/components/modificar/modificar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ModificarUsuarioComponent } from '../layout/usuarios/components/modificar/modificar-usuario.component';
 
 
 
@@ -12,7 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     NavigationComponent,
     SectionRightComponent,
-    ModificarComponent
+    ModificarComponent,
+    ModificarUsuarioComponent
   ],
   imports: [
     CommonModule,

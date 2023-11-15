@@ -2,7 +2,7 @@
     <!-- <div class="container" *ngIf="ruta() === '/main/tickets/'"> -->
     <div class="container" [ngSwitch]="rutaActual">
         <app-modificar *ngSwitchCase="'tickets'"></app-modificar>
-        <div *ngSwitchDefault>Hola mundo</div>
+        <app-modificar-usuario *ngSwitchCase="'usuarios'"></app-modificar-usuario>
     </div>
     
 </section>

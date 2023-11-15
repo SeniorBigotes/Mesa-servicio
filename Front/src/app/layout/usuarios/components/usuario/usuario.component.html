@@ -1,5 +1,5 @@
 <main class="container">
-    <table class="tabla table table-striped">
+    <table class="tabla table table-striped table-hover">
         <!-- Encabezado -->
         <thead class="tabla-encabezado">
             <tr>
@@ -11,36 +11,68 @@
 
         <!-- Cuerpo -->
         <tbody class="tabla-cuerpo">
-            <tr *ngFor="let perfil of perfiles"
-            [ngClass]="perfil.estatus === 'INACTIVO' ? 'table-danger' : ''">
-                <td scope="row">
-                    <div>
-                        <p>{{perfil.nombre}}</p>
-                        <p>{{perfil.apellidoP}} {{perfil.apellidoM}}</p>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <p>{{perfil.telefono}}</p>
-                        <p>{{perfil.correo}}</p>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <p class="fw-bold" 
-                        [ngClass]="perfil.estatus === 'ACTIVO' ? 'text-success' : 'text-danger'">
-                            {{perfil.estatus}}
-                        </p> 
+            <ng-container *ngFor="let cuenta of cuentas">
+                <!-- Fila principal -->
+                <tr [ngClass]="cuenta.perfil.estatus === 'INACTIVO' ? 'table-danger inactivo' : ''" data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#collapse' + cuenta.perfil.id" aria-expanded="false"
+                    [attr.aria-controls]="'collapse' + cuenta.perfil.id">
+                    <td scope="row">
+                        <div>
+                            <p>{{cuenta.perfil.nombre}}</p>
+                            <p>{{cuenta.perfil.apellidoP}} {{cuenta.perfil.apellidoM}}</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <p>{{cuenta.perfil.telefono}}</p>
+                            <p>{{cuenta.perfil.correo}}</p>
+                        </div>
+                    </td>
+                    <td class="estatus">
+                        <div class="">
+                            <p class="fw-bold" [ngClass]="cuenta.perfil.estatus === 'ACTIVO' ? 'text-success' : 'text-danger'">
+                                {{cuenta.perfil.estatus}}
+                            </p>
+        
+                        </div>
+                    </td>
+                </tr>
+                
+                <!-- Acordeón para cada fila -->
+                <tr [ngClass]="cuenta.perfil.estatus === 'INACTIVO' ? 'table-danger' : ''" class="border-0">
+                    <td colspan="3" class="border-0 p-3">
+                        
+                        <div id="{{'collapse' + cuenta.perfil.id}}" class="accordion-collapse collapse"
+                        [attr.aria-labelledby]="'heading' + cuenta.perfil.id" data-bs-parent="#accordionFlushExample">
 
-                        <button class="btn"
-                        [ngClass]="perfil.estatus === 'ACTIVO' ? 'btn-danger': 'btn-success'"
-                        (click)="cambiarEstatus(perfil.estatus, perfil.id)">
-                            {{perfil.estatus === 'ACTUVO' ? 'Desactivar' : 'Activar'}}
-                        </button>
-                    </div>
-                </td>
-            </tr>
+                        <div class="accordion-body d-flex justify-content-between desglosado">
+
+                            <p>Usuario: <span class="fw-bold"
+                            [ngClass]="cuenta.perfil.estatus === 'ACTIVO' ? 'text-primary' : 'text-danger'">
+                                {{cuenta.nombreUsuario}}</span></p>
+
+                            <p>Rol: <span class="fw-bold"
+                            [ngClass]="cuenta.perfil.estatus !== 'ACTIVO' ? 'text-danger' : 'text-primary'">
+                                {{cuenta.role}}</span></p> 
+
+                            <button class="btn btn-primary fw-bold"
+                            (click)="modificar(cuenta.id)">
+                                Modificar
+                            </button>
+
+                            <button class="btn fw-bold" [ngClass]="cuenta.perfil.estatus === 'ACTIVO' ? 'btn-danger': 'btn-success'"
+                                (click)="cambiarEstatus(cuenta.perfil.estatus, cuenta.perfil.id)">
+                                {{cuenta.perfil.estatus === 'ACTIVO' ? 'Desactivar' : 'Activar'}}
+                            </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </ng-container>
         </tbody>
+
+
+
     </table>
 
     <!-- Modal -->
@@ -52,9 +84,19 @@
             </div>
             <div class="toast-body">
                 <p>¡{{mensaje}}!</p>
-                <div class="mt-3">
+                <div class="mt-3" *ngIf="actualizado">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="36" height="36"
+                        viewBox="0 0 24 24" stroke-width="2.5" stroke="#7bc62d" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                        <path d="M9 12l2 2l4 -4" />
+                    </svg>
+                </div>
+                <div class="mt-3" *ngIf="!actualizado">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-x" width="36" height="36"
-                        viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
                         <path d="M10 10l4 4m0 -4l-4 4" />

@@ -56,17 +56,18 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public List<Perfil> findAllPerfles() {
         List<Perfil> perfil = perfilRep.findAll();
-
         // Ordenar por ID
         Collections.sort(perfil, Comparator.comparingLong(Perfil::getId));
-
         return perfil;
     }
 
     // Ver todas las cuentas de los usuarios
     @Transactional(readOnly = true)
     public List<Cuenta> findAllCuentas() {
-        return cuentaRep.findAll();
+        List<Cuenta> cuenta = cuentaRep.findAll();
+        // Ordenar por ID
+        Collections.sort(cuenta, Comparator.comparingLong(Cuenta::getId));
+        return cuenta;
     }
 
     // Consulta perfil por Id
@@ -134,31 +135,35 @@ public class UsuarioService {
     }
 
     // Actualizar usuario
-    public Usuario updateUser(UsuarioDto newUsuario, Long id) {
+    public Cuenta updateUser(UsuarioDto newUsuario, Long id) {
         String rolString = newUsuario.getRole();
         Role rol = Role.valueOf(rolString);
-        Usuario usuario = new Usuario();
+        Cuenta cuenta = new Cuenta();
+        Perfil perfil = new Perfil();
 
-        usuario = usuarioRep.findById(id).orElse(null);
+        cuenta = cuentaRep.findById(id).orElse(null);
+        perfil = perfilRep.findById(id).orElse(null);
 
-        if(usuario == null) {
-            return null;
+        if(cuenta != null && perfil != null) {
+            // Datos generales
+            perfil.setNombre(newUsuario.getNombre());
+            perfil.setApellidoP(newUsuario.getApellidoP());
+            perfil.setApellidoM(newUsuario.getApellidoM());
+            perfil.setCorreo(newUsuario.getCorreo());
+            perfil.setTelefono(newUsuario.getTelefono());
+            //  Datos de la cuenta
+            cuenta.setNombreUsuario(newUsuario.getNombreUsuario());
+            cuenta.setContraseña(passwordEncoder.encode(newUsuario.getContraseña()));
+            cuenta.setRole(rol);
+
+            cuentaRep.save(cuenta);
+            perfilRep.save(perfil);
+
+            return cuenta;
         }
 
-        // Datos generales
-        usuario.setNombre(newUsuario.getNombre());
-        usuario.setApellidoP(newUsuario.getApellidoP());
-        usuario.setApellidoM(newUsuario.getApellidoM());
-        usuario.setCorreo(newUsuario.getCorreo());
-        usuario.setTelefono(newUsuario.getTelefono());
-        //  Datos de la cuenta
-        usuario.setNombreUsuario(newUsuario.getNombreUsuario());
-        usuario.setContraseña(passwordEncoder.encode(newUsuario.getContraseña()));
-        usuario.setRole(rol);
-        // Estatus
-        usuario.setEstatus(newUsuario.getEstatus());
+        return null;
 
-        return usuarioRep.save(usuario);
     }
 
     // Actualizar estatus usuario
