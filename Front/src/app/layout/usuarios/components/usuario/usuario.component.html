@@ -1,79 +1,102 @@
 <main class="container">
-    <table class="tabla table table-striped table-hover">
-        <!-- Encabezado -->
-        <thead class="tabla-encabezado">
-            <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Contacto</th>
-                <th scope="col">Estatus</th>
-            </tr>
-        </thead>
 
-        <!-- Cuerpo -->
-        <tbody class="tabla-cuerpo">
-            <ng-container *ngFor="let cuenta of cuentas">
-                <!-- Fila principal -->
-                <tr [ngClass]="cuenta.perfil.estatus === 'INACTIVO' ? 'table-danger inactivo' : ''" data-bs-toggle="collapse"
-                    [attr.data-bs-target]="'#collapse' + cuenta.perfil.id" aria-expanded="false"
-                    [attr.aria-controls]="'collapse' + cuenta.perfil.id">
-                    <td scope="row">
-                        <div>
-                            <p>{{cuenta.perfil.nombre}}</p>
-                            <p>{{cuenta.perfil.apellidoP}} {{cuenta.perfil.apellidoM}}</p>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <p>{{cuenta.perfil.telefono}}</p>
-                            <p>{{cuenta.perfil.correo}}</p>
-                        </div>
-                    </td>
-                    <td class="estatus">
-                        <div class="">
-                            <p class="fw-bold" [ngClass]="cuenta.perfil.estatus === 'ACTIVO' ? 'text-success' : 'text-danger'">
-                                {{cuenta.perfil.estatus}}
-                            </p>
-        
-                        </div>
-                    </td>
+    <!-- Busqueda de usuarios -->
+    <div class="d-flex align-items-center filtros">
+        <div class="input-group busqueda">
+            <input type="text" class="form-control" placeholder="Buscar por ID o Asunto"
+                [ngClass]="{'ng-untouched': busquedaInput === ''}" aria-label="Nombre de usuario del destinatario"
+                [(ngModel)]="busquedaInput" (keyup.enter)="busqueda()">
+            <button class="btn btn-outline-secondary" (click)="busqueda()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="14" height="14"
+                    viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                    <path d="M21 21l-6 -6" />
+                </svg>
+            </button>
+        </div> <!-- end .busqueda -->
+        <p class="text-danger fs-5 fw-bolder" *ngIf="busquedaInput !== ''">
+            * La barra debe estar vacía para <span class="d-block"> obtener <u class="text-uppercase">todos</u> los
+                resultados *</span>
+        </p>
+    </div>
+
+    <div class="scroll-central">
+        <table class="tabla table table-striped table-hover">
+            <!-- Encabezado -->
+            <thead class="tabla-encabezado">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Contacto</th>
+                    <th scope="col">Estatus</th>
                 </tr>
+            </thead>
+
+            <!-- Cuerpo -->
+            <tbody class="tabla-cuerpo">
+                    <ng-container *ngFor="let cuenta of cuentas">
+                        <!-- Fila principal -->
+                        <tr [ngClass]="cuenta.perfil.estatus === 'INACTIVO' ? 'table-danger inactivo' : ''" 
+                        data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#collapse' + cuenta.perfil.id" aria-expanded="false"
+                        [attr.aria-controls]="'collapse' + cuenta.perfil.id">
+                            <td scope="row">
+                                <div>
+                                    <p>{{cuenta.perfil.nombre}}</p>
+                                    <p>{{cuenta.perfil.apellidoP}} {{cuenta.perfil.apellidoM}}</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <p>{{cuenta.perfil.telefono}}</p>
+                                    <p>{{cuenta.perfil.correo}}</p>
+                                </div>
+                            </td>
+                            <td class="estatus">
+                                <div class="">
+                                    <p class="fw-bold" [ngClass]="cuenta.perfil.estatus === 'ACTIVO' ? 'text-success' : 'text-danger'">
+                                        {{cuenta.perfil.estatus}}
+                                    </p>
                 
-                <!-- Acordeón para cada fila -->
-                <tr [ngClass]="cuenta.perfil.estatus === 'INACTIVO' ? 'table-danger' : ''" class="border-0">
-                    <td colspan="3" class="border-0 p-3">
+                                </div>
+                            </td>
+                        </tr>
                         
-                        <div id="{{'collapse' + cuenta.perfil.id}}" class="accordion-collapse collapse"
-                        [attr.aria-labelledby]="'heading' + cuenta.perfil.id" data-bs-parent="#accordionFlushExample">
+                        <!-- Acordeón para cada fila -->
+                        <tr [ngClass]="cuenta.perfil.estatus === 'INACTIVO' ? 'table-danger' : ''" class="border-0">
+                            <td colspan="3" class="border-0 p-3">
+                                
+                                <div id="{{'collapse' + cuenta.perfil.id}}" class="accordion-collapse collapse"
+                                [attr.aria-labelledby]="'heading' + cuenta.perfil.id" data-bs-parent="#accordionFlushExample">
 
-                        <div class="accordion-body d-flex justify-content-between desglosado">
+                                <div class="accordion-body d-flex justify-content-between desglosado">
 
-                            <p>Usuario: <span class="fw-bold"
-                            [ngClass]="cuenta.perfil.estatus === 'ACTIVO' ? 'text-primary' : 'text-danger'">
-                                {{cuenta.nombreUsuario}}</span></p>
+                                    <p>Usuario: <span class="fw-bold"
+                                    [ngClass]="cuenta.perfil.estatus === 'ACTIVO' ? 'text-primary' : 'text-danger'">
+                                        {{cuenta.nombreUsuario}}</span></p>
 
-                            <p>Rol: <span class="fw-bold"
-                            [ngClass]="cuenta.perfil.estatus !== 'ACTIVO' ? 'text-danger' : 'text-primary'">
-                                {{cuenta.role}}</span></p> 
+                                    <p>Rol: <span class="fw-bold"
+                                    [ngClass]="cuenta.perfil.estatus !== 'ACTIVO' ? 'text-danger' : 'text-primary'">
+                                        {{cuenta.role}}</span></p> 
 
-                            <button class="btn btn-primary fw-bold"
-                            (click)="modificar(cuenta.id)">
-                                Modificar
-                            </button>
+                                    <button class="btn btn-primary fw-bold"
+                                    (click)="modificar(cuenta.id)">
+                                        Modificar
+                                    </button>
 
-                            <button class="btn fw-bold" [ngClass]="cuenta.perfil.estatus === 'ACTIVO' ? 'btn-danger': 'btn-success'"
-                                (click)="cambiarEstatus(cuenta.perfil.estatus, cuenta.perfil.id)">
-                                {{cuenta.perfil.estatus === 'ACTIVO' ? 'Desactivar' : 'Activar'}}
-                            </button>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </ng-container>
-        </tbody>
-
-
-
-    </table>
+                                    <button class="btn fw-bold" [ngClass]="cuenta.perfil.estatus === 'ACTIVO' ? 'btn-danger': 'btn-success'"
+                                        (click)="cambiarEstatus(cuenta.perfil.estatus, cuenta.perfil.id)">
+                                        {{cuenta.perfil.estatus === 'ACTIVO' ? 'Desactivar' : 'Activar'}}
+                                    </button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+            </tbody>
+        </table>
+    </div>
 
     <!-- Modal -->
     <div class="modal" [ngClass]="modal ? 'grid' : ''">

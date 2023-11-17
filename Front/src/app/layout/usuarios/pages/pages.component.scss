@@ -8,15 +8,3 @@
 a {
     color: black;
 }
-
-.scroll-central {
-    height: calc(102vh - 100px);
-    overflow-y: auto;
-    @include s.tablet {
-        height: calc(71vh - 100px);
-        
-    }
-    @include s.pc-mediano {
-        height: calc(102vh - 100px);
-    }
-}

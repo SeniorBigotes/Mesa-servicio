@@ -74,5 +74,4 @@ export class FormRegisterService {
   updatedUsers(cuentas: any) {
     this.usuariosModificados.next(cuentas);
   }
-
 }

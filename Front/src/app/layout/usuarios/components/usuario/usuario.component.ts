@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormRegisterService } from '../../usuarios.service';
 import { Perfil } from '../PerfilesInterface';
-import { NONE_TYPE } from '@angular/compiler';
 
 @Component({
   selector: 'app-usuario',
@@ -12,25 +11,38 @@ export class UsuarioComponent implements OnInit {
 
   perfiles: Array<Perfil> = [];
   cuentas: any = [];
+  respaldoCuentas: any = [];
   modal: boolean = false;
   mensaje: string = "";
   estatus: string = "";
   actualizado: boolean = false;
   nombre?: string;
+  busquedaInput: string = "";
+  usuarioBuscado: Array<any> = [];
 
   constructor(private usuariosService: FormRegisterService) {}
 
   ngOnInit(): void {
     // Estado incial (perfiles y cuentas)
-    this.usuariosService.getPerfil().subscribe({next: resp => this.perfiles = resp, error: err => this.mensaje = err});
-    this.usuariosService.getCuenta().subscribe({next: resp => this.cuentas = resp, error: err => this.mensaje = err});
+    this.usuariosService.getCuenta().subscribe({
+      next: resp => {
+        this.cuentas = resp;
+        this.respaldoCuentas = resp;
+      }, error: err => this.mensaje = err});
+
     // Con estatus actualizado
-    this.usuariosService.estatus$.subscribe({next: resp => this.cuentas = resp, error: err => this.mensaje = err});
+    this.usuariosService.estatus$.subscribe({
+      next: resp => {
+        this.cuentas = resp;
+        this.respaldoCuentas = resp;
+      }, error: err => this.mensaje = err});
+
     // con cuentas actualizadas
     this.usuariosService.usuariosModificados$.subscribe({
       next: resp => {
         if(resp !== null) {
           this.cuentas = resp;
+          this.respaldoCuentas = resp;
           this.actualizado = true;
           this.mensaje = `${this.nombre} se a actualizado con éxito`;
           this.mostrarToast(1700);
@@ -61,6 +73,70 @@ export class UsuarioComponent implements OnInit {
         this.usuariosService.updateUser(resp);
         this.nombre = resp.perfil.nombre;
     }});
+  }
+
+  // Buscar usuarios
+  busqueda() {
+    const terminosBusqueda = this.busquedaInput.toLowerCase().split(' ');
+
+    // ejecucion de metodos de busqueda
+    if (this.soloLetras(this.busquedaInput)) {
+      if (terminosBusqueda.length === 2) {
+        this.busquedaNombreApellidoP_M(terminosBusqueda);
+        if(this.usuarioBuscado.length === 0) {
+          this.busquedaApellidoP_M(terminosBusqueda);
+        }
+      } else if (terminosBusqueda.length === 1) {
+        this.busquedaPorTerminoUnico(terminosBusqueda[0]);
+      }
+    } else {
+      this.busquedaPorTelefono(terminosBusqueda[0]);
+    }
+    // datos a visualizar
+    this.cuentas = this.usuarioBuscado.length > 0 ? this.usuarioBuscado : this.respaldoCuentas;
+  }
+
+  /* BUSQUEDA DE USUARIOS */
+  // Por nombre y apellido Materno o Paterno
+  private busquedaNombreApellidoP_M(terminosBusqueda: string[]) {
+    const nombre = terminosBusqueda[0];
+    const apellidoP = terminosBusqueda[1];
+    const apellidoM = terminosBusqueda[1];
+
+    this.usuarioBuscado = this.cuentas.filter((cuenta: any) =>
+      (cuenta.perfil.nombre.toLowerCase().includes(nombre) 
+        && cuenta.perfil.apellidoP.toLowerCase().includes(apellidoP)) ||
+      (cuenta.perfil.nombre.toLowerCase().includes(nombre) 
+        && cuenta.perfil.apellidoM.toLowerCase().includes(apellidoM))
+    );
+  }
+  // Por apellido paterno y materno
+  private busquedaApellidoP_M(terminosBusqueda: string[]) {
+    const apellidoP = terminosBusqueda[0];
+    const apellidoM = terminosBusqueda[1];
+
+    this.usuarioBuscado = this.cuentas.filter((cuenta: any) =>
+      cuenta.perfil.apellidoP.toLowerCase().includes(apellidoP) &&
+      cuenta.perfil.apellidoM.toLowerCase().includes(apellidoM)
+    );
+  }
+  // por nombre, apellidos (materno o paterno) o nombre de usuario
+  private busquedaPorTerminoUnico(termino: string) {
+    this.usuarioBuscado = this.cuentas.filter((cuenta: any) =>
+      cuenta.nombreUsuario.toLowerCase().includes(termino) ||
+      cuenta.perfil.nombre.toLowerCase().includes(termino) ||
+      cuenta.perfil.apellidoP.toLowerCase().includes(termino) ||
+      cuenta.perfil.apellidoM.toLowerCase().includes(termino)
+    );
+  }
+  // Por telefono
+  private busquedaPorTelefono(termino: string) {
+    const busqueda = parseInt(termino, 10);
+    this.usuarioBuscado = this.cuentas.filter((cuenta: any) => cuenta.perfil.telefono.includes(busqueda));
+  }
+  // Verificar si su buscan palabras o numeros
+  private soloLetras(str: string): boolean {
+    return /^[A-Za-z\s]+$/.test(str);
   }
 
   // Mostrar el toast (modal)

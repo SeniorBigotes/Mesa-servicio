@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketsService } from '../../tickets.service';
-import { DatePipe } from '@angular/common';
-import { LoginService } from 'src/app/layout/login/login.service';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
