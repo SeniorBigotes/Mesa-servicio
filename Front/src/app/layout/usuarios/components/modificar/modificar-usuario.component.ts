@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormRegisterService } from '../../usuarios.service';
-import { Rol } from '../RolesInterface';
+import { Rol } from '../../../../models/RolesInterface';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({

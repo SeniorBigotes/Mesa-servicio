@@ -1,25 +1,46 @@
 <main class="container">
 
     <!-- Busqueda de usuarios -->
-    <div class="d-flex align-items-center filtros">
-        <div class="input-group busqueda">
-            <input type="text" class="form-control" placeholder="Buscar por ID o Asunto"
-                [ngClass]="{'ng-untouched': busquedaInput === ''}" aria-label="Nombre de usuario del destinatario"
-                [(ngModel)]="busquedaInput" (keyup.enter)="busqueda()">
-            <button class="btn btn-outline-secondary" (click)="busqueda()">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="14" height="14"
-                    viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                    <path d="M21 21l-6 -6" />
-                </svg>
-            </button>
-        </div> <!-- end .busqueda -->
-        <p class="text-danger fs-5 fw-bolder" *ngIf="busquedaInput !== ''">
-            * La barra debe estar vacía para <span class="d-block"> obtener <u class="text-uppercase">todos</u> los
-                resultados *</span>
-        </p>
+    <div class="d-flex filtros my-3">
+        <div class="busqueda-filtros d-flex gap-3">
+            <div class="input-group busqueda">
+                <input type="text" class="form-control" placeholder="Nombre, Apellido, Usuario"
+                    [ngClass]="{'ng-untouched': busquedaInput === ''}" aria-label="Nombre de usuario del destinatario"
+                    [(ngModel)]="busquedaInput" (keyup.enter)="busqueda()">
+                <button class="btn btn-outline-secondary" (click)="busqueda()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="14" height="14"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                        <path d="M21 21l-6 -6" />
+                    </svg>
+                </button>
+            </div> <!-- end .busqueda -->
+            <p class="text-danger fs-5 fw-bolder" *ngIf="busquedaInput !== ''">
+                * La barra debe estar vacía para <span class="d-block"> obtener <u class="text-uppercase">todos</u> los
+                    resultados *</span>
+            </p>
+        </div>
+        <div class="rol-estatus d-flex">
+            <div class="rol d-flex align-items-center gap-2">
+                <p>Rol: </p>
+                <select class="form-select" [ngClass]="rolTextinput === 'ALL' ? 'ng-untouched' : ''"
+                [(ngModel)]="rolTextinput" (ngModelChange)="aplicarFiltro()">
+                    <option value="">ALL</option>
+                    <option *ngFor="let rol of roles" [ngValue]="rol.rolName"> {{rol.rolName}} </option>
+                </select>
+            </div>
+            <div class="estatus d-flex align-items-center gap-2">
+                <p>Estatus: </p>
+                <select class="form-select" [ngClass]="estatusTextInput === 'ALL' ? 'ng-untouched' : ''" 
+                [(ngModel)]="estatusTextInput" (ngModelChange)="aplicarFiltro()">
+                    <option value="">ALL</option>
+                    <option value="ACTIVO">ACTIVO</option>
+                    <option value="INACTIVO">INACTIVO</option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <div class="scroll-central">

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormRegisterService } from '../../usuarios.service';
-import { Perfil } from '../PerfilesInterface';
+import { Perfil } from '../../../../models/PerfilesInterface';
+import { BehaviorSubject } from 'rxjs';
+import { Rol } from 'src/app/models/RolesInterface';
 
 @Component({
   selector: 'app-usuario',
@@ -9,16 +11,27 @@ import { Perfil } from '../PerfilesInterface';
 })
 export class UsuarioComponent implements OnInit {
 
-  perfiles: Array<Perfil> = [];
   cuentas: any = [];
   respaldoCuentas: any = [];
+
   modal: boolean = false;
   mensaje: string = "";
+  nombre?: string;
+
   estatus: string = "";
   actualizado: boolean = false;
-  nombre?: string;
+
+  roles: any;
+
   busquedaInput: string = "";
   usuarioBuscado: Array<any> = [];
+  rolTextinput: string = "";
+  estatusTextInput: string = "";
+  /* Observables */
+  private filtroEstatus = new BehaviorSubject<any>("");
+  filtroEstatus$ = this.filtroEstatus.asObservable();
+  private filtroRoles = new BehaviorSubject<any>("");
+  filtroRoles$ = this.filtroRoles.asObservable();
 
   constructor(private usuariosService: FormRegisterService) {}
 
@@ -49,7 +62,11 @@ export class UsuarioComponent implements OnInit {
         }
       }, error: err => this.mensaje = err
     });
-  }
+
+    // Obtener roles
+    this.usuariosService.getRoles().subscribe(roles => this.roles = roles);
+    
+  } // end OnInit()
 
   // Actualizar estatus
   cambiarEstatus(estatusUsuario: string, id: number): void {
@@ -94,6 +111,44 @@ export class UsuarioComponent implements OnInit {
     }
     // datos a visualizar
     this.cuentas = this.usuarioBuscado.length > 0 ? this.usuarioBuscado : this.respaldoCuentas;
+  }
+  // Detecta cambios
+  aplicarFiltro() {
+
+    if(this.estatusTextInput !== '') { // filtro por estatus
+      this.filtroEstatus.next(this.estatusTextInput);
+
+      if(this.estatusTextInput === 'ACTIVO') this.filtrarEstatus();
+      if(this.estatusTextInput === 'INACTIVO') this.filtrarEstatus();
+
+    } else if(this.rolTextinput !== '') { // filtro por roles
+      this.filtroRoles.next(this.rolTextinput);
+
+      for(let i = 0; i < this.roles.length ; i++) {
+        if(this.rolTextinput === this.roles[i].rolName) this.filtrarRoles();
+      }
+
+    } else if(this.estatusTextInput === '' || this.rolTextinput === ''){ // resetear
+      this.cuentas = this.respaldoCuentas;
+    }
+  }
+  // Filtrar por estatus
+  private filtrarEstatus() {
+    this.filtroEstatus$.subscribe({
+      next: resp => {
+        this.usuarioBuscado = this.cuentas.filter((cuenta: any) => cuenta.perfil.estatus === resp);
+        this.cuentas = this.usuarioBuscado.length > 0 ? this.usuarioBuscado : this.respaldoCuentas;
+        this.usuarioBuscado = [];
+      }});
+    }
+    private filtrarRoles() {
+      this.filtroRoles$.subscribe({
+        next: resp => {
+          this.usuarioBuscado = this.cuentas.filter((cuenta:any) => cuenta.role === resp);
+          this.cuentas = this.usuarioBuscado.length > 0 ? this.usuarioBuscado : this.respaldoCuentas;
+          this.usuarioBuscado = [];
+        }
+    });
   }
 
   /* BUSQUEDA DE USUARIOS */

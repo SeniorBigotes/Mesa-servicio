@@ -12,6 +12,64 @@ th, td {
 tr {
     height: 100%;
 }
+.filtros {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+    @include s.pc-chico {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+    .busqueda-filtros {
+        flex-direction: column;
+        @include s.pc-mediano {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+    .busqueda {
+        width: 28rem;
+        margin: auto;
+        input {
+            padding: .5rem;
+            font-size: 1.3rem;
+        }
+    }
+    .rol-estatus {
+        flex-direction: column;
+        .estatus, .rol {
+            margin-top: 1rem;
+    
+            select {
+                padding: .5rem;
+                font-size: 1.3rem;
+                width: 11rem;
+            }
+        }
+        .rol {
+            select {
+                width: 16rem;
+            }
+        }
+        @include s.pc-chico {
+            flex-direction: row;
+            gap: 2rem;
+            .estatus, .rol {
+                margin: 0;
+            }
+        }
+    }
+    .ng-touched {
+        border: 2px solid s.$form-invalid
+    }
+
+    .ng-untouched {
+        border: 2px solid s.$form-valid;
+    }
+}
 .container {
     max-width: 90rem;
 }
@@ -20,6 +78,9 @@ tr {
     margin: auto;
     .tabla-encabezado, .tabla-cuerpo {
         border-bottom: 2px solid black;
+    }
+    .tabla-encabezado {
+        border-top: 2px solid black;
     }
     .estatus {
         height: 100%;
