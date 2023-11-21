@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.AllArgsConstructor;
 import servicedesk.dto.TicketDto;
 import servicedesk.entity.ticket.Categoria;
 import servicedesk.entity.ticket.Prioridad;
@@ -25,11 +26,12 @@ import servicedesk.entity.ticket.Ticket;
 import servicedesk.services.TicketService;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api")
 public class TicketRest {
 
     @Autowired
-    private TicketService ticketservice;
+    private final TicketService ticketservice;
 
     // Buscar todos los tickets
     @GetMapping("/tickets")
@@ -37,7 +39,7 @@ public class TicketRest {
     public List<Ticket> consulta() {
         return ticketservice.findAllTicket();
     }
-    
+
     @GetMapping("/secciones")
     @ResponseStatus(HttpStatus.OK)
     public List<Seccion> consultaSeccion() {
@@ -88,7 +90,7 @@ public class TicketRest {
             response.put("mensaje", "Ticket creado con exito");
             response.put("ticket", ticketNew);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
-            
+
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert");
             response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));
@@ -103,6 +105,27 @@ public class TicketRest {
         Map<String, Object> response = new HashMap<>();
         try {
             actualizarticket = this.ticketservice.update(actualizarTicket, id);
+            if (actualizarticket == null) {
+                response.put("Error", " no existe en la base de datos");
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+            }
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al actualizar");
+            response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", "Ticket actualizado con exito");
+        response.put("Ticket", actualizarticket);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
+    // Asignar seguimiento al ticket
+    @PutMapping("/seguimiento/{id}")
+    public ResponseEntity<?> seguimientoTicket(@RequestBody TicketDto actualizarTicket, @PathVariable Long id) {
+        Ticket actualizarticket = null;
+        Map<String, Object> response = new HashMap<>();
+        try {
+            actualizarticket = this.ticketservice.asignarTicket(id, actualizarTicket);
             if (actualizarticket == null) {
                 response.put("Error", " no existe en la base de datos");
                 return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.AllArgsConstructor;
 import servicedesk.dto.TicketDto;
 import servicedesk.entity.ticket.Categoria;
 import servicedesk.entity.ticket.EstatusTicket;
@@ -21,16 +22,17 @@ import servicedesk.repository.ISeccionRep;
 import servicedesk.repository.ITicketRep;
 
 @Service
+@AllArgsConstructor
 public class TicketService {
 
     @Autowired
-    private ITicketRep ticketRepo;
+    private final ITicketRep ticketRepo;
     @Autowired
-    private ISeccionRep seccionRep;
+    private final ISeccionRep seccionRep;
     @Autowired
-    private ICategoriaRep categoriaRep;
+    private final ICategoriaRep categoriaRep;
     @Autowired
-    private IPrioridadRep prioridadRep;
+    private final IPrioridadRep prioridadRep;
 
     // Consulta de todos los tickets
     @Transactional(readOnly = true)
@@ -66,17 +68,21 @@ public class TicketService {
 
     // Crear nuevo ticket
     public Ticket createTicket(TicketDto ticket) {
-        Date fecha = new Date();
-        Ticket ticketEntity = new Ticket();
+        final Date fecha = new Date();
+        final Ticket ticketEntity = new Ticket();
 
         ticketEntity.setAsunto(ticket.getAsunto());
         ticketEntity.setDescripcionCambios("");
         ticketEntity.setEstatus(EstatusTicket.ABIERTO);
         ticketEntity.setFechaCreacion(fecha);
-        ticketEntity.setCuenta(ticket.getCuenta());
+        ticketEntity.setCreador(ticket.getCreador());
         ticketEntity.setSeccion(ticket.getSeccion());
         ticketEntity.setCategoria(ticket.getCategoria());
         ticketEntity.setPrioridad(ticket.getPrioridad());
+
+        if (ticket.getAsignado() != null) {
+            ticketEntity.setAsignado(ticket.getAsignado());
+        }
 
         return ticketRepo.save(ticketEntity);
     }
@@ -84,7 +90,7 @@ public class TicketService {
     // Update o Actualizar
     public Ticket update(TicketDto ticket, Long id) {
         Ticket ticketEntity = null;
-        Date fecha = new Date();
+        final Date fecha = new Date();
 
         ticketEntity = ticketRepo.findById(id).orElse(null);
 
@@ -107,5 +113,21 @@ public class TicketService {
         }
 
         return ticketRepo.save(ticketEntity);
+    }
+
+    // Asignar un ticket
+    public Ticket asignarTicket(Long ticketId, TicketDto ticketDto) {
+        final Ticket ticket = ticketRepo.findById(ticketId).orElse(null);
+
+        if (ticket == null) {
+            return null;
+        }
+        // actualizar estado y asignacion
+        if (ticket.getAsignado() == null) {
+            ticket.setEstatus(EstatusTicket.EN_PROCESO);
+            ticket.setAsignado(ticketDto.getAsignado());
+            ticketRepo.save(ticket);
+        }
+        return ticket;
     }
 }

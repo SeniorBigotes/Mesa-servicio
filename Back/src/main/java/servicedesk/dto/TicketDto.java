@@ -17,7 +17,7 @@ import servicedesk.entity.usuario.Cuenta;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TicketDto {
-    private Long id;
+	private Long id;
 	private String asunto;
 	private String descripcionCambios;
 	private Date fechaCreacion;
@@ -27,5 +27,6 @@ public class TicketDto {
 	private Seccion seccion;
 	private Categoria categoria;
 	private Prioridad prioridad;
-	private Cuenta cuenta;
+	private Cuenta creador;
+	private Cuenta asignado;
 }

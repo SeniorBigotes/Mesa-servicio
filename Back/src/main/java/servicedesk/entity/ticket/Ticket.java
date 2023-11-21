@@ -39,28 +39,37 @@ public class Ticket {
     private Date fechaCreacion;
     @Column(name = "fecha_modificacion") // Renombrara la columna
     private Date fechaModificacion;
-    
+
     @Enumerated(EnumType.STRING)
     private EstatusTicket estatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seccion_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Seccion seccion; // a quien va dirigido
-    
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Categoria categoria; // papeleria, administracion, etc...
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prioridad_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Prioridad prioridad; // alta, media, baja
-    
-    // Se colocan las relaciones entre entidades
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cuenta_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Cuenta cuenta; // ticket que creo el usuario
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creador_id")
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    private Cuenta creador; // ticket que creo el usuario
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asignado_id")
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    private Cuenta asignado; // ticket que creo el usuario
 }
