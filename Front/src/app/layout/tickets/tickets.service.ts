@@ -10,6 +10,7 @@ import { Ticket } from '../../models/TicketInterface';
 export class TicketsService {
 
   private api: string = environment.API_API;
+  private auth: string = environment.API_AUTH;
 
   // Vista de tickets (lista o cuadriculado)
   private vista = new BehaviorSubject<any>(false);
@@ -82,6 +83,10 @@ export class TicketsService {
 
   getPrioridad(): Observable<any> {
     return this.http.get(`${this.api}/prioridades`);
+  }
+
+  getAsignados(id: number): Observable<any> {
+    return this.http.get(`${this.auth}/asignados/${id}`);
   }
 
   /* VISTA DE TICKETS */

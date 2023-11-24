@@ -1,5 +1,6 @@
 package servicedesk.services;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -80,6 +81,22 @@ public class UsuarioService {
         return (Cuenta) cuentaRep.findById(id).orElse(null);
     }
 
+    // viduslizar asignado
+    public List<Cuenta> verAsignado(Long seccionID) {
+        List<Cuenta> cuentas = cuentaRep.findAll();
+        List<Cuenta> asignado = new ArrayList<>();
+
+        for(Cuenta cuenta : cuentas) {
+            if(seccionID == cuenta.getSeccion().getId()) {
+                asignado.add(cuenta);
+            }
+        }
+        if(asignado.size() == 0) {
+            return null;
+        }
+        return asignado;
+    }
+
     // Inicio de sesion (ajustar a la clase cuenta)
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate( // solicitar credenciales para autentificacion
@@ -123,6 +140,7 @@ public class UsuarioService {
         cuenta.setContraseña(usuario.getContraseña());
         cuenta.setRole(usuario.getRole());
         cuenta.setPerfil(perfil);
+        cuenta.setSeccion(request.getSeccion());
 
         // Se almacena en la base de datos
         perfilRep.save(perfil);
@@ -155,15 +173,16 @@ public class UsuarioService {
             cuenta.setNombreUsuario(newUsuario.getNombreUsuario());
             cuenta.setContraseña(passwordEncoder.encode(newUsuario.getContraseña()));
             cuenta.setRole(rol);
+            cuenta.setSeccion(newUsuario.getSeccion());
+
+            System.out.println("\n\n"+newUsuario.getSeccion().getSeccion()+"\n\n");
 
             cuentaRep.save(cuenta);
             perfilRep.save(perfil);
 
             return cuenta;
         }
-
         return null;
-
     }
 
     // Actualizar estatus usuario

@@ -66,6 +66,14 @@
                         <option *ngFor="let rol of roles" [ngValue]="rol.rolName"> {{rol.rolName}} </option>
                     </select>
                 </div>
+                <div class="mb-3">
+                    <label for="area" class="form-label text-start d-block">Area: </label>
+                    <select id="area" class="form-select"
+                    formControlName="seccion">
+                        <option value=""> --Seleccione-- </option>
+                        <option *ngFor="let seccion of secciones" [ngValue]="seccion.id"> {{seccion.seccion}} </option>
+                    </select>
+                </div>
             </div> <!-- Datos de inicio de sesion -->
         </fieldset>
 
@@ -84,7 +92,7 @@
                         stroke-width="0" fill="currentColor" />
                 </svg>
             </button>
-            <input type="submit" value="Actualizar" class="btn text-uppercase fw-bold"
-            [disabled]="formMoidficarUsuario.invalid" [ngClass]="formMoidficarUsuario.invalid ? 'btn-outline-danger' : 'btn-outline-success'">
+            <button class="btn text-uppercase fw-bold fs-4" [ngClass]="formMoidficarUsuario.invalid ? 'btn-outline-danger' : 'btn-outline-success'"
+            [disabled]="formMoidficarUsuario.invalid" (keyup.enter)="enviar()"> Actualizar </button>
         </div>
     </form>

@@ -59,17 +59,7 @@ public class Ticket {
     private Prioridad prioridad; // alta, media, baja
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cuenta_id")
+    @JoinColumn(name = "autor_id")
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    private Cuenta cuenta; // ticket que creo el usuario
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "creador_id")
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    private Cuenta creador; // ticket que creo el usuario
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "asignado_id")
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    private Cuenta asignado; // ticket que creo el usuario
+    private Cuenta autor; // ticket que creo el usuario
 }

@@ -118,25 +118,4 @@ public class TicketRest {
         response.put("Ticket", actualizarticket);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
-
-    // Asignar seguimiento al ticket
-    @PutMapping("/seguimiento/{id}")
-    public ResponseEntity<?> seguimientoTicket(@RequestBody TicketDto actualizarTicket, @PathVariable Long id) {
-        Ticket actualizarticket = null;
-        Map<String, Object> response = new HashMap<>();
-        try {
-            actualizarticket = this.ticketservice.asignarTicket(id, actualizarTicket);
-            if (actualizarticket == null) {
-                response.put("Error", " no existe en la base de datos");
-                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-            }
-        } catch (DataAccessException e) {
-            response.put("mensaje", "Error al actualizar");
-            response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        response.put("mensaje", "Ticket actualizado con exito");
-        response.put("Ticket", actualizarticket);
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
-    }
 }

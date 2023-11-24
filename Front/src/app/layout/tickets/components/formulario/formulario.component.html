@@ -15,21 +15,8 @@
                 </div>
             </div>
             <div class="mb-3 campo-form">
-                <label for="seccion">Sección: </label>
-                <select id="seccion" class="form-select form-select-lg mb-3"
-                formControlName="seccion">
-                    <option value="" disabled selected> --Seleccione-- </option>
-                    <option *ngFor="let seccion of secciones" [ngValue]="seccion.id"> {{seccion.seccion}} </option>
-                </select>
-                <div *ngIf="getSeccion.value === '' && getSeccion.touched">
-                    <p class="text-danger text-opacity-75 border-bottom border-danger rounded-2 fw-bolder p-1 fs-6 mt-2">
-                        * ¿A que area va dirigido?</p>
-                </div>
-            </div>
-            <div class="mb-3 campo-form">
                 <label for="categoria">Categoría: </label>
-                <select id="categoria" class="form-select form-select-lg mb-3"
-                formControlName="categoria">
+                <select id="categoria" class="form-select form-select-lg mb-3" formControlName="categoria">
                     <option value="" disabled selected> --Seleccione-- </option>
                     <option *ngFor="let categoria of categorias" [ngValue]="categoria.id"> {{categoria.categoria}} </option>
                 </select>
@@ -38,7 +25,33 @@
                         * ¿Sera de papaeleria o de administracion?</p>
                 </div>
             </div>
-            <div class="row mb-3 campo-form">
+            <div class="mb-3 campo-form">
+                <label for="seccion">Area: </label>
+                <select id="seccion" class="form-select form-select-lg mb-3"
+                formControlName="seccion">
+                    <option value="" disabled selected> --Seleccione-- </option>
+                    <option *ngFor="let seccion of secciones" [ngValue]="seccion.id" 
+                    (click)="usuariosArea(seccion.id)"> {{seccion.seccion}} </option>
+                </select>
+                <div *ngIf="getSeccion.value === '' && getSeccion.touched">
+                    <p class="text-danger text-opacity-75 border-bottom border-danger rounded-2 fw-bolder p-1 fs-6 mt-2">
+                        * ¿A que area va dirigido?</p>
+                </div>
+            </div>
+            <div class="mb-3 campo-form">
+                <label for="asignado">Enviar a: </label>
+                <select id="asignado" class="form-control form-select-lg mb-3"
+                formControlName="asignado">
+                    <option value="" disabled selected> --Seleccione-- </option>
+                    <option *ngFor="let usuario of usuariosSeccion"
+                    [ngValue]="usuario?.id"> {{usuario?.perfil?.nombre}} {{usuario?.perfil?.apellidoP}}</option>
+                </select>
+                <div *ngIf="getAsignado.value === '' && getAsignado.touched">
+                    <p class="text-danger text-opacity-75 border-bottom border-danger rounded-2 fw-bolder p-1 fs-6 mt-2">
+                        * ¿A quien va dirigido?</p>
+                </div>
+            </div>
+            <div class="row mb-3 campo-form" *ngIf="visualizar">
                 <p class="col-form-label col-sm-2 p-0 fs-4">Prioridad</p>
                 <div class="col-sm-10 d-flex mt-4 check-box">
                     <div class="form-check" *ngFor="let prioridad of prioridades">

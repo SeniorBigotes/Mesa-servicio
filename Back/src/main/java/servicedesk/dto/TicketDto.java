@@ -27,6 +27,6 @@ public class TicketDto {
 	private Seccion seccion;
 	private Categoria categoria;
 	private Prioridad prioridad;
-	private Cuenta creador;
+	private Cuenta autor;
 	private Cuenta asignado;
 }

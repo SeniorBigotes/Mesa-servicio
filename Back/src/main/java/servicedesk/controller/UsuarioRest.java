@@ -1,6 +1,8 @@
 package servicedesk.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,6 +96,22 @@ public class UsuarioRest {
             response = response.concat(e.getMessage().concat(e.getMostSpecificCause().toString()));
             return new ResponseEntity<String>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    // Visualizar usuarios asignados
+    @GetMapping("/asignados/{id}")
+    public ResponseEntity<?> asignados(@PathVariable Long id) {
+        List<Cuenta> cuenta = new ArrayList<>();
+        String response = "";
+
+        try {
+            cuenta = usuarioService.verAsignado(id);
+        } catch (DataAccessException e) {
+            response = "Error al realizar la consulta";
+            response = response.concat(e.getMessage().concat(e.getMostSpecificCause().toString()));
+            return new ResponseEntity<String>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<List<Cuenta>>(cuenta, HttpStatus.OK);
     }
 
     // inicio de sesion

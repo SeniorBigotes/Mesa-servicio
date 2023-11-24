@@ -57,6 +57,13 @@
                         <option *ngFor="let rol of roles" [ngValue]="rol.rolName"> {{rol.rolName}} </option>
                     </select>
                 </div>
+                <div>
+                    <label for="area" class="form-label text-start d-block">Area perteneciente: </label>
+                    <select id="area" class="form-select" formControlName="seccion">
+                        <option value="" disabled selected> --Seleccione-- </option>
+                        <option *ngFor="let seccion of secciones" [ngValue]="seccion.id"> {{seccion.seccion}} </option>
+                    </select>
+                </div>
             </div> <!-- Datos de inicio de sesion -->
         </fieldset>
         <div class="boton">

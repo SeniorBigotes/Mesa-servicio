@@ -75,14 +75,10 @@ public class TicketService {
         ticketEntity.setDescripcionCambios("");
         ticketEntity.setEstatus(EstatusTicket.ABIERTO);
         ticketEntity.setFechaCreacion(fecha);
-        ticketEntity.setCreador(ticket.getCreador());
+        ticketEntity.setAutor(ticket.getAutor());
         ticketEntity.setSeccion(ticket.getSeccion());
         ticketEntity.setCategoria(ticket.getCategoria());
         ticketEntity.setPrioridad(ticket.getPrioridad());
-
-        if (ticket.getAsignado() != null) {
-            ticketEntity.setAsignado(ticket.getAsignado());
-        }
 
         return ticketRepo.save(ticketEntity);
     }
@@ -113,21 +109,5 @@ public class TicketService {
         }
 
         return ticketRepo.save(ticketEntity);
-    }
-
-    // Asignar un ticket
-    public Ticket asignarTicket(Long ticketId, TicketDto ticketDto) {
-        final Ticket ticket = ticketRepo.findById(ticketId).orElse(null);
-
-        if (ticket == null) {
-            return null;
-        }
-        // actualizar estado y asignacion
-        if (ticket.getAsignado() == null) {
-            ticket.setEstatus(EstatusTicket.EN_PROCESO);
-            ticket.setAsignado(ticketDto.getAsignado());
-            ticketRepo.save(ticket);
-        }
-        return ticket;
     }
 }

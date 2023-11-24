@@ -24,7 +24,7 @@ export class ModificarComponent implements OnInit {
   ngOnInit(): void {
     this.modificarTicket = this.formulario();
     // escuchar cambios y actualizar
-    this.ticketsService.ticketService$?.subscribe(ticket => {
+    this.ticketsService.ticketService$?.subscribe(ticket => {      
       if(ticket !== null && ticket !== undefined) {
         this.ticket = ticket;
         this.ticketID = ticket.id;
@@ -36,9 +36,8 @@ export class ModificarComponent implements OnInit {
       }
     });
 
-    this.ticketsService.getPrioridad().subscribe(resp => {
-      this.prioridades = resp;
-    })
+    // obtener prioridades
+    this.ticketsService.getPrioridad().subscribe(resp => this.prioridades = resp)
   } // end OnInit
 
   get getPrioridad() {return this.modificarTicket.get('prioridad') as FormControl;}
@@ -53,10 +52,13 @@ export class ModificarComponent implements OnInit {
         descripcionCambios: this.getDescripcion.value
       }
       // actualizar tickets
-      this.ticketsService.putTicket(ticketModificado, this.ticketID). subscribe(resp => {
-        this.ticketsService.getTickets().subscribe(tickets => this.ticketsService.actualizarTickets(tickets), err => this.error = err);
-        this.modificarTicket.reset();
-      }, err => console.log(err));
+      this.ticketsService.putTicket(ticketModificado, this.ticketID).subscribe({
+        next: resp => {
+          this.ticketsService.getTickets().subscribe({
+            next: tickets => this.ticketsService.actualizarTickets(tickets), 
+            error: err => this.error = err});
+          this.modificarTicket.reset();
+      },error: err => console.log(err)});
       
     } else { // else
       this.alerta = true;
@@ -64,6 +66,10 @@ export class ModificarComponent implements OnInit {
         this.alerta = false;
       }, 2000);
     }
+  }
+
+  clear() {
+    this.modificarTicket.reset();
   }
 
   // Crear formulario para modificar tickets

@@ -1,0 +1,1 @@
+No subi la carpeta de node_modules, pesa mucho

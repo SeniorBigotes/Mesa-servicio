@@ -32,7 +32,8 @@ export class TicketComponent implements OnInit {
     }); // end vista ticket
 
     //Obtener tickets (principal)
-    this.ticketsService.getTickets().subscribe(tickets => {
+    this.ticketsService.getTickets().subscribe({
+      next: tickets => {
       // Mostrar Activos / Finalizados
       if (this.router.url === '/main/tickets/finalizados') { // Finalizados
         this.tickets = this.filtrosFinalizados(this.tickets, tickets);
@@ -47,7 +48,7 @@ export class TicketComponent implements OnInit {
         this.fechaCreacion = tickets.fechaCreacion;
         this.fechaModificacion = tickets.fechaModificacion;
       });
-    }, err => this.error = err); // end obtener tickets 
+    }, error: err => this.error = err}); // end obtener tickets 
     
     // Actualiza los tickets
     this.ticketsService.ticketsActualizados$.subscribe(tickets => {

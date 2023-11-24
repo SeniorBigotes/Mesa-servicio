@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import servicedesk.entity.ticket.Seccion;
 import servicedesk.entity.usuario.EstatusUsuario;
 
 @Data
@@ -22,4 +23,5 @@ public class UsuarioDto {
     private String role;
 
     private EstatusUsuario estatus;
+    private Seccion seccion;
 }
