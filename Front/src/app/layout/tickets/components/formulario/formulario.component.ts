@@ -3,7 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { TicketsService } from '../../tickets.service';
 import { LoginService } from 'src/app/layout/login/login.service';
 import { Router } from '@angular/router';
-import { FormRegisterService } from 'src/app/layout/usuarios/usuarios.service';
+import { Ticket } from 'src/app/models/Ticket';
+import { RegistrosService } from 'src/app/layout/registros/registros.service';
 
 @Component({
   selector: 'app-formulario',
@@ -13,7 +14,7 @@ import { FormRegisterService } from 'src/app/layout/usuarios/usuarios.service';
 export class FormularioComponent implements OnInit {
 
   nuevoTicket!: FormGroup;
-  validar: boolean = false;
+  validar: boolean = true;
   categorias!: any;
   secciones!: any;
   asignados?: any;
@@ -27,13 +28,13 @@ export class FormularioComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private ticketsService: TicketsService,
               private loginService: LoginService,
-              private usuariosService: FormRegisterService,
+              private registrosService: RegistrosService,
               private router: Router) {}
 
   ngOnInit(): void {
     // Obtener rol
     this.rolUser = this.loginService.getUserRol();
-    this.visualizar = this.rolUser === 'ADMINISTRADOR' ? true : false;
+    this.visualizar = this.rolUser !== 'BECARIO' ? true : false;
     // formulario ticket
     this.nuevoTicket = this.crearFormulario();
 
@@ -49,38 +50,44 @@ export class FormularioComponent implements OnInit {
   get getPrioridad() {return this.nuevoTicket.get('prioridad') as FormControl}
   get getAsignado() {return this.nuevoTicket.get('asignado') as FormControl}
 
-  
+  // crear ticket
   crearTicket() {
-    if(this.nuevoTicket.valid) {
-      const ticketGenerado = {
-        asunto: this.getAsunto.value,
-        autor: {id: this.loginService.getUser().id},
-        seccion: {id: this.getSeccion.value},
-        categoria: {id: this.getCategoria.value},
-        prioridad: {id: this.getPrioridad.value},
-        asignado: {id: this.getAsignado.value}
-      }
-      this.ticketsService.postTickets(ticketGenerado).subscribe({
-        complete: () => {
-        this.nuevoTicket.reset();
-        this.router.navigate(['/main/tickets/activos']);
-      }, error: err => this.errores = err});
+    if(this.rolUser === 'BECARIO') {
+      const ticketGenerado: Ticket = this.formBecarioColaborador();
+      this.getAsunto.value !== '' && (this.getCategoria.value !== '' && this.getSeccion.value !== '') ? 
+          this.enviar(ticketGenerado) : this.toast();
     } else {
-      this.toast();
+      const ticketGenerado: any = this.formAdmin();
+      this.nuevoTicket.valid ?
+        this.enviar(ticketGenerado) : this.toast();
     }
   }
 
+  // Obtener usuaros de el area seleccionada
   usuariosArea(id: number) {
     this.ticketsService.getAsignados(id).subscribe(asignados => this.usuariosSeccion = asignados); 
   }
 
+  // Toast
   toast() {
     this.toastr = true;
-    setTimeout(() => {
-      this.toastr = false;
-    }, 2000);
+    setTimeout(() => this.toastr = false, 1500);
   }
 
+  private enviar(datos: Ticket) {
+    this.ticketsService.postTickets(datos).subscribe({
+        // generar el reporte
+        next: resp => {
+          const usuario = this.loginService.getUser();
+          this.registrosService.postRegistro(this.registro(usuario, resp))
+              .subscribe();
+        // resto de funciones
+        }, complete: () => {
+        this.nuevoTicket.reset();
+        this.router.navigate(['/main/tickets/activos']);
+      }, error: err => this.errores = err});
+  }
+  /* FORMULARIOS */
   private crearFormulario(): FormGroup {
     return this.fb.group({
       asunto: ['', Validators.required],
@@ -89,5 +96,38 @@ export class FormularioComponent implements OnInit {
       prioridad: ['', Validators.required],
       asignado: ['', Validators.required]
     });
+  }
+
+  private formAdmin() {
+    const form: Ticket = {
+        asunto: this.getAsunto.value,
+        autor: {id: this.loginService.getUser().id},
+        seccion: {id: this.getSeccion.value},
+        categoria: {id: this.getCategoria.value},
+        prioridad: {id: this.getPrioridad.value},
+        asignado: {id: this.getAsignado.value}
+      }
+      return form;
+  }
+  
+  private formBecarioColaborador() {
+    const form = {
+        asunto: this.getAsunto.value,
+        autor: {id: this.loginService.getUser().id},
+        seccion: {id: this.getSeccion.value},
+        categoria: {id: this.getCategoria.value}
+      }
+      return form;
+  }
+
+  private registro(usuario: any, response: any) {
+    const registro = {
+      modifico: usuario.id,
+      ticket: response.ticket.id,
+      cambios: response.ticket.asunto,
+      prioridad: response.ticket.prioridad.id,
+      estatus: response.ticket.estatus
+    }
+    return registro;
   }
 }

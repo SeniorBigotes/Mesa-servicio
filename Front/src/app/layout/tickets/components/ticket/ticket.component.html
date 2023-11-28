@@ -11,7 +11,12 @@
         <div class="card ticket-body">
             <div class="ticket-medium">
                 <div class="autor-prioridad">
-                    <p>Autor: <span> {{ticket.autor.perfil.nombre}} {{ticket.autor.perfil.apellidoP}}</span></p>
+                    <p>Autor: <span> {{ticket.autor.perfil.nombre}} {{ticket.autor.perfil.apellidoP}} </span></p>
+                    <p *ngIf="ticket.asignado; else a">Asignado a: <span> {{ticket.asignado?.perfil?.nombre}} {{ticket.asignado?.perfil?.apellidoP}} </span></p>
+                    <ng-template #a>
+                        <p>Asignado a: <span> - - </span></p>
+                    </ng-template>
+                    
                     <p class="form-label">Prioridad: <span>{{ticket.prioridad?.prioridad}}</span> </p>
                 </div>
                 <div class="linea-list"></div>

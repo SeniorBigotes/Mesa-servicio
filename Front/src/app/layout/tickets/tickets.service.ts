@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Ticket } from '../../models/TicketInterface';
+import { Ticket } from '../../models/Ticket';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +40,7 @@ export class TicketsService {
     return this.http.get(`${this.api}/tickets`, {withCredentials: true, headers: headers});
   }
 
-  // Actualiza tickets
+  // Actualiza tickets tiempo real
   actualizarTickets(tickets: any) {
     this.ticketsSubject.next(tickets);
   }
@@ -54,6 +54,7 @@ export class TicketsService {
     return this.http.get(`${this.api}/tickets/${id}`);
   }
 
+  // Crear tickets
   postTickets(ticket: any): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders()
@@ -65,7 +66,7 @@ export class TicketsService {
       headers: headers
     });
   }
-
+  // Actualizar ticket
   putTicket(ticket: any, id: number): Observable<any> {
     return this.http.put(`${this.api}/tickets/${id}`, ticket, {
       withCredentials: true

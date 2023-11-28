@@ -62,4 +62,9 @@ public class Ticket {
     @JoinColumn(name = "autor_id")
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Cuenta autor; // ticket que creo el usuario
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asignado_id")
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    private Cuenta asignado; // ticket al usuario que va a signado
 }

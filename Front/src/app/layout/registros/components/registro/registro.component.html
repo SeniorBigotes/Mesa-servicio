@@ -1,0 +1,36 @@
+<div *ngFor="let registro of registros" >
+    <div class="registro rounded-3 mb-5" [ngClass]="{'no-atiende': atiende(registro.id, registro)}">
+        <div class="registro-datos">
+            <div class="datos-id">
+                <p>#{{registro.id}}</p>
+            </div>
+            <div class="datos-cambios">
+                <p class="cambios">Cambios: </p>
+                <div class="cambios-texto">
+                    <p>{{registro.cambios}}</p>
+                </div>
+            </div>
+            <div class="fecha">
+                <p class="date">{{registro.fecha | date:'dd-MM-yyyy'}}</p>
+                <div class="datos-modifico">
+                    <p>Modifico: <span>{{registro.modifico.perfil?.nombre}} {{registro.modifico.perfil?.apellidoP}}</span></p>
+                </div>
+                <div class="datos-estatus">
+                    <p>{{registro.estatus}}</p>
+                    <p>{{registro.prioridad.prioridad}}</p>
+                </div>
+                <div>
+                </div>
+            </div>
+        </div>
+        <div class="registro-ticket">
+            <p>Ticket: <span class="text-primary fw-bold">#{{registro.ticket.id}}</span></p>
+            <p>Autor: <span>{{registro.ticket.autor?.perfil?.nombre}} {{registro.ticket.autor?.perfil?.apellidoP}}</span></p>
+            <p [ngClass]="{'text-danger fw-bold': atiende(registro.id, registro)}">Atiende: 
+                <span *ngIf="!atiende(registro.id, registro); else a">
+                    {{registro.ticket.asignado?.perfil?.nombre}} {{registro.ticket.asignado?.perfil?.apellidoP}}</span>
+                    <ng-template #a> - - </ng-template>
+            </p>
+        </div>
+    </div>
+</div>

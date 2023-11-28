@@ -2,6 +2,8 @@ package servicedesk.entity.ticket;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,19 +23,27 @@ import servicedesk.entity.usuario.Cuenta;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "reportes")
-public class Reporte {
+@Table(name = "registros")
+public class Registro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date modificacion;
+    private Date fecha;
     private String cambios;
+    private String estatus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "prioridad_id")
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    private Prioridad prioridad;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id")
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Ticket ticket;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "asignado_id")
-    private Cuenta asignado;
+    @JoinColumn(name = "modifico_id")
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    private Cuenta modifico;
 }

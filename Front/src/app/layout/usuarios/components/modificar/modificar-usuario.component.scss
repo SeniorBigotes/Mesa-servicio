@@ -29,7 +29,6 @@ fieldset {
         padding: 1rem 3rem;
     }
     @include s.pc-chico {
-        justify-content: flex-end;
         margin-right: 20%;
         margin-top: 2rem;
         .btn {

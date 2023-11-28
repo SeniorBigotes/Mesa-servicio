@@ -23,6 +23,9 @@
             }
         }
     }
+    .form {
+        overflow-y: auto;
+    }
     @include s.tablet{
         height: calc(96% - (0px));
     }
@@ -81,4 +84,8 @@ input, select {
 
 .ng-valid:not(form).ng-touched {
     border: 2px solid s.$form-valid;
+}
+.scroll-central {
+    height: calc(97vh - 100px); // 100px representa la altura sumada de otros elementos
+    overflow-y: auto;
 }

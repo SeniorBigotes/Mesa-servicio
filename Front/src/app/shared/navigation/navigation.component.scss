@@ -17,8 +17,9 @@
         .menu {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
+            align-items: center;
             gap: 1rem;
-            
+
             @include s.tablet {
                 grid-template-columns: repeat(3, 1fr);
             }
@@ -26,8 +27,8 @@
             @include s.pc-mediano {
                 grid-template-columns: none;
                 padding-top: 2rem;
+                
             }
-
         }
     }
 }
@@ -46,7 +47,6 @@ li {
 
         @include s.pc-chico {
             display: block;
-            width: 15rem;
             padding: 1rem 4rem;
         }
     }

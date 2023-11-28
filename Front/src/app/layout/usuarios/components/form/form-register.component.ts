@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@a
 import { FormRegisterService } from '../../usuarios.service';
 import { TicketsService } from 'src/app/layout/tickets/tickets.service';
 import { Seccion } from 'src/app/models/Seccion';
-import { Rol } from 'src/app/models/RolesInterface';
+import { Rol } from 'src/app/models/Rol';
 
 @Component({
   selector: 'app-form-register',

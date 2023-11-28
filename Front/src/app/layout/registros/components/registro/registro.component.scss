@@ -1,0 +1,93 @@
+@use '../../../../../styles.scss' as s;
+
+p {
+    font-size: 1.3rem;
+    margin: 0;
+    @include s.pc-mediano {
+        font-size: 1.5rem;
+    }
+}
+.registro {
+    border: 2px solid s.$bg-infotec-marron;
+    background-color: lighten(s.$bg-infotec-marron, 40);
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+.registro-datos {
+    display: grid;
+    grid-template-columns: 1fr 3fr 3fr 2fr 2fr;
+    grid-template-areas:
+            "id cambios cambios fecha fecha"
+            "ticket ticket ticket ticket ticket";
+    justify-items: center;
+    height: 9rem;
+}
+.datos-id,
+.datos-cambios,
+.datos-modifico,
+.datos-estatus {
+    width: 100%;
+}
+.datos-id {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    grid-area: id;
+    background-color: lighten(rgb(78, 249, 121), 10);
+    border-right: 2px solid s.$bg-infotec-marron;
+}
+.datos-cambios {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-area: cambios;
+    align-items: center;
+    .cambios {
+        text-align: center;
+        margin-right: 1rem;
+    }
+    .cambios-texto {
+        height: 9rem;
+        overflow-y: auto;
+        margin-right: .7rem;
+        display: grid;
+        align-items: center;
+        @include s.tablet {
+            margin: 0;
+        }
+    }
+}
+.fecha {
+    grid-area: fecha;
+    display: grid;
+    grid-template-areas: 
+            "date date"
+            "modifico estatus";
+    grid-template-rows: none;
+    width: 100%;
+    text-align: center;
+}
+.date {
+    grid-area: date;
+}
+.datos-modifico {
+    grid-area: modifico;
+    p {
+        text-align: center;
+        span {
+            display: block;
+        }
+    }
+}
+.datos-estatus {
+    grid-area: estatus;
+}
+.registro-ticket {
+    border-top: 2px solid s.$bg-infotec-marron;
+    grid-area: ticket;
+    display: flex;
+    justify-content: space-around;
+}
+.no-atiende {
+    border: 2px solid lighten(s.$form-invalid, 10);
+    box-shadow: rgba(s.$form-invalid, 0.19) 0px 10px 20px, rgba(s.$form-invalid, 0.23) 0px 6px 6px;
+}

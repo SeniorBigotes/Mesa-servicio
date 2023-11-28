@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
+import servicedesk.dto.RegistroDto;
 import servicedesk.dto.TicketDto;
 import servicedesk.entity.ticket.Categoria;
 import servicedesk.entity.ticket.Prioridad;
+import servicedesk.entity.ticket.Registro;
 import servicedesk.entity.ticket.Seccion;
 import servicedesk.entity.ticket.Ticket;
 import servicedesk.services.TicketService;
@@ -117,5 +119,52 @@ public class TicketRest {
         response.put("mensaje", "Ticket actualizado con exito");
         response.put("Ticket", actualizarticket);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
+    // Ver todos los reportes
+    @GetMapping("/reportes")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Registro> consultaReporte() {
+        return ticketservice.reporteFindAll();
+    }
+
+    // Ver reportes por ID
+    @GetMapping("/reportes/{id}")
+    public ResponseEntity<?> consultaReportePorID(@PathVariable Long id) {
+        Registro reporte = null;
+        String response = "";
+
+        try {
+            reporte = ticketservice.reporteFindById(id);
+
+            if (reporte == null) {
+                response = "El reporte con el ID: ".concat(id.toString()).concat("no existe en la base de datos");
+                return new ResponseEntity<String>(response, HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<Registro>(reporte, HttpStatus.OK);
+        } catch (DataAccessException e) {
+            response = "Error al realizar la consulta";
+            response = response.concat(e.getMessage().concat(e.getMostSpecificCause().toString()));
+            return new ResponseEntity<String>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // Crear reportes
+    @PostMapping("/reportes")
+    public ResponseEntity<?> create(@RequestBody RegistroDto reporte) {
+        Registro reporteNew = null;
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            reporteNew = ticketservice.crearReporte(reporte);
+
+            response.put("mensaje", "Reporte  creado con exito");
+            response.put("reporte", reporteNew);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert");
+            response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

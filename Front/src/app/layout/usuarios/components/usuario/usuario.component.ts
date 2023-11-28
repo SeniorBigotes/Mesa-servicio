@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormRegisterService } from '../../usuarios.service';
-import { Perfil } from '../../../../models/PerfilesInterface';
 import { BehaviorSubject } from 'rxjs';
-import { Rol } from 'src/app/models/RolesInterface';
+import { Cuenta } from 'src/app/models/Cuenta';
 
 @Component({
   selector: 'app-usuario',

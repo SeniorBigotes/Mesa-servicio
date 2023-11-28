@@ -106,9 +106,9 @@
                                         Modificar
                                     </button>
 
-                                    <button class="btn fw-bold" [ngClass]="cuenta.perfil.estatus === 'ACTIVO' ? 'btn-danger': 'btn-success'"
+                                    <button class="btn fw-bold" [ngClass]="cuenta.perfil?.estatus === 'ACTIVO' ? 'btn-danger': 'btn-success'"
                                         (click)="cambiarEstatus(cuenta.perfil.estatus, cuenta.perfil.id)">
-                                        {{cuenta.perfil.estatus === 'ACTIVO' ? 'Desactivar' : 'Activar'}}
+                                        {{cuenta.perfil?.estatus === 'ACTIVO' ? 'Desactivar' : 'Activar'}}
                                     </button>
                                     </div>
                                 </div>

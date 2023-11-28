@@ -1,0 +1,31 @@
+@use '../../../../styles.scss' as s;
+
+.busqueda-filtros {
+    flex-direction: column;
+    align-items: center;
+    @include s.tablet {
+        flex-direction: row;
+        margin-left: 3rem;
+    }
+}
+.busqueda {
+    width: 30rem;
+    height: 4rem;
+    input {
+        font-size: 1.5rem;
+    }
+}
+.container {
+    max-width: 90rem;
+}
+.scroll {
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+.linea {
+    content: "";
+    height: 3px;
+    background-color: s.$bg-infotec-marron;
+    margin-bottom: 5px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}

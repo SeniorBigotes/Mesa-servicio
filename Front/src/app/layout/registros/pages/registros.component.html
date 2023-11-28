@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="busqueda-filtros d-flex gap-3 mt-4">
+        <div class="input-group busqueda border border-dark rounded-2">
+            <input type="text" class="form-control" placeholder="ID, ticket, fecha"
+            [(ngModel)]="input" (keyup.enter)="buscar()">
+            <button class="btn btn-outline-secondary" (click)="buscar()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="14" height="14"
+                    viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                    <path d="M21 21l-6 -6" />
+                </svg>
+            </button>
+        </div> <!-- end .busqueda -->
+        <p class="text-danger fs-5 fw-bolder" *ngIf="input !== ''">
+            * La barra debe estar vacía para <span class="d-block"> obtener <u class="text-uppercase">todos</u> los
+                resultados *</span>
+        </p>
+    </div>
+    <main class="container mt-4 scroll">
+        <app-registro></app-registro>
+    </main>
+    <div class="linea w-100 rounded-circle d-block"></div>
+</div>

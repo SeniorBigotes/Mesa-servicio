@@ -9,7 +9,7 @@ import { NavigationEnd, Router } from '@angular/router';
 export class SectionRightComponent implements OnInit {
 
   
-  rutaActual: string | null = localStorage.getItem('url');
+  rutaActual!: string;
 
   constructor(private router: Router) {}
 
@@ -17,14 +17,13 @@ export class SectionRightComponent implements OnInit {
     this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd) {
         if(event.url.includes('/tickets')) this.almacenarUrl('tickets')
-        if(event.url.includes('/usuarios')) this.almacenarUrl('usuarios')
+        if(event.url.includes('/users')) this.almacenarUrl('users')
+        if(event.url.includes('/registros')) this.almacenarUrl('registros')
       }
     })
   }
   
   private almacenarUrl(url: string): void {
-    localStorage.removeItem(url);
-    localStorage.setItem('url', url);
     this.rutaActual = url;
   }
 }

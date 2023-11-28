@@ -38,7 +38,7 @@
                         * ¿A que area va dirigido?</p>
                 </div>
             </div>
-            <div class="mb-3 campo-form">
+            <div class="mb-3 campo-form" *ngIf="visualizar">
                 <label for="asignado">Enviar a: </label>
                 <select id="asignado" class="form-control form-select-lg mb-3"
                 formControlName="asignado">
@@ -68,9 +68,7 @@
             </div>
     
             <div class="button">
-                <button class="btn btn-outline-primary mt-4"
-                [disabled]="nuevoTicket.invalid"
-                >Crear</button>
+                <button class="btn btn-outline-primary mt-4">Crear</button>
             </div>
         </form>
     </div>

@@ -81,7 +81,7 @@ public class UsuarioService {
         return (Cuenta) cuentaRep.findById(id).orElse(null);
     }
 
-    // viduslizar asignado
+    // visualizar asignado
     public List<Cuenta> verAsignado(Long seccionID) {
         List<Cuenta> cuentas = cuentaRep.findAll();
         List<Cuenta> asignado = new ArrayList<>();
@@ -94,6 +94,7 @@ public class UsuarioService {
         if(asignado.size() == 0) {
             return null;
         }
+        Collections.sort(asignado, Comparator.comparing(Cuenta::getNombreUsuario));
         return asignado;
     }
 

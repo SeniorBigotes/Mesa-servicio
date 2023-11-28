@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ServiciosService } from 'src/app/servicios.service';
 import { LoginService } from '../login.service';
 import { LoginRequest } from '../../../models/loginInterface';
-import { tokenResponse } from '../../../models/tokenResponse';
+import { Token } from 'src/app/models/Token';
 
 @Component({
   selector: 'app-login',
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     if(this.formLogin.valid) {
       const login: LoginRequest = this.formLogin.value;
       // almacenar token y otras validaciones
-      this.loginService.postLogin(login).subscribe((resp: tokenResponse) => {
+      this.loginService.postLogin(login).subscribe((resp: Token) => {
         // pasar token y obener usuario
         this.loginService.loginUser(resp.token);
         this.loginService.getCurrentUser().subscribe((user: any) => {

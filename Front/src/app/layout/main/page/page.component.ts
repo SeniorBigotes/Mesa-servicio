@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiciosService } from 'src/app/servicios.service';
 import { LoginService } from '../../login/login.service';
+import { BehaviorSubject } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
 @Component({
   selector: 'app-page',
   templateUrl: './page.component.html',
@@ -13,7 +15,8 @@ export class PageComponent implements OnInit {
   tokenLocalStorage: string | null = this.loginService.getToken();
 
   constructor(private serviciosService: ServiciosService,
-              private loginService: LoginService) {}
+              private loginService: LoginService,
+              private router: Router) {}
   
   ngOnInit(): void {    
     // verifica el inicio de sesion
@@ -49,10 +52,5 @@ export class PageComponent implements OnInit {
       return JSON.parse(decoded);
     }
     return null;
-  }
-
-  private tokenTime(time: number) {
-    const date = new Date(time * 1000);
-    return date;
   }
 }
