@@ -12,27 +12,23 @@ export class RegistrosComponent implements OnInit {
 
   input: string = '';
 
-  // Subject y observable
-  // Busqueda
-  private busquedaInput = new BehaviorSubject<string>("");
-  busquedaInput$ = this.busquedaInput.asObservable();
-
-  constructor() {}
+  constructor(private registrosService: RegistrosService) {}
   
   ngOnInit(): void {
-
   }
 
   // funcion de la barra de busqueda
   buscar() {
-    this.busqueda(this.input);
-    this.busquedaInput$.subscribe(resp => {
-      console.log(resp);
-    })
+    this.registrosService.busqueda(this.input);
   }
 
-  // Subject de la busqueda
-  private busqueda(str: string) {
-    this.busquedaInput.next(str)
+  // botones (registros / tickets)
+  btnRegistro(str: string) {
+    this.registrosService.botones(str);
   }
+  btnTicket(str: string) {
+    this.registrosService.botones(str);
+  }
+
+  
 }

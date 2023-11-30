@@ -25,7 +25,7 @@ export class ModificarComponent implements OnInit {
   asignar?: any;
   seccionID!: number;
 
-  userRol!: string;
+  authority: string = this.loginService.getUserRol();
   
   constructor(private ticketsService: TicketsService,
               private loginService: LoginService,
@@ -34,7 +34,6 @@ export class ModificarComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.userRol = this.loginService.getUserRol();
     this.modificarTicket = this.formulario();
     // escuchar cambios y actualizar
     this.ticketsService.ticketService$?.subscribe(ticket => {      
@@ -57,7 +56,7 @@ export class ModificarComponent implements OnInit {
   get getAsignado() {return this.modificarTicket.get('asignado') as FormControl;}
 
   modificar() {
-    if(this.userRol !== 'BECARIO') {
+    if(this.authority !== 'BECARIO') {
       if(!this.modificarTicket.invalid) {
         const ticketModificado = {
           prioridad: {id: this.getPrioridad.value},
@@ -83,6 +82,7 @@ export class ModificarComponent implements OnInit {
   clear() {
     this.modificarTicket.reset();
     this.ticket = null;
+    this.ticketsService.click(0);
   }
 
   private enviar(ticket: any): void {
@@ -96,16 +96,19 @@ export class ModificarComponent implements OnInit {
       complete: () => {
         // obtener tickets actualizados
         this.extraerTickets();    
-        this.modificarTicket.reset();
         this.ticket = null;
+        this.modificarTicket.reset();
+        this.ticketsService.click(0);
       }});
   }
 
+  // Alerta
   private alert(): void {
     this.alerta = true;
     setTimeout(() => this.alerta = false, 2000);
   }
 
+  // Envia datos actualizados
   private extraerTickets(): void {
     this.ticketsService.getTickets().subscribe({
       next: tickets => this.ticketsService.actualizarTickets(tickets), 
@@ -123,6 +126,7 @@ export class ModificarComponent implements OnInit {
     });
   }
 
+  // Formulario de modificar
   private modificarFormulario(ticket: any): void {
     this.modificarTicket.patchValue({
       prioridad: ticket.prioridad.id,
@@ -132,6 +136,7 @@ export class ModificarComponent implements OnInit {
     });
   }
 
+  // objeto de registro
   private registro(usuario: any, response: any) {
     const registro = {
       modifico: usuario.id,

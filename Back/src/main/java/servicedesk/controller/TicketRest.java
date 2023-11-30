@@ -3,6 +3,8 @@ package servicedesk.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -121,16 +123,24 @@ public class TicketRest {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
-    // Ver todos los reportes
+    // Ver todos los registros
     @GetMapping("/reportes")
     @ResponseStatus(HttpStatus.OK)
-    public List<Registro> consultaReporte() {
+    public List<Registro> consultaRegistros() {
         return ticketservice.reporteFindAll();
     }
-
-    // Ver reportes por ID
+    
+    // Ver todos los registros (ordenado por id del ticket)
+    @GetMapping("/reportes/ticket")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Registro> consultaRegistrosTicket() {
+        List<Registro> list = ticketservice.reporteFindAll();
+        Collections.sort(list, Comparator.comparingLong(registro -> ((Registro) registro).getTicket().getId()).reversed());
+        return list;
+    }
+    // Ver registros por ID
     @GetMapping("/reportes/{id}")
-    public ResponseEntity<?> consultaReportePorID(@PathVariable Long id) {
+    public ResponseEntity<?> consultaRegistroPorID(@PathVariable Long id) {
         Registro reporte = null;
         String response = "";
 

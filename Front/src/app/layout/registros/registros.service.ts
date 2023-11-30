@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,10 +10,24 @@ export class RegistrosService {
 
   api = environment.API_API
 
+  // Botones (tickets, registros)
+  private boton = new BehaviorSubject<string>('registros');
+  boton$ = this.boton.asObservable();
+
+  // busqueda del input
+  private busquedaInput = new BehaviorSubject<string>("");
+  busquedaInput$ = this.busquedaInput.asObservable();
+
   constructor(private http: HttpClient) { }
 
+  // consultar todos los registros
   getRegistros(): Observable<any> {
     return this.http.get(`${this.api}/reportes`);
+  }
+
+  // consultar registros por ID
+  getRegistrosTicket(): Observable<any> {
+    return this.http.get(`${this.api}/reportes/ticket`);
   }
 
   // Generar registro sobre los tickets
@@ -27,5 +41,14 @@ export class RegistrosService {
     }
 
     return this.http.post(`${this.api}/reportes`, formato);
+  }
+
+  // Subject de la busqueda
+  busqueda(str: string) {
+    this.busquedaInput.next(str)
+  }
+
+  botones(str: string) {
+    this.boton.next(str);
   }
 }

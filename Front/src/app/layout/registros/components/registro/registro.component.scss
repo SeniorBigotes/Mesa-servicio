@@ -20,7 +20,7 @@ p {
             "id cambios cambios fecha fecha"
             "ticket ticket ticket ticket ticket";
     justify-items: center;
-    height: 9rem;
+    height: 10rem;
 }
 .datos-id,
 .datos-cambios,
@@ -46,7 +46,7 @@ p {
         margin-right: 1rem;
     }
     .cambios-texto {
-        height: 9rem;
+        height: 10rem;
         overflow-y: auto;
         margin-right: .7rem;
         display: grid;
@@ -68,6 +68,20 @@ p {
 }
 .date {
     grid-area: date;
+    &::after {
+        content: "";
+        display: block;
+        margin: auto;
+        width: 50%;
+        height: 1px;
+        background-color: lighten(black, 60);
+    }
+    span {
+        display: block;
+        @include s.tablet {
+            display: inline-block;
+        }
+    }
 }
 .datos-modifico {
     grid-area: modifico;
@@ -82,10 +96,20 @@ p {
     grid-area: estatus;
 }
 .registro-ticket {
+    background-color: lighten(black, 85);
     border-top: 2px solid s.$bg-infotec-marron;
     grid-area: ticket;
     display: flex;
     justify-content: space-around;
+    p{
+        text-align: center;
+        span {
+            display: block;
+            @include s.tablet {
+                display: inline-block;
+            }
+        }
+    }
 }
 .no-atiende {
     border: 2px solid lighten(s.$form-invalid, 10);

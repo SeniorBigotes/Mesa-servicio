@@ -1,4 +1,4 @@
 export interface Seccion {
-    id?: number,
+    id: number,
     seccion?: string
 }

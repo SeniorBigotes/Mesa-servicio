@@ -12,6 +12,10 @@ export class TicketsService {
   private api: string = environment.API_API;
   private auth: string = environment.API_AUTH;
 
+  // Click al ticket
+  private clickTiket = new BehaviorSubject<number>(0);
+  clickTicket$ = this.clickTiket.asObservable();
+
   // Vista de tickets (lista o cuadriculado)
   private vista = new BehaviorSubject<any>(false);
   vistaSubject$ = this.vista.asObservable();
@@ -105,5 +109,10 @@ export class TicketsService {
   }
   textoBuscado(texto: string) {
     this.busquedaTexto.next(texto);
+  }
+
+  // Click al ticket
+  click(str: number) {
+    this.clickTiket.next(str);
   }
 }

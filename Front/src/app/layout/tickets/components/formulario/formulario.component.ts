@@ -5,6 +5,10 @@ import { LoginService } from 'src/app/layout/login/login.service';
 import { Router } from '@angular/router';
 import { Ticket } from 'src/app/models/Ticket';
 import { RegistrosService } from 'src/app/layout/registros/registros.service';
+import { Cuenta } from 'src/app/models/Cuenta';
+import { Prioridad } from 'src/app/models/Prioridad';
+import { Seccion } from 'src/app/models/Seccion';
+import { Categoria } from 'src/app/models/Categoria';
 
 @Component({
   selector: 'app-formulario',
@@ -15,14 +19,18 @@ export class FormularioComponent implements OnInit {
 
   nuevoTicket!: FormGroup;
   validar: boolean = true;
-  categorias!: any;
-  secciones!: any;
-  asignados?: any;
-  usuariosSeccion: any[] = []
-  prioridades!: any;
+
+  categorias!: Categoria[];
+  secciones!: Seccion[];
+  prioridades!: Prioridad[];
+
+  asignados?: Cuenta[];
+  usuariosSeccion: Cuenta[] = []
+
   errores: any;
   toastr: boolean = false;
-  rolUser: string = '';
+  
+  authority: string = this.loginService.getUserRol();
   visualizar: boolean = false;
 
   constructor(private fb: FormBuilder,
@@ -33,8 +41,7 @@ export class FormularioComponent implements OnInit {
 
   ngOnInit(): void {
     // Obtener rol
-    this.rolUser = this.loginService.getUserRol();
-    this.visualizar = this.rolUser !== 'BECARIO' ? true : false;
+    this.visualizar = this.authority !== 'BECARIO' ? true : false;
     // formulario ticket
     this.nuevoTicket = this.crearFormulario();
 
@@ -52,7 +59,7 @@ export class FormularioComponent implements OnInit {
 
   // crear ticket
   crearTicket() {
-    if(this.rolUser === 'BECARIO') {
+    if(this.authority === 'BECARIO') {
       const ticketGenerado: Ticket = this.formBecarioColaborador();
       this.getAsunto.value !== '' && (this.getCategoria.value !== '' && this.getSeccion.value !== '') ? 
           this.enviar(ticketGenerado) : this.toast();

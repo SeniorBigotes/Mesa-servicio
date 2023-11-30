@@ -14,6 +14,8 @@ export class LoginService {
   private apiAuth = environment.API_AUTH;
   private user = environment.API_USERS;
 
+  authority: string = "";
+
   constructor(private httpClient: HttpClient,
               private router: Router
               ) {}

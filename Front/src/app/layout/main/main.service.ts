@@ -6,11 +6,13 @@ import { LoginService } from '../login/login.service';
 })
 export class MainService implements OnInit {
 
+  // rol del usuario logeado
   authority: string = this.loginService.getUserRol();
+  // ruta actual
+  urlActual!: string;
   
   constructor(private loginService: LoginService) {}
 
   ngOnInit(): void {
-    console.log(this.authority)
   }
 }

@@ -10,16 +10,21 @@ import { Router } from '@angular/router';
 export class TicketComponent implements OnInit {
 
   tickets: any;
+  ticketsRespaldo!: any;
+  
   ticketsActivos!: any;
   ticketsFinalizados!: any;
+
   error: any;
+  
   fechaCreacion!: Date | string;
   fechaModificacion!: Date | string;
-  ticketSeleccionado: number | null = null;
+  
   vista: boolean = false;
+  
+  ticketSeleccionado: number | null = null;
   ticketBuscado: any = [];
   textoBusqueda: string = "";
-  ticketsRespaldo!: any;
 
 
   constructor(private ticketsService: TicketsService,
@@ -31,6 +36,8 @@ export class TicketComponent implements OnInit {
       this.vista = vista;
     }); // end vista ticket
 
+    // Click ticket
+    this.ticketsService.clickTicket$.subscribe(click => this.ticketSeleccionado = click);
     //Obtener tickets (principal)
     this.ticketsService.getTickets().subscribe({
       next: tickets => {
@@ -67,6 +74,7 @@ export class TicketComponent implements OnInit {
         this.ticketBuscado = this.filtrosActivos(this.tickets, resp);
       }
     });
+    // resultados de busqueda
     this.ticketsService.busquedaTexto$.subscribe(texto => {
       this.textoBusqueda = texto;
       
@@ -80,13 +88,14 @@ export class TicketComponent implements OnInit {
 
   // Almacenar ticket (evento click)
   click(id: number): void {
-    this.ticketSeleccionado = id;
+    this.ticketsService.click(id);
     this.ticketsService.getTicketId(id).subscribe(ticket => {
       this.ticketsService.setTicket(ticket);
     });
   } // end evento click
 
   /* FILTROS PARA LA BUSQUEDA DE TICKETS */
+  // Tickets activos
   private filtrosActivos(vari: any, param: any): any {
     vari = param?.filter((f: any) => {
       const estatus = f.estatus.toLowerCase()
@@ -95,6 +104,7 @@ export class TicketComponent implements OnInit {
     });
     return vari;
   }
+  // Tickets finalizados
   private filtrosFinalizados(vari: any, param: any): any {
     vari = param?.filter((f: any) => {
       const estatus = f.estatus.toLowerCase();

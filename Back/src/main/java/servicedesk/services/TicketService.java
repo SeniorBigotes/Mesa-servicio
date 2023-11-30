@@ -77,7 +77,7 @@ public class TicketService {
         return (Ticket) ticketRepo.findById(id).orElse(null);
     }
 
-    // Consulta de todos los reportes
+    // Consulta de todos los registros
     @Transactional(readOnly = true)
     public List<Registro> reporteFindAll() {
         List<Registro> registros =  registroRep.findAll();

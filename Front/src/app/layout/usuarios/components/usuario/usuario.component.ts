@@ -109,7 +109,8 @@ export class UsuarioComponent implements OnInit {
       this.busquedaPorTelefono(terminosBusqueda[0]);
     }
     // datos a visualizar
-    this.cuentas = this.usuarioBuscado.length > 0 ? this.usuarioBuscado : this.respaldoCuentas;
+    this.cuentas = this.usuarioBuscado.length > 0
+        ? this.usuarioBuscado : this.respaldoCuentas;
   }
   // Detecta cambios
   aplicarFiltro() {
