@@ -131,7 +131,6 @@ export class ModificarComponent implements OnInit {
     this.modificarTicket.patchValue({
       prioridad: ticket.prioridad.id,
       estatus: ticket.estatus,
-      descripcionCambios: ticket.descripcionCambios,
       asignado: ticket.asignado?.id
     });
   }

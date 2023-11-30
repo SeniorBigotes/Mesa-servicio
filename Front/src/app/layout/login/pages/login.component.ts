@@ -4,6 +4,7 @@ import { ServiciosService } from 'src/app/servicios.service';
 import { LoginService } from '../login.service';
 import { LoginRequest } from '../../../models/loginInterface';
 import { Token } from 'src/app/models/Token';
+import { Cuenta } from 'src/app/models/Cuenta';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,9 @@ import { Token } from 'src/app/models/Token';
 })
 export class LoginComponent implements OnInit {
   formLogin!: FormGroup;
+
   alert: boolean = false;
+  mensaje: string = "";
 
   errorGeneral: any = this.serviciosService.error;
   alertGeneral: boolean = this.serviciosService.activarError;
@@ -44,34 +47,47 @@ export class LoginComponent implements OnInit {
 
   // se valida la informacion
   inciarSesion(): void {
-
     if(this.formLogin.valid) {
       const login: LoginRequest = this.formLogin.value;
       // almacenar token y otras validaciones
-      this.loginService.postLogin(login).subscribe((resp: Token) => {
-        // pasar token y obener usuario
-        this.loginService.loginUser(resp.token);
-        this.loginService.getCurrentUser().subscribe((user: any) => {
-          const usuario = {
-            id: user.id,
-            username: user.username,
-            authority: user.authorities[0].authority
-          }
-          this.loginService.setUser(usuario);
-          this.serviciosService.route.navigate(['/main']);
-        }, err => console.log(err))
-        this.alert = false;
-        this.formLogin.reset();
-      }, (err: any) => {
-        this.alert = true;
-        this.formLogin.reset();
+      this.loginService.postLogin(login).subscribe({
+        // alamcenar token
+        next: (resp: Token) => this.loginService.loginUser(resp.token),
+        error: (err: any) => this.error(true, 'reset', 'Credenciales inválidas'),
+        //obener usuario
+        complete: () => this.loginService.getCurrentUser().subscribe(user => this.comprobacion(user))
       });
     } else {
-      this.alert = true;
-      this.formLogin.markAllAsTouched();
+      this.error(true, 'markAllAsTouched', 'Es necesario llenar los campos');
     }
-    setTimeout(() => {
-      this.alert = false;
-    }, 3000);
+    // Quitar añerta despues de 3 segundos
+    setTimeout(() => this.alert = false, 3000);
+  } // end iniciarSesion()
+
+  // crear formato a enviar
+  private usuarioObject(user: any) {
+    const usuario = {
+      id: user.id,
+      username: user.username,
+      authority: user.authorities[0].authority
+    }
+    return usuario;
+  }
+  // alertas y errores
+  private error(alert: boolean, method: string, mensaje: string): void {
+    this.mensaje = mensaje;
+    this.alert = alert;
+    method === 'reset' ? 
+        this.formLogin.reset() : this.formLogin.markAllAsTouched();
+  }
+  // comprobar estatus de usuario
+  private comprobacion(user: any) {
+    if(user.perfil.estatus === 'ACTIVO')  {
+      this.loginService.setUser(this.usuarioObject(user));
+      this.serviciosService.route.navigate(['/main']);
+    } else {
+      this.loginService.logOut();
+      this.error(true, 'reset', 'Usuario Inactivo');
+    }
   }
 }

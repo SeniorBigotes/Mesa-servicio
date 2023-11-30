@@ -1,10 +1,12 @@
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, catchError, map, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { ServiciosService } from 'src/app/servicios.service';
 import { LoginRequest } from '../../models/loginInterface';
 import { environment } from 'src/environments/environment';
+import { FormRegisterService } from '../usuarios/usuarios.service';
+import { Perfil } from 'src/app/models/Perfil';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +17,10 @@ export class LoginService {
   private user = environment.API_USERS;
 
   authority: string = "";
+  estatus!: string;
 
   constructor(private httpClient: HttpClient,
-              private router: Router
-              ) {}
+              private usuarioService: FormRegisterService) {}
 
   
   /* INICIO DE SESION */
@@ -37,7 +39,6 @@ export class LoginService {
     if(token === undefined || token === null || token.length === 0) {
       return false;
     }
-
     return true;
   }
   // obtener token
@@ -75,6 +76,15 @@ export class LoginService {
     localStorage.removeItem('user');
     localStorage.removeItem('url');
     return true;
+  }
+  // Obtener el estatus del usuario
+  getEstatus(): string {
+    const usuario = this.getUser();
+    this.usuarioService.getPerfil().subscribe({
+      next: (resp: Perfil[]) => resp.forEach((resp: Perfil) => {
+        if(resp.id === usuario.id) this.estatus = resp.estatus;
+      })
+    }); return this.estatus;
   }
 
   private handleError(error: HttpErrorResponse) {

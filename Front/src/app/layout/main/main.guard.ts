@@ -23,6 +23,5 @@ export const mainGuard: CanActivateFn = (route: ActivatedRouteSnapshot,
   });
   // cargar autoridad o rol
   loginService.authority = loginService.getUserRol();
-  
   return true;
 };
