@@ -1,5 +1,6 @@
 package servicedesk.services;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -39,6 +40,7 @@ public class TicketService {
     @Autowired
     private final IRegistroRep registroRep;
 
+    /* CONSULTAR TICKETS */
     // Consulta de todos los tickets
     @Transactional(readOnly = true)
     public List<Ticket> findAllTicket() {
@@ -50,6 +52,65 @@ public class TicketService {
 
         return lista;
     }
+    // Consultar tickets de seccion que no tengan asignado
+    @Transactional(readOnly = true)
+    public List<Ticket> ticketsSinAsignar(Long usuarioSeccionID) {
+        List<Ticket> list = ticketRepo.findAll();
+        List<Ticket> activos = new ArrayList<>();
+        
+        // no asignados y ticket.seccion === cuenta.seccion
+        for(Ticket ticket : list) {
+            if(ticket.getAsignado() == null && ticket.getSeccion().getId().equals(usuarioSeccionID)) {
+                activos.add(ticket);
+            }
+        }
+        if(activos.size() == 0) {
+            return null;
+        }
+        Collections.sort(activos, Comparator.comparingLong(Ticket::getId).reversed());
+        return activos;
+    }
+    // Consultar mis tickets activos y en proceso
+    public List<Ticket> ticketsSeccionActivos(Long usuarioSeccionID, Long usuarioID) {
+        List<Ticket> list = ticketRepo.findAll();
+        List<Ticket> misTickets = new ArrayList<>();
+
+        for(Ticket ticket : list) {
+            if(ticket.getAsignado() != null) {
+                if(ticket.getEstatus() != EstatusTicket.CERRADO && 
+                ( ticket.getAutor().getId().equals(usuarioID) ||
+                ticket.getAsignado().getId().equals(usuarioID) )) {
+                    misTickets.add(ticket);
+                }
+            }
+        }
+        if(misTickets.size() == 0) {
+            return null;
+        }
+        Collections.sort(misTickets, Comparator.comparingLong(Ticket::getId).reversed());
+        return misTickets;
+    }
+    // consultar mis tickets finalizados
+    public List<Ticket> ticketsSeccionInactivos(Long usuarioSeccionID, Long usuarioID) {
+        List<Ticket> list = ticketRepo.findAll();
+        List<Ticket> cerrados = new ArrayList<>();
+
+        for(Ticket ticket : list) {
+            if(ticket.getAsignado() != null) {
+                if(ticket.getEstatus() == EstatusTicket.CERRADO &&
+                ( ticket.getAutor().getId().equals(usuarioID) || 
+                ticket.getAsignado().getId().equals(usuarioID) )) {
+                    cerrados.add(ticket);
+                }
+            }
+        }
+        if(cerrados.size() == 0) {
+            return null;
+        }
+        Collections.sort(cerrados, Comparator.comparingLong(Ticket::getId).reversed());
+        return cerrados;
+    }
+
 
     // Consultar secciones
     public List<Seccion> findAllSeccion() {

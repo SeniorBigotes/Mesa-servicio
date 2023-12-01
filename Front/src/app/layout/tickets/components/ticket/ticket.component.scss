@@ -13,7 +13,6 @@ span {
     transition: all .3s ease-in-out;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
     border-radius: 1rem;
-
 }
 .ticket {
     margin: 1rem 0 0 0;
@@ -30,12 +29,37 @@ span {
 .click {
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 10px 20px, rgba(0, 0, 0, 0.5) 0px 6px 6px;
+    margin-bottom: 1rem;
 }
 .footer-ticket,
 .autor-prioridad {
     p {
         margin: 0;
     }
+}
+.autor-header,
+.autor-body {
+    border: 3px solid darken(s.$bg-infotec-marron, 5);
+    border-radius: 1rem;
+}
+.asignado-header,
+.asignado-body {
+    border: 3px solid lighten(s.$form-invalid, 10);
+    border-radius: 1rem;
+    background-color: rgba(s.$form-invalid, .05);
+
+}
+.autor-header,
+.asignado-header {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom: 0;
+}
+.autor-body,
+.asignado-body {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-top: none;
 }
 /*-----------------------------------------CUADRICULADO-----------------------------------------*/
 .verCuadros {
@@ -69,13 +93,15 @@ span {
         display: grid;
         align-content: center;
         grid-template-columns: 2fr 6fr;
+        border-bottom: 1px solid s.$bg-section-right;
         p {
             border-right: 1px solid s.$bg-section-right;
-            height: 100%;
+            height: 6rem;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0 1rem;
+            margin: 0;
         }
         .text-cambios {
             overflow-y: scroll;
@@ -133,7 +159,6 @@ span {
             height: 8rem;
         }
     }
-    
 }
 /*-----------------------------------------LISTADO+-----------------------------------------*/
 .verLista {
@@ -162,6 +187,7 @@ span {
             align-items: center;
             width: 60%;
             height: 7rem;
+            border-bottom: 1px solid s.$bg-section-right;
             p {
                 margin: 0;
                 border-left: 1px solid s.$bg-section-right;

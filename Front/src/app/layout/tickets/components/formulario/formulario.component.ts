@@ -60,7 +60,7 @@ export class FormularioComponent implements OnInit {
   // crear ticket
   crearTicket() {
     if(this.authority === 'BECARIO') {
-      const ticketGenerado: Ticket = this.formBecarioColaborador();
+      const ticketGenerado: any = this.formBecarioColaborador();
       this.getAsunto.value !== '' && (this.getCategoria.value !== '' && this.getSeccion.value !== '') ? 
           this.enviar(ticketGenerado) : this.toast();
     } else {
@@ -106,7 +106,7 @@ export class FormularioComponent implements OnInit {
   }
 
   private formAdmin() {
-    const form: Ticket = {
+    const form: any = {
         asunto: this.getAsunto.value,
         autor: {id: this.loginService.getUser().id},
         seccion: {id: this.getSeccion.value},

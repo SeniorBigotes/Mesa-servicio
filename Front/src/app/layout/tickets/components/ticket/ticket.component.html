@@ -1,7 +1,8 @@
 <div [ngClass]="vista ? 'verLista' : 'verCuadros'">
     <div *ngFor="let ticket of tickets"(click)="click(ticket.id)" 
     [ngClass]="ticketSeleccionado === ticket.id ? 'click' : 'ticket'">
-        <div class="card ticket-header-list">
+        <div class="card ticket-header-list"
+        [ngClass]="{'autor-header': ticket.autor.id === usuario.id, 'asignado-header': ticket?.asignado?.id === usuario.id}">
             <h3 class="card-header asunto"> {{ticket.asunto}} </h3>
             <div class="cambios">
                 <p>Cambios:</p>
@@ -10,16 +11,17 @@
                 </div>
             </div>
         </div>
-        <div class="card ticket-body">
+        <div class="card ticket-body"
+        [ngClass]="{'autor-body': ticket.autor.id === usuario.id, 'asignado-body': ticket?.asignado?.id === usuario.id}">
             <div class="ticket-medium">
                 <div class="autor-prioridad">
                     <p>Autor: <span> {{ticket.autor.perfil.nombre}} {{ticket.autor.perfil.apellidoP}} </span></p>
-                    <p *ngIf="ticket.asignado; else a">Asignado a: <span> {{ticket.asignado?.perfil?.nombre}} {{ticket.asignado?.perfil?.apellidoP}} </span></p>
+                    <p *ngIf="ticket.asignado; else a">Asignado a: <span> {{ticket.asignado.perfil.nombre}} {{ticket.asignado.perfil.apellidoP}} </span></p>
                     <ng-template #a>
                         <p>Asignado a: <span> - - </span></p>
                     </ng-template>
                     
-                    <p class="form-label">Prioridad: <span>{{ticket.prioridad?.prioridad}}</span> </p>
+                    <p class="form-label">Prioridad: <span>{{ticket.prioridad.prioridad}}</span> </p>
                 </div>
                 <div class="linea-list"></div>
                 <div class="ticket-fecha">
@@ -38,8 +40,8 @@
                 </div>
                 <p class="linea"></p>
                 <div class="sec-cat">
-                    <p class="linea-bottom">Seccion: <span>{{ticket.seccion?.seccion}}</span> </p>
-                    <p>Categoria: <span> {{ticket.categoria?.categoria}} </span> </p>
+                    <p class="linea-bottom">Seccion: <span>{{ticket.seccion.seccion}}</span> </p>
+                    <p>Categoria: <span> {{ticket.categoria.categoria}} </span> </p>
                 </div>
             </div>
         </div>

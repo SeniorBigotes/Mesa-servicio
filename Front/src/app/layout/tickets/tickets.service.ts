@@ -35,13 +35,22 @@ export class TicketsService {
   // CONSTRUCTOR
   constructor(private http: HttpClient) { }
 
+  /* OBATENER TICKTES */
+  // consultar todos los tickets
   getTickets(): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Bearer ' + token)
-      .set('Acces-Control-Allow-Origin', '*');
-
-    return this.http.get(`${this.api}/tickets`, {withCredentials: true, headers: headers});
+    return this.http.get(`${this.api}/tickets`);
+  }
+  // consultar tickets no asigandos
+  getTicketsNoAsigandos(id: number): Observable<any> {
+      return this.http.get(`${this.api}/tickets/no_asignados/${id}`);
+  }
+  // consultar mis tickets activos y en proceso
+  getMisTicketsActivos(seccilonID: number, usuarioID: number): Observable<any> {
+    return this.http.get(`${this.api}/tickets/mis_tickets/${seccilonID}/${usuarioID}`);
+  }
+  // consultar mis tickets cerrados
+  getMisTicketsCerrados(seccilonID: number, usuarioID: number): Observable<any> {
+    return this.http.get(`${this.api}/tickets/cerrados/${seccilonID}/${usuarioID}`);
   }
 
   // Actualiza tickets tiempo real

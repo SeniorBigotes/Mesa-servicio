@@ -7,6 +7,7 @@ import { FormularioComponent } from './components/formulario/formulario.componen
 const routes: Routes = [
   {path: '', component: TicketsComponent, children: [
     {path: 'activos', component: TicketComponent},
+    {path: 'mis-tickets', component: TicketComponent},
     {path: 'finalizados', component: TicketComponent},
     {path: 'nuevo', component: FormularioComponent}
   ]},

@@ -7,6 +7,7 @@ import { LoginRequest } from '../../models/loginInterface';
 import { environment } from 'src/environments/environment';
 import { FormRegisterService } from '../usuarios/usuarios.service';
 import { Perfil } from 'src/app/models/Perfil';
+import { Cuenta } from 'src/app/models/Cuenta';
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +63,7 @@ export class LoginService {
     return JSON.parse(user)
   }
   // obtener el usuario actual en la sesion
-  getCurrentUser() {
+  getCurrentUser(): Observable<any> {
     return this.httpClient.get(`${this.user}/user-logged`)
   }
   // obtener rol del usuario

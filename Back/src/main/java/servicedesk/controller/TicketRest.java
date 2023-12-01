@@ -3,6 +3,7 @@ package servicedesk.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -37,25 +38,64 @@ public class TicketRest {
     @Autowired
     private final TicketService ticketservice;
 
+    /* GET TICKETS */
     // Buscar todos los tickets
     @GetMapping("/tickets")
     @ResponseStatus(HttpStatus.OK)
     public List<Ticket> consulta() {
         return ticketservice.findAllTicket();
     }
+    // Consultar tickets de seccion que no tengan asignado
+    @GetMapping("/tickets/no_asignados/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Ticket> consultaTicketSinAsignar(@PathVariable Long id) {
+        List<Ticket> ticket = new ArrayList<>();
+        ticket = ticketservice.ticketsSinAsignar(id);
+        
+        if (ticket == null) {
+            return null;
+        }
+        return ticket;
+    }
+    // Consultar mis tickets
+    @GetMapping("/tickets/mis_tickets/{seccion}/{user}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Ticket> consultaMisTicketsActivos(@PathVariable Long seccion, @PathVariable Long user) {
+        List<Ticket> ticket = new ArrayList<>();
+        ticket = ticketservice.ticketsSeccionActivos(seccion, user);
+        
+        if (ticket == null) {
+            return null;
+        }
+        return ticket;
+    }
+    // Consultar tickets cerrados
+    @GetMapping("/tickets/cerrados/{seccion}/{user}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Ticket> consultaMisTicketsCerrados(@PathVariable Long seccion, @PathVariable Long user) {
+        List<Ticket> ticket = new ArrayList<>();
+        ticket = ticketservice.ticketsSeccionInactivos(seccion, user);
+        
+        if (ticket == null) {
+            return null;
+        }
+        return ticket;
+    }
 
+    /* Consultar todo */
+    // secciones
     @GetMapping("/secciones")
     @ResponseStatus(HttpStatus.OK)
     public List<Seccion> consultaSeccion() {
         return ticketservice.findAllSeccion();
     }
-
+    //categorias
     @GetMapping("/categorias")
     @ResponseStatus(HttpStatus.OK)
     public List<Categoria> consultaCategorias() {
         return ticketservice.findAllCategorias();
     }
-
+    // prioridades
     @GetMapping("/prioridades")
     @ResponseStatus(HttpStatus.OK)
     public List<Prioridad> consultaPrioridad() {

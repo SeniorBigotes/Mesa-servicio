@@ -81,19 +81,29 @@ public class UsuarioService {
         return (Cuenta) cuentaRep.findById(id).orElse(null);
     }
 
-    // visualizar asignado
+    // visualizar usuarios de area
     public List<Cuenta> verAsignado(Long seccionID) {
         List<Cuenta> cuentas = cuentaRep.findAll();
         List<Cuenta> asignado = new ArrayList<>();
 
+        // Agregar a usuarios de esa seccion
         for(Cuenta cuenta : cuentas) {
             if(seccionID == cuenta.getSeccion().getId()) {
                 asignado.add(cuenta);
             }
         }
-        if(asignado.size() == 0) {
+        // Eliminar a lis INACTIVOS
+        if(asignado.size() != 0) {
+            for(Cuenta a : asignado) {
+                if(a.getPerfil().getEstatus().equals(EstatusUsuario.INACTIVO)) {
+                    asignado.remove(a);
+                    if(asignado.size() == 0) { return null; }
+                }
+            }
+        } else {
             return null;
         }
+
         Collections.sort(asignado, Comparator.comparing(Cuenta::getNombreUsuario));
         return asignado;
     }
