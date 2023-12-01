@@ -5,7 +5,9 @@
 
     <!-- Contenido central -->
     <div class="container">
-        <router-outlet></router-outlet>
+        <app-home *ngIf="main; else a"></app-home>
+        <ng-template #a><router-outlet></router-outlet></ng-template>
+        
     </div>
 
     <!-- Seccion derecho donde se muestra la info -->

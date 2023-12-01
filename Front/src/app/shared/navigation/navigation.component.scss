@@ -9,10 +9,11 @@
         align-items: center;
         margin: 0 2rem;
         padding: 3rem 0 2rem 0;
-
+        
         @include s.pc-mediano {
             flex-direction: column;
-            height: 100vh;
+            height: 92.4vh;
+            padding: 1rem 0 2rem 0;
         }
         .menu {
             display: grid;
@@ -56,4 +57,9 @@ li {
 }
 .router-active {
     background-color: s.$bg-infotec-marron;   
+}
+.title {
+    color: darken(s.$bg-infotec-marron, 0);
+    font-weight: 700;
+    text-transform: uppercase;
 }

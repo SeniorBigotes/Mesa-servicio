@@ -67,4 +67,5 @@ a {
 .scroll-central {
     height: calc(97vh - 100px); // 100px representa la altura sumada de otros elementos
     overflow-y: auto;
+    padding: 1rem;
 }

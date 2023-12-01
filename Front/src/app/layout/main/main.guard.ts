@@ -15,6 +15,14 @@ export const mainGuard: CanActivateFn = (route: ActivatedRouteSnapshot,
     router.navigate(['/login']);
     return false;
   }
+
+  if(mainService.authority === null || mainService.authority === '') {
+    router.navigate(['/login']);
+    return false;
+  } else {
+    loginService.authority = loginService.getUserRol();
+  }
+  
   // cargar url
   router.events.subscribe(event => {
       if(event instanceof NavigationEnd) {
@@ -22,6 +30,5 @@ export const mainGuard: CanActivateFn = (route: ActivatedRouteSnapshot,
       }
   });
   // cargar autoridad o rol
-  loginService.authority = loginService.getUserRol();
   return true;
 };
