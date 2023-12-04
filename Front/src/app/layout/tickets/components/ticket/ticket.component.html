@@ -1,3 +1,5 @@
+<app-sin-tickets *ngIf="!hayTickets"/>
+
 <div [ngClass]="vista ? 'verLista' : 'verCuadros'">
     <div *ngFor="let ticket of tickets"(click)="click(ticket.id)" 
     [ngClass]="ticketSeleccionado === ticket.id ? 'click' : 'ticket'">
@@ -36,12 +38,12 @@
             <div class="footer-ticket">
                 <div class="id-status">
                     <p class="linea-bottom">Ticket: <span>#{{ticket.id}} </span></p>
-                    <p>Status: <span>{{ticket.estatus}}</span> </p>
+                    <p>Estatus: <span>{{ticket.estatus}}</span> </p>
                 </div>
                 <p class="linea"></p>
                 <div class="sec-cat">
-                    <p class="linea-bottom">Seccion: <span>{{ticket.seccion.seccion}}</span> </p>
-                    <p>Categoria: <span> {{ticket.categoria.categoria}} </span> </p>
+                    <p class="linea-bottom">Área: <span>{{ticket.seccion.seccion}}</span> </p>
+                    <p>Categoría: <span> {{ticket.categoria.categoria}} </span> </p>
                 </div>
             </div>
         </div>

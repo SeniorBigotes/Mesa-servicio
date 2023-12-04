@@ -16,6 +16,7 @@ export class TicketComponent implements OnInit {
 
   tickets: Ticket[] = [];
   ticketsRespaldo: Ticket[] = [];
+  hayTickets!: boolean;
   
   error: any;
   
@@ -97,7 +98,8 @@ export class TicketComponent implements OnInit {
   }
 
   // Asignar tickets y fechas
-  private asignar(tickets: Ticket[]): void {    
+  private asignar(tickets: Ticket[]): void {
+    this.hayTickets = tickets === null ? false : true;
     this.tickets = tickets;
     this.ticketsRespaldo = tickets;
     if(tickets !== null) {

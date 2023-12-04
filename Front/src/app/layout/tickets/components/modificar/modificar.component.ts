@@ -142,7 +142,8 @@ export class ModificarComponent implements OnInit {
       ticket: response.Ticket.id,
       cambios: response.Ticket.descripcionCambios,
       prioridad: response.Ticket.prioridad.id,
-      estatus: response.Ticket.estatus
+      estatus: response.Ticket.estatus,
+      asignado: response.Ticket.asignado.id
     };
     return registro;
   }

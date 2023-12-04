@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { ModificarComponent } from '../layout/tickets/components/modificar/modificar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModificarUsuarioComponent } from '../layout/usuarios/components/modificar/modificar-usuario.component';
+import { SinTicketsComponent } from './sin-tickets/sin-tickets.component';
 
 
 
@@ -14,7 +15,8 @@ import { ModificarUsuarioComponent } from '../layout/usuarios/components/modific
     NavigationComponent,
     SectionRightComponent,
     ModificarComponent,
-    ModificarUsuarioComponent
+    ModificarUsuarioComponent,
+    SinTicketsComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { ModificarUsuarioComponent } from '../layout/usuarios/components/modific
   ],
   exports: [
     NavigationComponent,
-    SectionRightComponent
+    SectionRightComponent,
+    SinTicketsComponent
   ]
 })
 export class SharedModule { }

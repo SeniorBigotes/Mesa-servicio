@@ -22,12 +22,12 @@ export class RegistrosService {
 
   // consultar todos los registros
   getRegistros(): Observable<any> {
-    return this.http.get(`${this.api}/reportes`);
+    return this.http.get(`${this.api}/registros`);
   }
 
   // consultar registros por ID
   getRegistrosTicket(): Observable<any> {
-    return this.http.get(`${this.api}/reportes/ticket`);
+    return this.http.get(`${this.api}/registros/ticket`);
   }
 
   // Generar registro sobre los tickets
@@ -37,10 +37,10 @@ export class RegistrosService {
       ticket: {id: registro.ticket},
       cambios: registro.cambios,
       prioridad: {id: registro.prioridad},
-      estatus: registro.estatus
+      estatus: registro.estatus,
+      asignado: {id: registro.asignado}
     }
-
-    return this.http.post(`${this.api}/reportes`, formato);
+    return this.http.post(`${this.api}/registros`, formato);
   }
 
   // Subject de la busqueda

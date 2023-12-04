@@ -133,7 +133,8 @@ export class FormularioComponent implements OnInit {
       ticket: response.ticket.id,
       cambios: response.ticket.asunto,
       prioridad: response.ticket.prioridad.id,
-      estatus: response.ticket.estatus
+      estatus: response.ticket.estatus,
+      asignado: response.ticket.asignado.id
     }
     return registro;
   }

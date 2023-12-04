@@ -31,12 +31,12 @@ public class Registro {
     private Date fecha;
     private String cambios;
     private String estatus;
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prioridad_id")
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Prioridad prioridad;
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id")
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
@@ -46,4 +46,10 @@ public class Registro {
     @JoinColumn(name = "modifico_id")
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Cuenta modifico;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asignado_id")
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    private Cuenta asignado;
+    ;
 }

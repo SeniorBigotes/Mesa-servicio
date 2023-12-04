@@ -140,14 +140,14 @@ public class TicketService {
 
     // Consulta de todos los registros
     @Transactional(readOnly = true)
-    public List<Registro> reporteFindAll() {
+    public List<Registro> registroFindAll() {
         List<Registro> registros =  registroRep.findAll();
         Collections.sort(registros, Comparator.comparingLong(Registro::getId).reversed());
         return registros;
     }
 
     // Consulta por Id
-    public Registro reporteFindById(Long id) {
+    public Registro registroFindById(Long id) {
         return registroRep.findById(id).orElse(null);
     }
 
@@ -209,8 +209,8 @@ public class TicketService {
         return ticketRepo.save(ticketEntity);
     }
 
-    // Crear nuevo reporte
-    public Registro crearReporte(RegistroDto registro) {
+    // Crear nuevo registro
+    public Registro crearRegistro(RegistroDto registro) {
         Date fecha = new Date();
         Registro registroEntity = new Registro();
 
@@ -218,6 +218,7 @@ public class TicketService {
         registroEntity.setTicket(registro.getTicket());
         registroEntity.setFecha(fecha);
         registroEntity.setCambios(registro.getCambios());
+        registroEntity.setAsignado(registro.getAsignado());
         registroEntity.setEstatus(registro.getEstatus());
         registroEntity.setPrioridad(registro.getPrioridad());
 

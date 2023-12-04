@@ -62,8 +62,4 @@ export class RegistroComponent {
     this.registros = this.registrosBuscado;
     this.registrosBuscado = [];
   }
-
-  private ordenarTickets() {
-
-  }
 }

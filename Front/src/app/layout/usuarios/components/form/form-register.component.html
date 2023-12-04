@@ -15,7 +15,7 @@
                         id="apellidoP" placeholder="Apellido Paterno">
                     </div>
                     <div>
-                        <label for="apellidoM" class="form-label text-start d-block">Apelldio Materno: </label>
+                        <label for="apellidoM" class="form-label text-start d-block">Apellido Materno: </label>
                         <input type="text" formControlName="apellidoM" class="form-control"
                         id="apellidoM" placeholder="Apellido Materno">
                     </div>
@@ -58,7 +58,7 @@
                     </select>
                 </div>
                 <div>
-                    <label for="area" class="form-label text-start d-block">Area perteneciente: </label>
+                    <label for="area" class="form-label text-start d-block">Área perteneciente: </label>
                     <select id="area" class="form-select" formControlName="seccion">
                         <option value="" disabled selected> --Seleccione-- </option>
                         <option *ngFor="let seccion of secciones" [ngValue]="seccion.id"> {{seccion.seccion}} </option>

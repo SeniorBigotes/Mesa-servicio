@@ -13,7 +13,7 @@
             <div class="fecha">
                 <p class="date">{{registro.fecha | date:'dd/MM/yyyy'}} - <span>{{registro.fecha | date: 'hh:mm:ss'}}</span></p>
                 <div class="datos-modifico">
-                    <p>Modifico: <span class="fw-bold">{{registro.modifico.perfil?.nombre}} {{registro.modifico.perfil?.apellidoP}}</span></p>
+                    <p>Modificó: <span class="fw-bold">{{registro.modifico.perfil.nombre}} {{registro.modifico.perfil.apellidoP}}</span></p>
                 </div>
                 <div class="datos-estatus d-flex flex-column gap-2">
                     <p class="fw-bold" [ngClass]="{
@@ -29,10 +29,10 @@
         </div>
         <div class="registro-ticket">
             <p>Ticket: <span class="text-primary fw-bold">#{{registro.ticket.id}}</span></p>
-            <p class="fw-bold">Autor: <span class="fw-normal">{{registro.ticket.autor?.perfil?.nombre}} {{registro.ticket.autor?.perfil?.apellidoP}}</span></p>
+            <p class="fw-bold">Autor: <span class="fw-normal">{{registro.ticket.autor.perfil.nombre}} {{registro.ticket.autor.perfil.apellidoP}}</span></p>
             <p [ngClass]="{'text-danger': atiende(registro.id, registro)}" class="fw-bold">Atiende: 
-                <span *ngIf="!atiende(registro.id, registro); else a"class="fw-normal">
-                    {{registro.ticket.asignado?.perfil?.nombre}} {{registro.ticket.asignado?.perfil?.apellidoP}}</span>
+                <span *ngIf="registro.asignado !== null; else a"class="fw-normal">
+                    {{registro.asignado.perfil.nombre}} {{registro.asignado.perfil.apellidoP}}</span>
                 <ng-template #a> <span> - - </span> </ng-template>
             </p>
         </div>

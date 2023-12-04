@@ -22,5 +22,6 @@ public class RegistroDto {
     private Date fecha;
     private Prioridad prioridad;
     private Cuenta modifico;
+    private Cuenta asignado;
     private Ticket ticket;
 }

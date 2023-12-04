@@ -164,34 +164,34 @@ public class TicketRest {
     }
 
     // Ver todos los registros
-    @GetMapping("/reportes")
+    @GetMapping("/registros")
     @ResponseStatus(HttpStatus.OK)
     public List<Registro> consultaRegistros() {
-        return ticketservice.reporteFindAll();
+        return ticketservice.registroFindAll();
     }
     
     // Ver todos los registros (ordenado por id del ticket)
-    @GetMapping("/reportes/ticket")
+    @GetMapping("/registros/ticket")
     @ResponseStatus(HttpStatus.OK)
     public List<Registro> consultaRegistrosTicket() {
-        List<Registro> list = ticketservice.reporteFindAll();
+        List<Registro> list = ticketservice.registroFindAll();
         Collections.sort(list, Comparator.comparingLong(registro -> ((Registro) registro).getTicket().getId()).reversed());
         return list;
     }
     // Ver registros por ID
-    @GetMapping("/reportes/{id}")
+    @GetMapping("/registros/{id}")
     public ResponseEntity<?> consultaRegistroPorID(@PathVariable Long id) {
-        Registro reporte = null;
+        Registro registros = null;
         String response = "";
 
         try {
-            reporte = ticketservice.reporteFindById(id);
+            registros = ticketservice.registroFindById(id);
 
-            if (reporte == null) {
-                response = "El reporte con el ID: ".concat(id.toString()).concat("no existe en la base de datos");
+            if (registros == null) {
+                response = "El registro con el ID: ".concat(id.toString()).concat("no existe en la base de datos");
                 return new ResponseEntity<String>(response, HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<Registro>(reporte, HttpStatus.OK);
+            return new ResponseEntity<Registro>(registros, HttpStatus.OK);
         } catch (DataAccessException e) {
             response = "Error al realizar la consulta";
             response = response.concat(e.getMessage().concat(e.getMostSpecificCause().toString()));
@@ -200,16 +200,16 @@ public class TicketRest {
     }
 
     // Crear reportes
-    @PostMapping("/reportes")
-    public ResponseEntity<?> create(@RequestBody RegistroDto reporte) {
-        Registro reporteNew = null;
+    @PostMapping("/registros")
+    public ResponseEntity<?> create(@RequestBody RegistroDto registro) {
+        Registro registroNew = null;
         Map<String, Object> response = new HashMap<>();
 
         try {
-            reporteNew = ticketservice.crearReporte(reporte);
+            registroNew = ticketservice.crearRegistro(registro);
 
-            response.put("mensaje", "Reporte  creado con exito");
-            response.put("reporte", reporteNew);
+            response.put("mensaje", "Registro  creado con exito");
+            response.put("registro", registroNew);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert");
