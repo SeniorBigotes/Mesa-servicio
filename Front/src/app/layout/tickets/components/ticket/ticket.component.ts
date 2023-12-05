@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Ticket } from 'src/app/models/Ticket';
 import { LoginService } from 'src/app/layout/login/login.service';
 import { Cuenta } from 'src/app/models/Cuenta';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-ticket',
@@ -16,7 +17,9 @@ export class TicketComponent implements OnInit {
 
   tickets: Ticket[] = [];
   ticketsRespaldo: Ticket[] = [];
-  hayTickets!: boolean;
+
+  spinner: boolean = true;
+  hayTickets: boolean = true;
   
   error: any;
   
@@ -68,15 +71,17 @@ export class TicketComponent implements OnInit {
   } // end evento click
 
   private busquedaTickets(text: string): void {
-    // Sin asignar
-    if(this.router.url === '/main/tickets/activos') {
-      this.ticketBuscado = this.funcionBusqueda(text);
-    // Mis tickets
-    } else if(this.router.url === '/main/tickets/mis-tickets') {
-      this.ticketBuscado = this.funcionBusqueda(text);
-    // Mis tickets cerrados
-    } else if (this.router.url === '/main/tickets/finalizados') {
-      this.ticketBuscado = this.funcionBusqueda(text);
+    if(this.tickets !== null) {
+      // Sin asignar
+      if(this.router.url === '/main/tickets/activos') {
+        this.ticketBuscado = this.funcionBusqueda(text);
+      // Mis tickets
+      } else if(this.router.url === '/main/tickets/mis-tickets') {
+        this.ticketBuscado = this.funcionBusqueda(text);
+      // Mis tickets cerrados
+      } else if (this.router.url === '/main/tickets/finalizados') {
+        this.ticketBuscado = this.funcionBusqueda(text);
+      }
     }
   }
 
@@ -94,22 +99,27 @@ export class TicketComponent implements OnInit {
         return ticket.id === busqueda;
       });
     }
+    this.hayTickets = busqueda.length === 0 ? false : true;
     return busqueda;
   }
 
   // Asignar tickets y fechas
   private asignar(tickets: Ticket[]): void {
-    this.hayTickets = tickets === null ? false : true;
+    this.spinner = false;
     this.tickets = tickets;
     this.ticketsRespaldo = tickets;
     if(tickets !== null) {
+      this.hayTickets = true;
       tickets.forEach((ticket: Ticket) => {
           this.fechaCreacion = ticket.fechaCreacion;
           this.fechaModificacion = ticket.fechaModificacion;
       });
+    } else {
+      this.hayTickets = false;
     }
   }
 
+  // llamar a mostrarTickets()
   private llamarMostrarTicket(resp: Cuenta) {
     const seccionID: number = +resp?.seccion?.id;
     const usuarioID = +resp?.id;

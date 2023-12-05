@@ -91,7 +91,7 @@ export class FormularioComponent implements OnInit {
         // resto de funciones
         }, complete: () => {
         this.nuevoTicket.reset();
-        this.router.navigate(['/main/tickets/activos']);
+        this.router.navigate(['/main/tickets/mis-tickets']);
       }, error: err => this.errores = err});
   }
   /* FORMULARIOS */

@@ -22,6 +22,8 @@ export class UsuarioComponent implements OnInit {
 
   roles: any;
 
+  spinner: boolean = true;
+
   busquedaInput: string = "";
   usuarioBuscado: Array<any> = [];
   rolTextinput: string = "";
@@ -38,6 +40,7 @@ export class UsuarioComponent implements OnInit {
     // Estado incial (perfiles y cuentas)
     this.usuariosService.getCuenta().subscribe({
       next: resp => {
+        this.spinner = false;
         this.cuentas = resp;
         this.respaldoCuentas = resp;
       }, error: err => this.mensaje = err});
@@ -52,7 +55,7 @@ export class UsuarioComponent implements OnInit {
     // con cuentas actualizadas
     this.usuariosService.usuariosModificados$.subscribe({
       next: resp => {
-        if(resp !== null) {
+        if(resp !== null && resp !== undefined) {
           this.cuentas = resp;
           this.respaldoCuentas = resp;
           this.actualizado = true;

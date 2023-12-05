@@ -44,6 +44,7 @@
     </div>
 
     <div class="scroll-central">
+        <app-spinner *ngIf="spinner"/>
         <table class="tabla table table-striped table-hover">
             <!-- Encabezado -->
             <thead class="tabla-encabezado">
@@ -76,10 +77,10 @@
                             </td>
                             <td class="estatus">
                                 <div class="">
-                                    <p class="fw-bold" [ngClass]="cuenta.perfil.estatus === 'ACTIVO' ? 'text-success' : 'text-danger'">
+                                    <p class="fw-bold" 
+                                    [ngClass]="cuenta.perfil.estatus === 'ACTIVO' ? 'text-success' : 'text-danger'">
                                         {{cuenta.perfil.estatus}}
                                     </p>
-                
                                 </div>
                             </td>
                         </tr>

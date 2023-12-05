@@ -10,14 +10,21 @@ import { RegistrosService } from '../../registros.service';
 export class RegistroComponent {
   registros: Registro[] = [];
   respaldo: Registro[] = [];
+
   registrosBuscado: Registro[] = [];
+  
   boton: string = "registros"
+
+  spinner: boolean = true;
+  hayRegistros: boolean = true;
 
   constructor(private registrosService: RegistrosService) {}
   
   ngOnInit(): void {
     // obtener registros (principal)
     this.registrosService.getRegistros().subscribe((registros: Registro[]) => {
+      this.spinner = false;
+      this.hayRegistros = true;
       this.registros = registros;
       this.respaldo = registros;
     });
@@ -26,6 +33,7 @@ export class RegistroComponent {
     this.registrosService.boton$.subscribe((resp: string) => {
       this.boton = resp;
       this.registros = this.respaldo;
+      this.hayRegistros = true;
       if(resp === 'tickets') { // hacerlo una funcion
         this.registrosService.getRegistrosTicket().subscribe((regTick: Registro[]) => {
           this.registrosBuscado = regTick
@@ -37,6 +45,7 @@ export class RegistroComponent {
     // Filtrar por busqueda
     this.registrosService.busquedaInput$.subscribe(resp => {
       this.registros = this.respaldo;
+      this.hayRegistros = true;
       if(resp !== '') !this.soloLetras(resp) ? this.busqueda(resp) : this.registros = this.respaldo;
     });
   }// end onInit()
@@ -60,6 +69,7 @@ export class RegistroComponent {
         this.registros.filter((registros: Registro) => registros.ticket.id === id);
 
     this.registros = this.registrosBuscado;
+    this.hayRegistros = this.registrosBuscado.length === 0 ? false : true;
     this.registrosBuscado = [];
   }
 }

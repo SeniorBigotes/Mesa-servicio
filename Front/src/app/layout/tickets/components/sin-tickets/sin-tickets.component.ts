@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sin-tickets',
@@ -7,9 +7,11 @@ import { Route, Router } from '@angular/router';
   styleUrls: ['./sin-tickets.component.scss']
 })
 export class SinTicketsComponent {
-
+  
   constructor(private router: Router) {}
+
   ir() {
-    this.router.navigate(['/main/tickets/nuevo'])
+    this.router.navigate(['/main/tickets/nuevo']);
   }
+  
 }

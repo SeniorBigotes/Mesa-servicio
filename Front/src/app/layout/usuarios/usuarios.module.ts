@@ -19,7 +19,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     FormRegisterRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class FormRegisterModule { }

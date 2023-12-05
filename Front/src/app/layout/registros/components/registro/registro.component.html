@@ -1,4 +1,10 @@
-<div *ngFor="let registro of registros" >
+<div class="spinner" *ngIf="spinner">
+    <app-spinner />
+</div>
+
+<app-no-encontrado *ngIf="!hayRegistros"/>
+
+<div *ngFor="let registro of registros">
     <div class="registro rounded-3 mb-5" [ngClass]="{'no-atiende': atiende(registro.id, registro)}">
         <div class="registro-datos">
             <div class="datos-id">

@@ -1,4 +1,6 @@
-<app-sin-tickets *ngIf="!hayTickets"/>
+<app-spinner class="ngx-spinner" *ngIf="spinner"/>
+
+<app-no-encontrado *ngIf="!hayTickets"/>
 
 <div [ngClass]="vista ? 'verLista' : 'verCuadros'">
     <div *ngFor="let ticket of tickets"(click)="click(ticket.id)" 
@@ -49,3 +51,4 @@
         </div>
     </div> <!-- end .card-body (ticket individual)-->
 </div> <!-- end .tickets-content-->
+

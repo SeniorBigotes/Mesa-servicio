@@ -19,6 +19,7 @@ export class ModificarUsuarioComponent implements OnInit {
   cuentas!: any;
   cuentaID!: number;
   mensaje: string = "";
+  contraseñaTocada: boolean = false;
 
   constructor(private usuariosService: FormRegisterService,
               private fb: FormBuilder,
@@ -61,6 +62,8 @@ export class ModificarUsuarioComponent implements OnInit {
       // crear formato a enviar
       const usuarioModificado = this.formMoidficarUsuario.value;
       usuarioModificado.seccion = {id: this.getSeccion.value}
+      if(!this.contraseñaTocada) delete usuarioModificado.contraseña;
+
       // enviar
       this.usuariosService.putUsuario(usuarioModificado, this.cuentaID).subscribe({
         error: err => {
@@ -83,6 +86,10 @@ export class ModificarUsuarioComponent implements OnInit {
   // limiar formulario (trash)
   clear() {
     this.formMoidficarUsuario.reset();
+  }
+  
+  checkPass(event: Event): void {
+    this.contraseñaTocada = true;
   }
 
   private formulario(): FormGroup {

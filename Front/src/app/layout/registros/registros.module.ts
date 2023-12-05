@@ -5,6 +5,7 @@ import { RegistrosRoutingModule } from './registros-routing.module';
 import { RegistrosComponent } from './pages/registros.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RegistrosRoutingModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class RegistrosModule { }

@@ -9,7 +9,9 @@ import { MainService } from 'src/app/layout/main/main.service';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
+  
   authority: string = this.loginService.authority;
+  usuario?: string;
   
   constructor(private loginService: LoginService,
               private mainService: MainService,
@@ -18,6 +20,8 @@ export class NavigationComponent implements OnInit {
   ngOnInit(): void {
     // Mostrar al cargar
     this.updateUrl()
+    this.loginService.getCurrentUser()
+        .subscribe(user => this.usuario = user.perfil.nombre);
   }
   // Actualizar con tiempo controlado al dar click
   click(): void {

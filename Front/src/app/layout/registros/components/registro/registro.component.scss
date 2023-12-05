@@ -1,5 +1,9 @@
 @use '../../../../../styles.scss' as s;
 
+.spinner {
+    position: relative;
+    top: 50%;
+}
 p {
     font-size: 1.3rem;
     margin: 0;

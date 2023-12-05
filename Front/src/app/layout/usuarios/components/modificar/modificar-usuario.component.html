@@ -55,7 +55,8 @@
                         <label for="password" class="form-label text-start d-block">Contraseña: </label>
                         <input type="password" class="form-control" id="password"
                         placeholder="Contraseña (password)"
-                        formControlName="contraseña">
+                        formControlName="contraseña"
+                        (input)="checkPass($event)">
                     </div>
                 </div>
                 <div class="mb-3">
@@ -93,6 +94,7 @@
                 </svg>
             </button>
             <button class="btn text-uppercase fw-bold fs-4" [ngClass]="formMoidficarUsuario.invalid ? 'btn-outline-danger' : 'btn-outline-success'"
-            [disabled]="formMoidficarUsuario.invalid" (keyup.enter)="enviar()"> Actualizar </button>
+            (keyup.enter)="enviar()"> Actualizar </button>
+            <!-- [disabled]="formMoidficarUsuario.invalid" -->
         </div>
     </form>

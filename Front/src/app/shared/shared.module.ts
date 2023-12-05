@@ -6,9 +6,8 @@ import { RouterModule } from '@angular/router';
 import { ModificarComponent } from '../layout/tickets/components/modificar/modificar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModificarUsuarioComponent } from '../layout/usuarios/components/modificar/modificar-usuario.component';
-import { SinTicketsComponent } from './sin-tickets/sin-tickets.component';
-
-
+import { SpinnerComponent } from './spinner/spinner.component';
+import { NoEncontradoComponent } from './no-encontrado/no-encontrado.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +15,8 @@ import { SinTicketsComponent } from './sin-tickets/sin-tickets.component';
     SectionRightComponent,
     ModificarComponent,
     ModificarUsuarioComponent,
-    SinTicketsComponent
+    SpinnerComponent,
+    NoEncontradoComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +27,8 @@ import { SinTicketsComponent } from './sin-tickets/sin-tickets.component';
   exports: [
     NavigationComponent,
     SectionRightComponent,
-    SinTicketsComponent
+    SpinnerComponent,
+    NoEncontradoComponent
   ]
 })
 export class SharedModule { }
