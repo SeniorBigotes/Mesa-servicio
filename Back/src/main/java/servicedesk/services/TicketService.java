@@ -78,8 +78,11 @@ public class TicketService {
         for(Ticket ticket : list) {
             if(ticket.getAsignado() != null) {
                 if(ticket.getEstatus() != EstatusTicket.CERRADO && 
-                ( ticket.getAutor().getId().equals(usuarioID) ||
-                ticket.getAsignado().getId().equals(usuarioID) )) {
+                ticket.getAutor().getId().equals(usuarioID)) {
+                    misTickets.add(ticket);
+                }
+            } else {
+                if(ticket.getAutor().getId().equals(usuarioID)) {
                     misTickets.add(ticket);
                 }
             }
@@ -146,7 +149,7 @@ public class TicketService {
         return registros;
     }
 
-    // Consulta por Id
+    // Consulta registros por id por Id
     public Registro registroFindById(Long id) {
         return registroRep.findById(id).orElse(null);
     }

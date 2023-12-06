@@ -1,6 +1,6 @@
 <nav class="card text-center mt-4">
     <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
+        <ul class="nav nav-tabs card-header-tabs" (click)="resetSelectFiltros()">
             <li class="nav-item" routerLinkActive="activo">
                 <a class="nav-link" aria-current="true" routerLink="activos">Por asignar</a>
             </li>
@@ -20,28 +20,86 @@
         <!-- Busqueda de tickets -->
         <div class="vista d-flex align-items-center justify-content-between gap-4 m-3 border-bottom border-dark w-100 m-auto pb-2 mb-1 tickets-header">
             <div class="d-flex align-items-center filtros">
-                <div class="input-group busqueda">
-                    <input type="text" class="form-control" placeholder="Buscar por ID o Asunto"
-                    [ngClass]="{'ng-untouched': busquedaInput === ''}"
-                    aria-label="Nombre de usuario del destinatario"
-                    [(ngModel)]="busquedaInput" (keyup.enter)="busqueda()">
-                    <button class="btn btn-outline-secondary"
-                    (click)="busqueda()">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="14" height="14"
-                            viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <div class="busqueda d-flex flex-column gap-2">
+                    <div class="d-flex">
+                        <input type="text" class="form-control" placeholder="Busqueda" [ngClass]="{'ng-untouched': busquedaInput === ''}"
+                        aria-label="Nombre de usuario del destinatario" [(ngModel)]="busquedaInput" (keyup.enter)="busqueda()">
+                        <button class="btn btn-outline-secondary" (click)="busqueda()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="14" height="14"
+                                viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                <path d="M21 21l-6 -6" />
+                            </svg>
+                        </button>
+                    </div>
+                    <button class="btn btn-outline-dark w-100" (click)="resetSelectFiltros()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash-x-filled" width="20" height="20"
+                            viewBox="0 0 24 24" stroke-width="1" stroke="#ffffff" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                            <path d="M21 21l-6 -6" />
+                            <path
+                                d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16zm-9.489 5.14a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z"
+                                stroke-width="0" fill="currentColor" />
+                            <path
+                                d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z"
+                                stroke-width="0" fill="currentColor" />
                         </svg>
                     </button>
                 </div> <!-- end .busqueda -->
-                <p class="text-danger fs-5 fw-bolder" *ngIf="busquedaInput !== ''">
-                    * La barra debe estar vacía para <span class="d-block"> obtener <u class="text-uppercase">todos</u> los resultados *</span>
-                </p>
+
+                <div class="filtros-tickets">
+                    <div class="filtro-ajuste">
+                        <div class="filtro">
+                            <label for="filtro" class="fs-4">Buscar:</label>
+                            <select id="filtro" class="form-select fs-4"
+                            [(ngModel)]="selectFiltro"
+                            (change)="selectTicket($event)">
+                                <option value="ticket">Ticket</option>
+                                <option value="autor">Autor</option>
+                                <option value="asignado">Asignado</option>
+                            </select>
+                        </div>
+                        <div class="filtro">
+                            <label for="areas" class="fs-4">Area:</label>
+                            <select id="areas" class="form-select fs-4"
+                            [(ngModel)]="selectArea"
+                            (change)="selectTicket($event)">
+                                <option value="all">Todos</option>
+                                <option *ngFor="let area of secciones"
+                                [ngValue]="area.seccion">{{area.seccion}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filtro-ajuste">
+                        <div class="filtro">
+                            <label for="categorias" class="fs-4">Categoria:</label>
+                            <select id="categorias" class="form-select fs-4"
+                            [(ngModel)]="selectCategoria"
+                            (change)="selectTicket($event)">
+                                <option value="all">Todos</option>
+                                <option *ngFor="let categoria of categorias" 
+                                [ngValue]="categoria.categoria">{{categoria.categoria}}</option>
+                            </select>
+                        </div>
+                        <div class="filtro">
+                            <label for="estatus" class="fs-4">Estatus:</label>
+                            <select id="estatus" class="form-select fs-4"
+                            [(ngModel)]="selectEstatus"
+                            (change)="selectTicket($event)">
+                                <option value="all">Todos</option>
+                                <option value="abierto">Abierto</option>
+                                <option value="en_proceso">En proceso</option>
+                                <option value="cerrado">Cerrado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         <!-- Vista del usuario -->
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-1">
                 <p style="border: none;" class="m-0">Vista:</p>
                 <button (click)="lista()" class="btn btn-light border border-secondary mx-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-details" viewBox="0 0 24 24"

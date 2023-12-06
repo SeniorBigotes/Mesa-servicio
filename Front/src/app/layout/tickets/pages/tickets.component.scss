@@ -3,6 +3,16 @@
 nav {
     position: relative;
 }
+.filtros-tickets {
+    display: flex;
+    gap: .5rem;
+    @include s.pc-grande {
+        .filtro-ajuste {
+            gap: .5rem;
+            display: flex;
+        }
+    }
+}
 /* TIPO DE VISTA */
 .vista {
     button {
@@ -29,8 +39,8 @@ nav {
 .tickets-header {
     flex-direction: column;
     .busqueda {
-        width: 28rem;
         margin-bottom: 1rem;
+        width: 25rem;
         input, button {
             padding: .5rem;
             font-size: 1.3rem;
@@ -68,7 +78,10 @@ a {
     color: black;
 }
 .scroll-central {
-    height: calc(97vh - 100px); // 100px representa la altura sumada de otros elementos
+    height: calc(77vh - 5px); // 100px representa la altura sumada de otros elementos
     overflow-y: auto;
     padding: 1rem;
+    @include s.pc-1920 {
+        height: calc(84vh - 5px); // 100px representa la altura sumada de otros elementos
+    }
 }

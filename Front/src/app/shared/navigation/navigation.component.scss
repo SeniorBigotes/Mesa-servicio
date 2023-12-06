@@ -2,6 +2,9 @@
 
 .section-left {
     background-color: s.$bg-navegacion;
+    @include s.pc-mediano  {
+        height: 100vh;
+    }
 
     .ul {
         display: flex;
@@ -9,10 +12,9 @@
         align-items: center;
         margin: 0 2rem;
         padding: 3rem 0 2rem 0;
-        
+        height: calc(89% - 5px);
         @include s.pc-mediano {
             flex-direction: column;
-            height: 92.4vh;
             padding: 1rem 0 2rem 0;
         }
         .menu {

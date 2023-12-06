@@ -182,11 +182,12 @@ public class UsuarioService {
             perfil.setTelefono(newUsuario.getTelefono());
             //  Datos de la cuenta
             cuenta.setNombreUsuario(newUsuario.getNombreUsuario());
-            cuenta.setContraseña(passwordEncoder.encode(newUsuario.getContraseña()));
             cuenta.setRole(rol);
             cuenta.setSeccion(newUsuario.getSeccion());
-
-            System.out.println("\n\n"+newUsuario.getSeccion().getSeccion()+"\n\n");
+            
+            if(newUsuario.getContraseña() != null) {
+                cuenta.setContraseña(passwordEncoder.encode(newUsuario.getContraseña()));
+            }
 
             cuentaRep.save(cuenta);
             perfilRep.save(perfil);

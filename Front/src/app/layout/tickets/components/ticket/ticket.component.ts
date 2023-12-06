@@ -30,6 +30,11 @@ export class TicketComponent implements OnInit {
   
   ticketSeleccionado: number | null = null;
   ticketBuscado!: Ticket[];
+  selectSeleccionBusqueda!: string;
+
+  filtroArea: string = 'all';
+  filtroCategoria: string = 'all';
+  filtroEstatus: string = 'all';
 
   constructor(private ticketsService: TicketsService,
               private loginService: LoginService,
@@ -47,77 +52,27 @@ export class TicketComponent implements OnInit {
     
     // Actualiza los tickets
     this.ticketsService.ticketsActualizados$
-        .subscribe(tickets => this.loginService.getCurrentUser()
+        .subscribe(() => this.loginService.getCurrentUser()
             .subscribe(resp => this.llamarMostrarTicket(resp)));
 
     // resultados de busqueda
     this.ticketsService.busquedaTexto$.subscribe(texto => {
       this.tickets = this.ticketsRespaldo;
       if(texto !== '') {
-        this.busquedaTickets(texto);
+        this.busquedaTickets(texto, this.selectSeleccionBusqueda);
         this.tickets = this.ticketBuscado;
       } else {
+        this.hayTickets = true;
         this.tickets = this.ticketsRespaldo;
       }
     }); // end busqueda y filtros
+
+    // Filtros
+    this.ticketsService.selectSeleccionBusqueda$.subscribe(resp => this.selectSeleccionBusqueda = resp);
+    this.ticketsService.filtroArea$.subscribe(resp => this.aplicarFiltro(resp, 'area'));
+    this.ticketsService.filtroCategoria$.subscribe(resp => this.aplicarFiltro(resp, 'categoria'));
+      this.ticketsService.filtroEstatus$.subscribe(resp => this.aplicarFiltro(resp, 'estatus'));
   } // end OnInit()
-
-  // Almacenar ticket (evento click)
-  click(id: number): void {
-    this.ticketsService.click(id);
-    this.ticketsService.getTicketId(id).subscribe(ticket => {
-      this.ticketsService.setTicket(ticket);
-    });
-  } // end evento click
-
-  private busquedaTickets(text: string): void {
-    if(this.tickets !== null) {
-      // Sin asignar
-      if(this.router.url === '/main/tickets/activos') {
-        this.ticketBuscado = this.funcionBusqueda(text);
-      // Mis tickets
-      } else if(this.router.url === '/main/tickets/mis-tickets') {
-        this.ticketBuscado = this.funcionBusqueda(text);
-      // Mis tickets cerrados
-      } else if (this.router.url === '/main/tickets/finalizados') {
-        this.ticketBuscado = this.funcionBusqueda(text);
-      }
-    }
-  }
-
-  // Filtro para busqueda de tickets
-  private funcionBusqueda(txt: string): Ticket[] {
-    let busqueda: Ticket[];
-    if(this.soloLetras(txt)) {
-      busqueda = this.tickets.filter(ticket => {
-        return ticket.asunto.toLowerCase().includes(txt.toLowerCase()) ||
-        ticket.autor.perfil.nombre.toLowerCase().includes(txt.toLowerCase());
-      });
-    } else {
-      busqueda = this.tickets.filter(ticket => {
-        const busqueda: number = parseInt(txt);
-        return ticket.id === busqueda;
-      });
-    }
-    this.hayTickets = busqueda.length === 0 ? false : true;
-    return busqueda;
-  }
-
-  // Asignar tickets y fechas
-  private asignar(tickets: Ticket[]): void {
-    this.spinner = false;
-    this.tickets = tickets;
-    this.ticketsRespaldo = tickets;
-    if(tickets !== null) {
-      this.hayTickets = true;
-      tickets.forEach((ticket: Ticket) => {
-          this.fechaCreacion = ticket.fechaCreacion;
-          this.fechaModificacion = ticket.fechaModificacion;
-      });
-    } else {
-      this.hayTickets = false;
-    }
-  }
 
   // llamar a mostrarTickets()
   private llamarMostrarTicket(resp: Cuenta) {
@@ -147,6 +102,147 @@ export class TicketComponent implements OnInit {
         this.ticketsRespaldo = this.tickets;
       }
     }
+  }
+
+  // Asignar tickets y fechas para mostrar
+  private asignar(tickets: Ticket[]): void {
+    this.spinner = false;
+    this.tickets = tickets;
+    this.ticketsRespaldo = tickets;
+    if(tickets !== null) {
+      this.hayTickets = true;
+      tickets.forEach((ticket: Ticket) => {
+          this.fechaCreacion = ticket.fechaCreacion;
+          this.fechaModificacion = ticket.fechaModificacion;
+      });
+    } else {
+      this.hayTickets = false;
+    }
+  }
+
+  // Almacenar ticket (evento click)
+  click(id: number): void {
+    this.ticketsService.click(id);
+    this.ticketsService.getTicketId(id).subscribe(ticket => {
+      this.ticketsService.setTicket(ticket);
+    });
+  } // end evento click
+
+  /* BUSQUEDA DE TICKETS */
+  // principal
+  private busquedaTickets(text: string, select?:string): void {
+    if(this.tickets !== null) {
+      // Sin asignar
+      if(this.router.url === '/main/tickets/activos') {
+        this.ticketBuscado = this.funcionBusqueda(text, this.selectSeleccionBusqueda);
+      // Mis tickets
+      } else if(this.router.url === '/main/tickets/mis-tickets') {
+        this.ticketBuscado = this.funcionBusqueda(text, this.selectSeleccionBusqueda);
+      // Mis tickets cerrados
+      } else if (this.router.url === '/main/tickets/finalizados') {
+        this.ticketBuscado = this.funcionBusqueda(text, this.selectSeleccionBusqueda);
+      }
+    }
+  }
+  /* FUNCIONES DE BUSQUEDA */
+  // Busqueda de tickets (secundario)
+  private funcionBusqueda(txt: string, select: string): Ticket[] {
+    let busqueda: Ticket[];
+    const texto = txt.toLowerCase()
+    if(this.soloLetras(txt)) {
+      if(select === 'autor') {
+        busqueda = this.busquedaTicketAutor(txt);
+      } else if(select === 'asignado') {
+        busqueda = this.busquedaTicketAsignado(txt);
+      } else {
+        busqueda = this.tickets.filter(ticket => {
+          return ticket.asunto.toLowerCase().includes(texto)
+        });
+      }
+    } else {
+      const ticketID: number = parseInt(txt);
+      busqueda = this.tickets.filter(ticket => ticket.id === ticketID);
+    }
+    this.hayTickets = busqueda.length === 0 ? false : true;
+    
+    return busqueda;
+  }
+  // Por autor
+  private busquedaTicketAutor(txt: string): Ticket[] | any {
+    let busqueda;
+    const texto = txt.toLowerCase()
+    if(texto.includes(' ')) {
+      const partes: string[] = texto.split(' ');
+      const parte1: string = partes[0];
+      const parte2: string = partes[1];
+      busqueda = this.tickets.filter(ticket => {
+        return (ticket.autor.perfil.nombre.toLowerCase().includes(parte1) &&
+        ticket.autor.perfil.apellidoP.toLowerCase().includes(parte2)) || 
+        (ticket.autor.perfil.nombre.toLowerCase().includes(parte2) &&
+        ticket.autor.perfil.apellidoP.toLowerCase().includes(parte1));
+      })
+    } else {
+      busqueda = this.tickets.filter(ticket => {
+        return ticket.autor.perfil.nombre.toLowerCase().includes(texto) ||
+        ticket.autor.perfil.apellidoP.toLowerCase().includes(texto);
+      });
+    }
+    return busqueda;
+  }
+  // por asignado
+  private busquedaTicketAsignado(txt: string): Ticket[] | any{
+    let busqueda;
+    const texto = txt.toLowerCase()
+    if(texto.includes(' ')) {
+      const partes: string[] = texto.split(' ');
+      const parte1: string = partes[0];
+      const parte2: string = partes[1];
+      busqueda = this.tickets.filter(ticket => {
+        return (ticket.asignado?.perfil.nombre.toLowerCase().includes(parte1) &&
+        ticket.asignado?.perfil.apellidoP.toLowerCase().includes(parte2)) || 
+        (ticket.asignado?.perfil.nombre.toLowerCase().includes(parte2) &&
+        ticket.asignado?.perfil.apellidoP.toLowerCase().includes(parte1));
+      })
+    } else {
+      busqueda = this.tickets.filter(ticket => {
+        return ticket.asignado?.perfil.nombre.toLowerCase().includes(texto) ||
+        ticket.asignado?.perfil.apellidoP.toLowerCase().includes(texto);
+      });
+    }
+    return busqueda;
+  }
+  // Por area
+  private filtrarArea(search: string, tickets: Ticket[]): Ticket[] | any{
+    let buscar; 
+    buscar = tickets.filter(ticket => ticket.seccion.seccion.toLowerCase().includes(search));
+    if(search === 'all') buscar = this.ticketsRespaldo;
+    return buscar;
+  }
+  private filtrarCategoria(search: string, tickets: Ticket[]): Ticket[] | any{
+    let buscar; 
+    buscar = tickets.filter(ticket => ticket.categoria.categoria.toLowerCase().includes(search));
+    if(search === 'all') buscar = this.ticketsRespaldo;
+    return buscar;
+  }
+  private filtrarEstatus(search: string, tickets: Ticket[]): Ticket[] | any{
+    let buscar;    
+    buscar = tickets.filter(ticket => ticket.estatus.toLowerCase().includes(search));
+    if(search === 'all') buscar = this.ticketsRespaldo;
+    return buscar;
+  }
+  // aplicar filtros
+  private aplicarFiltro(resp: string, filtro: string) {
+    const busqueda = resp.toLowerCase();
+    this.tickets = this.ticketsRespaldo;
+    this.hayTickets = true;
+    if(filtro === 'area') {
+      this.tickets = this.filtrarArea(busqueda, this.tickets);
+    } else if(filtro === 'categoria') {
+      this.tickets = this.filtrarCategoria(busqueda, this.tickets);
+    } else if(filtro === 'estatus') {
+      this.tickets = this.filtrarEstatus(busqueda, this.tickets);
+    }
+    if(this.tickets.length === 0) this.hayTickets = false;
   }
 
   // Verificar si su buscan palabras o numeros

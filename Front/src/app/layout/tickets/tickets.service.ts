@@ -32,6 +32,19 @@ export class TicketsService {
   private busquedaTexto = new BehaviorSubject('');
   busquedaTexto$ = this.busquedaTexto.asObservable();
 
+  // Filtros
+  private selectSeleccionBusqueda = new BehaviorSubject<string>('ticket');
+  selectSeleccionBusqueda$ = this.selectSeleccionBusqueda.asObservable();
+  
+  private filtroArea = new BehaviorSubject<string>('all');
+  filtroArea$ = this.filtroArea.asObservable();
+  
+  private filtroCategoria = new BehaviorSubject<string>('all');
+  filtroCategoria$ = this.filtroCategoria.asObservable();
+  
+  private filtroEstatus = new BehaviorSubject<string>('all');
+  filtroEstatus$ = this.filtroEstatus.asObservable();
+
   // CONSTRUCTOR
   constructor(private http: HttpClient) { }
 
@@ -121,7 +134,21 @@ export class TicketsService {
   }
 
   // Click al ticket
-  click(str: number) {
+  click(str: number): void {
     this.clickTiket.next(str);
+  }
+
+  // cambios en los filtros (select)
+  seleccion(str: string): void {
+    this.selectSeleccionBusqueda.next(str);
+  }
+  area(str: string) {
+    this.filtroArea.next(str);
+  }
+  categoria(str: string): void {
+    this.filtroCategoria.next(str);
+  }
+  estatus(str: string): void {
+    this.filtroEstatus.next(str);
   }
 }
