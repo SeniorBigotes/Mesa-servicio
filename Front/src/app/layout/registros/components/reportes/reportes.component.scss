@@ -1,0 +1,11 @@
+@use '../../../../../styles.scss' as s;
+
+.resumen {
+    max-width: 40rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: lighten(s.$bg-infotec-marron, 33);
+    span {
+        color: blue;
+        display: block;
+    }
+}

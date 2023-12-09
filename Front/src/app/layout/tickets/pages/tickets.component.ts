@@ -66,6 +66,8 @@ export class TicketsComponent implements OnInit {
     this.ticketsService.area('all');
     this.ticketsService.categoria('all');
     this.ticketsService.estatus('all');
+    this.busquedaInput = '';
+    this.ticketsService.textoBuscado('');
   }
   
   /* VISTA DE TICKETS */
@@ -92,7 +94,6 @@ export class TicketsComponent implements OnInit {
 
   // filtros
   selectTicket(event: any): void {
-    const str = event.target.value;
     const filtro = event.target.id;
     
     if(filtro === 'filtro') this.ticketsService.seleccion(this.selectFiltro);

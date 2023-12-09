@@ -42,7 +42,7 @@ $font-family: 'Raleway',sans-serif;
 }
 
 @mixin pc-1920 {
-    @media(min-width: 1700px) {
+    @media(min-width: 1400px) {
         @content
     }
 }

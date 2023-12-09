@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiciosService } from 'src/app/servicios.service';
 import { LoginService } from '../../login/login.service';
-import { BehaviorSubject } from 'rxjs';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MainService } from '../main.service';
 @Component({
   selector: 'app-page',

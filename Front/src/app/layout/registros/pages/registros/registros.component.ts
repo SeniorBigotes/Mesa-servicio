@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RegistrosService } from '../registros.service';
+import { RegistrosService } from '../../registros.service';
 import { Registro } from 'src/app/models/Registro';
 import { BehaviorSubject } from 'rxjs';
 

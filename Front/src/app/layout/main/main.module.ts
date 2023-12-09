@@ -15,8 +15,8 @@ import { HomeComponent } from './components/home/home.component';
   imports: [
     CommonModule,
     MainRoutingModule,
-    SharedModule,
-    MainRoutingModule
+    MainRoutingModule,
+    SharedModule
   ]
 })
 export class MainModule { }

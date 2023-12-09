@@ -5,6 +5,7 @@ import { Ticket } from 'src/app/models/Ticket';
 import { LoginService } from 'src/app/layout/login/login.service';
 import { Cuenta } from 'src/app/models/Cuenta';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-ticket',
@@ -29,7 +30,7 @@ export class TicketComponent implements OnInit {
   vista: boolean = false;
   
   ticketSeleccionado: number | null = null;
-  ticketBuscado!: Ticket[];
+  ticketBuscado: Ticket[] = [];
   selectSeleccionBusqueda!: string;
 
   filtroArea: string = 'all';
@@ -62,8 +63,8 @@ export class TicketComponent implements OnInit {
         this.busquedaTickets(texto, this.selectSeleccionBusqueda);
         this.tickets = this.ticketBuscado;
       } else {
-        this.hayTickets = true;
         this.tickets = this.ticketsRespaldo;
+        this.hayTickets = true;
       }
     }); // end busqueda y filtros
 
@@ -71,7 +72,8 @@ export class TicketComponent implements OnInit {
     this.ticketsService.selectSeleccionBusqueda$.subscribe(resp => this.selectSeleccionBusqueda = resp);
     this.ticketsService.filtroArea$.subscribe(resp => this.aplicarFiltro(resp, 'area'));
     this.ticketsService.filtroCategoria$.subscribe(resp => this.aplicarFiltro(resp, 'categoria'));
-      this.ticketsService.filtroEstatus$.subscribe(resp => this.aplicarFiltro(resp, 'estatus'));
+    this.ticketsService.filtroEstatus$.subscribe(resp => this.aplicarFiltro(resp, 'estatus'));
+    
   } // end OnInit()
 
   // llamar a mostrarTickets()
@@ -107,16 +109,18 @@ export class TicketComponent implements OnInit {
   // Asignar tickets y fechas para mostrar
   private asignar(tickets: Ticket[]): void {
     this.spinner = false;
+    this.hayTickets = false;
     this.tickets = tickets;
     this.ticketsRespaldo = tickets;
+    
     if(tickets !== null) {
       this.hayTickets = true;
       tickets.forEach((ticket: Ticket) => {
+        if(ticket !== null) {
           this.fechaCreacion = ticket.fechaCreacion;
           this.fechaModificacion = ticket.fechaModificacion;
+        }
       });
-    } else {
-      this.hayTickets = false;
     }
   }
 
@@ -213,20 +217,26 @@ export class TicketComponent implements OnInit {
   }
   // Por area
   private filtrarArea(search: string, tickets: Ticket[]): Ticket[] | any{
-    let buscar; 
-    buscar = tickets.filter(ticket => ticket.seccion.seccion.toLowerCase().includes(search));
+    let buscar;
+    if(tickets !== null) {
+      buscar = tickets.filter(ticket => ticket.seccion.seccion.toLowerCase().includes(search));
+    }
     if(search === 'all') buscar = this.ticketsRespaldo;
     return buscar;
   }
   private filtrarCategoria(search: string, tickets: Ticket[]): Ticket[] | any{
     let buscar; 
-    buscar = tickets.filter(ticket => ticket.categoria.categoria.toLowerCase().includes(search));
+    if(tickets !== null) {
+      buscar = tickets.filter(ticket => ticket.categoria.categoria.toLowerCase().includes(search));
+    }
     if(search === 'all') buscar = this.ticketsRespaldo;
     return buscar;
   }
   private filtrarEstatus(search: string, tickets: Ticket[]): Ticket[] | any{
     let buscar;    
-    buscar = tickets.filter(ticket => ticket.estatus.toLowerCase().includes(search));
+    if(tickets !== null) {
+      buscar = tickets.filter(ticket => ticket.estatus.toLowerCase().includes(search));
+    }
     if(search === 'all') buscar = this.ticketsRespaldo;
     return buscar;
   }
@@ -235,14 +245,18 @@ export class TicketComponent implements OnInit {
     const busqueda = resp.toLowerCase();
     this.tickets = this.ticketsRespaldo;
     this.hayTickets = true;
-    if(filtro === 'area') {
-      this.tickets = this.filtrarArea(busqueda, this.tickets);
-    } else if(filtro === 'categoria') {
-      this.tickets = this.filtrarCategoria(busqueda, this.tickets);
-    } else if(filtro === 'estatus') {
-      this.tickets = this.filtrarEstatus(busqueda, this.tickets);
+    if(this.tickets !== null) {
+      if(filtro === 'area') {
+        if(this.filtrarArea(busqueda, this.tickets).length === 0) this.hayTickets = false;
+        this.tickets = this.filtrarArea(busqueda, this.tickets);
+      } else if(filtro === 'categoria') {
+        if(this.filtrarCategoria(busqueda, this.tickets).length === 0) this.hayTickets = false;
+        this.tickets = this.filtrarCategoria(busqueda, this.tickets);
+      } else if(filtro === 'estatus') {
+        if(this.filtrarEstatus(busqueda, this.tickets).length === 0) this.hayTickets = false;
+        this.tickets = this.filtrarEstatus(busqueda, this.tickets);
+      }
     }
-    if(this.tickets.length === 0) this.hayTickets = false;
   }
 
   // Verificar si su buscan palabras o numeros
