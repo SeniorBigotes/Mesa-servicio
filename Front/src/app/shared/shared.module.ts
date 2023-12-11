@@ -8,7 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModificarUsuarioComponent } from '../layout/usuarios/components/modificar/modificar-usuario.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { NoEncontradoComponent } from './no-encontrado/no-encontrado.component';
-import { ReportesComponent } from '../layout/registros/components/reportes/reportes.component';
+import { ReportesComponent } from '../layout/registros/pages/reportes/reportes.component';
 
 @NgModule({
   declarations: [

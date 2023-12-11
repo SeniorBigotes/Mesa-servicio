@@ -11,7 +11,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 @NgModule({
   declarations: [
     RegistrosComponent,
-    RegistroComponent
+    RegistroComponent,
   ],
   imports: [
     CommonModule,

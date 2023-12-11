@@ -11,10 +11,12 @@ import { BehaviorSubject } from 'rxjs';
 export class RegistrosComponent implements OnInit {
 
   input: string = '';
+  reporte: boolean = false;
 
   constructor(private registrosService: RegistrosService) {}
   
   ngOnInit(): void {
+    this.registrosService.verReporte$.subscribe(resp => this.reporte = resp);
   }
 
   // funcion de la barra de busqueda

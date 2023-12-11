@@ -18,6 +18,10 @@ export class RegistrosService {
   private busquedaInput = new BehaviorSubject<string>("");
   busquedaInput$ = this.busquedaInput.asObservable();
 
+  // Ver registros o reportes
+  private verReporte = new BehaviorSubject<boolean>(false);
+  verReporte$ = this.verReporte.asObservable();
+
   constructor(private http: HttpClient) { }
 
   // consultar todos los registros
@@ -47,8 +51,12 @@ export class RegistrosService {
   busqueda(str: string) {
     this.busquedaInput.next(str)
   }
-
+  // botones de filtros
   botones(str: string) {
     this.boton.next(str);
+  }
+  // boton de ver reporte o registro
+  reporte(x: boolean) {
+    this.verReporte.next(x);
   }
 }
